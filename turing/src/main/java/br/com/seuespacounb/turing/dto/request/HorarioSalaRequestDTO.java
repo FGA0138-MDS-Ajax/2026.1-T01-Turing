@@ -1,4 +1,4 @@
-package br.com.seuespacounb.turing.dto;
+package br.com.seuespacounb.turing.dto.request;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;

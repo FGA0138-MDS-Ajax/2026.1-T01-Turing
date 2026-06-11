@@ -1,6 +1,6 @@
 package br.com.seuespacounb.turing.service;
 
-import br.com.seuespacounb.turing.dto.HorarioSalaRequestDTO;
+import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
 import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;

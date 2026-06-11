@@ -1,7 +1,7 @@
 package br.com.seuespacounb.turing.controller;
 
-import br.com.seuespacounb.turing.dto.FiltroSalaRequest;
-import br.com.seuespacounb.turing.dto.SalaRequestDTO;
+import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
+import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.SalaResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

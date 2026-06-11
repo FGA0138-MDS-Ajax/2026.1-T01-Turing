@@ -1,7 +1,8 @@
 package br.com.seuespacounb.turing.repository;
 
 import br.com.seuespacounb.turing.entity.HorarioSala;
-import jakarta.transaction.Transactional;
+import br.com.seuespacounb.turing.entity.StatusHorario;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,7 @@ import java.util.List;
 public interface HorarioSalaRepository extends JpaRepository<HorarioSala, Long>{
 
     List<HorarioSala> findBySalaId(Long salaId);
+    List<HorarioSala> findBySalaIdAndStatus(Long salaId, StatusHorario status);
 
     boolean existsBySalaIdAndInicioPeriodoAndDiaSemanaAndInicioHora(
             Long salaId, LocalDate inicioPeriodo,

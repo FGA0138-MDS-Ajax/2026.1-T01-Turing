@@ -1,7 +1,7 @@
 package br.com.seuespacounb.turing.mapstruct;
 
 import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
-import br.com.seuespacounb.turing.dto.SalaRequestDTO;
+import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.SalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
