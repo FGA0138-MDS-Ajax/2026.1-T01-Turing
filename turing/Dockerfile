@@ -10,7 +10,7 @@ FROM eclipse-temurin:17-jre-alpine
 
 EXPOSE 8080 
 
-COPY --from=build turing/target/turing-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build target/turing-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
