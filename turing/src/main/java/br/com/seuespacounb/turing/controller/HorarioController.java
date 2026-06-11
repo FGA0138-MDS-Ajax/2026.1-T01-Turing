@@ -2,7 +2,7 @@ package br.com.seuespacounb.turing.controller;
 
 import br.com.seuespacounb.turing.dto.request.AtualizarStatusRequest;
 import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
-import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
+import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.exception.ConflictException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.service.HorarioSalaService;

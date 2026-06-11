@@ -4,7 +4,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
-import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
+import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 
 @Mapper(componentModel = "spring")

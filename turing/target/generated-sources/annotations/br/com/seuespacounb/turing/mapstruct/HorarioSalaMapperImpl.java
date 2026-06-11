@@ -1,7 +1,7 @@
 package br.com.seuespacounb.turing.mapstruct;
 
 import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
-import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
+import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.StatusHorario;
 import java.time.DayOfWeek;

@@ -28,6 +28,7 @@ public interface HorarioSalaRepository extends JpaRepository<HorarioSala, Long>{
 
     @Query("SELECT COUNT(horario)>0 FROM HorarioSala horario " +
             "WHERE horario.sala.id= :salaId " +
+            "AND horario.id <> :ignorarId " +
             "AND horario.inicioPeriodo <= :fimPeriodo " +
             "AND horario.fimPeriodo >= :inicioPeriodo " +
             "AND horario.diaSemana = :diaSemana " +
@@ -35,6 +36,7 @@ public interface HorarioSalaRepository extends JpaRepository<HorarioSala, Long>{
             "AND horario.fimHora >= :inicioHora ")
     boolean conflito(
             @Param("salaId") Long salaId,
+            @Param("ignorarId") Long ignorarId,
             @Param("fimPeriodo") LocalDate fimPeriodo,
             @Param("inicioPeriodo") LocalDate inicioPeriodo,
             @Param("diaSemana") DayOfWeek diaSemana,

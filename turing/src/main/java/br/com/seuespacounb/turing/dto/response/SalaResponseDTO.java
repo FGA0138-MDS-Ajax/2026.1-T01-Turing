@@ -1,6 +1,4 @@
-package br.com.seuespacounb.turing.dto;
-
-import java.util.List;
+package br.com.seuespacounb.turing.dto.response;
 
 public record SalaResponseDTO(
         Long id,
