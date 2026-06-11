@@ -25,13 +25,16 @@ public class HorarioController {
     private final HorarioSalaService horarioSalaService;
 
     @GetMapping("/sala/{salaId}")
-    public ResponseEntity<List<HorarioSalaResponseDTO>> buscarPorSala(@PathVariable Long salaId) {
+    public ResponseEntity<List<HorarioSalaResponseDTO>> buscarPorSala(
+            @PathVariable Long salaId) {
         List<HorarioSalaResponseDTO> horarios = horarioSalaService.listarHorariosPorSala(salaId);
         return ResponseEntity.ok(horarios);
     }
 
     @PostMapping
-    public ResponseEntity<HorarioSalaResponseDTO> salvar(@RequestBody @Valid HorarioSalaRequestDTO horarioSalaRequestDTO) throws ConflictException, NotFoundException{
+    public ResponseEntity<HorarioSalaResponseDTO> salvar(
+            @Valid
+            @RequestBody HorarioSalaRequestDTO horarioSalaRequestDTO) throws ConflictException, NotFoundException{
         HorarioSalaResponseDTO horarioSalvo =  horarioSalaService.salvarHorario(horarioSalaRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(horarioSalvo);
     }
@@ -54,5 +57,11 @@ public class HorarioController {
         HorarioSalaResponseDTO horarioAtualizado = horarioSalaService.atualizarStatusHorario(id, request.status());
 
         return ResponseEntity.ok(horarioAtualizado);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HorarioSalaResponseDTO> buscarPorId(
+            @PathVariable Long id) throws NotFoundException {
+        return ResponseEntity.ok(horarioSalaService.buscarPorId(id));
     }
 }

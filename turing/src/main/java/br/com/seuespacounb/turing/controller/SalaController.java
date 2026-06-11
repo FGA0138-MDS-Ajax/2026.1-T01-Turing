@@ -3,6 +3,7 @@ package br.com.seuespacounb.turing.controller;
 import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
 import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,13 @@ public class SalaController {
 
     private final SalaService service;
 
+    // GET /salas                          → lista todas
+    // GET /salas?nome=Sala+A              → filtra por nome
+    // GET /salas?diaSemana=MONDAY         → filtra por dia da semana
+    // GET /salas?status=VAGO&diaSemana=FRIDAY → combinação de filtros
+
     @PostMapping
-    public ResponseEntity<SalaResponseDTO> salvarSala(@RequestBody SalaRequestDTO requestDTO){
+    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarSala(requestDTO));
     }
 
@@ -36,6 +42,7 @@ public class SalaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SalaResponseDTO> atualizarSala(
+            @Valid
             @PathVariable Long id,
             @RequestBody SalaRequestDTO requestDTO){
 
@@ -50,7 +57,7 @@ public class SalaController {
 
     @GetMapping("/filtrar")
         public ResponseEntity<List<SalaResponseDTO>> filtrarPorNome(@RequestParam String nome){
-    return ResponseEntity.ok(service.filtrarPorNome(nome));
+        return ResponseEntity.ok(service.filtrarPorNome(nome));
 }
 
     @GetMapping("/filtroOrdenacao")

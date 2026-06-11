@@ -83,4 +83,11 @@ HorarioSalaService {
         horario.setStatus(novoStatus);
         return mapper.paraHorarioResponseDTO(horarioRepository.save(horario));
     }
+
+    @Transactional(readOnly = true)
+    public HorarioSalaResponseDTO buscarPorId(Long id) throws NotFoundException {
+        HorarioSala horario = horarioRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Horário não encontrado"));
+        return mapper.paraHorarioResponseDTO(horario);
+    }
 }
