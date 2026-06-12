@@ -46,6 +46,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/usuarios/adm/encontrarPorEmail").hasRole("ADM")
                         .requestMatchers(HttpMethod.PUT, "/usuarios/adm/{idUsuarioParaAlterar}").hasRole("ADM")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/adm/{idUsuarioParaDeletar}").hasRole("ADM")
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
 
                         .anyRequest().authenticated())
