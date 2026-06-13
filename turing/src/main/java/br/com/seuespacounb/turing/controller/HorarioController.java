@@ -26,7 +26,7 @@ public class HorarioController {
 
     @GetMapping("/sala/{salaId}")
     public ResponseEntity<List<HorarioSalaResponseDTO>> buscarPorSala(
-            @PathVariable Long salaId) {
+            @PathVariable Long salaId) throws NotFoundException {
         List<HorarioSalaResponseDTO> horarios = horarioSalaService.listarHorariosPorSala(salaId);
         return ResponseEntity.ok(horarios);
     }

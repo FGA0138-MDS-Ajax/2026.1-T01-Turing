@@ -42,9 +42,8 @@ public class SalaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SalaResponseDTO> atualizarSala(
-            @Valid
             @PathVariable Long id,
-            @RequestBody SalaRequestDTO requestDTO){
+            @Valid @RequestBody SalaRequestDTO requestDTO){
 
         return ResponseEntity.ok(service.atualizarSala(id, requestDTO));
     }

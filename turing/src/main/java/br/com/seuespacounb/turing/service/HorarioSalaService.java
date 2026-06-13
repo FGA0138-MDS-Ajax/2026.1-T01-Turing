@@ -50,7 +50,10 @@ HorarioSalaService {
     }
 
     @Transactional(readOnly = true)
-    public List<HorarioSalaResponseDTO> listarHorariosPorSala(Long salaId){
+    public List<HorarioSalaResponseDTO> listarHorariosPorSala(Long salaId) throws NotFoundException {
+        salaRepository.findById(salaId)
+                .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + salaId));
+
         return mapper.paraListaHorarioResponseDTO(horarioRepository.findBySalaId(salaId));
     }
 
