@@ -17,21 +17,21 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/horarios")
+@RequestMapping("/turing")
 @RequiredArgsConstructor
 
 public class HorarioController {
 
     private final HorarioSalaService horarioSalaService;
 
-    @GetMapping("/sala/{salaId}")
+    @GetMapping("/horarios/sala/{salaId}")
     public ResponseEntity<List<HorarioSalaResponseDTO>> buscarPorSala(
             @PathVariable Long salaId) throws NotFoundException {
         List<HorarioSalaResponseDTO> horarios = horarioSalaService.listarHorariosPorSala(salaId);
         return ResponseEntity.ok(horarios);
     }
 
-    @PostMapping
+    @PostMapping("/horarios")
     public ResponseEntity<HorarioSalaResponseDTO> salvar(
             @Valid
             @RequestBody HorarioSalaRequestDTO horarioSalaRequestDTO) throws ConflictException, NotFoundException{
@@ -39,7 +39,7 @@ public class HorarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(horarioSalvo);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/horarios/{id}")
     public ResponseEntity<String> excluir(
             @PathVariable Long id,
             @RequestParam LocalDate inicioPeriodo,
@@ -49,7 +49,7 @@ public class HorarioController {
         return ResponseEntity.ok("Horário removido");
     }
 
-    @PatchMapping("/{id}/status")
+    @PatchMapping("/horarios/{id}/status")
     public ResponseEntity<HorarioSalaResponseDTO> atualizarStatus(
             @PathVariable Long id,
             @RequestBody @Valid AtualizarStatusRequest request) throws NotFoundException {
@@ -59,7 +59,7 @@ public class HorarioController {
         return ResponseEntity.ok(horarioAtualizado);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/horarios/{id}")
     public ResponseEntity<HorarioSalaResponseDTO> buscarPorId(
             @PathVariable Long id) throws NotFoundException {
         return ResponseEntity.ok(horarioSalaService.buscarPorId(id));
