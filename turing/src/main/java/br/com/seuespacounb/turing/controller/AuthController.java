@@ -50,7 +50,7 @@ public class AuthController {
         novoUsuario.setName(request.name());
         novoUsuario.setEmail(request.email());
         novoUsuario.setCpf(request.cpf());
-        novoUsuario.setSenha(passwordEncoder.encode(request.password()));
+        novoUsuario.setPassword(passwordEncoder.encode(request.password()));
         novoUsuario.setTipoUsuario(request.tipoUsuario());
 
         usuarioRepository.save(novoUsuario);

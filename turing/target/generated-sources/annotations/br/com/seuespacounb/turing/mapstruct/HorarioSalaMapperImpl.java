@@ -3,6 +3,7 @@ package br.com.seuespacounb.turing.mapstruct;
 import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
+import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.entity.StatusHorario;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-09T23:02:21-0300",
+    date = "2026-06-14T13:52:15-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.16 (Oracle Corporation)"
 )
 @Component
@@ -47,6 +48,7 @@ public class HorarioSalaMapperImpl implements HorarioSalaMapper {
             return null;
         }
 
+        Long salaId = null;
         Long id = null;
         LocalDate inicioPeriodo = null;
         LocalDate fimPeriodo = null;
@@ -56,6 +58,7 @@ public class HorarioSalaMapperImpl implements HorarioSalaMapper {
         String status = null;
         String descricaoOcupacao = null;
 
+        salaId = entitySalaId( entity );
         id = entity.getId();
         inicioPeriodo = entity.getInicioPeriodo();
         fimPeriodo = entity.getFimPeriodo();
@@ -67,7 +70,7 @@ public class HorarioSalaMapperImpl implements HorarioSalaMapper {
         }
         descricaoOcupacao = entity.getDescricaoOcupacao();
 
-        HorarioSalaResponseDTO horarioSalaResponseDTO = new HorarioSalaResponseDTO( id, inicioPeriodo, fimPeriodo, diaSemana, inicioHora, fimHora, status, descricaoOcupacao );
+        HorarioSalaResponseDTO horarioSalaResponseDTO = new HorarioSalaResponseDTO( id, inicioPeriodo, fimPeriodo, diaSemana, inicioHora, fimHora, status, descricaoOcupacao, salaId );
 
         return horarioSalaResponseDTO;
     }
@@ -84,5 +87,20 @@ public class HorarioSalaMapperImpl implements HorarioSalaMapper {
         }
 
         return list;
+    }
+
+    private Long entitySalaId(HorarioSala horarioSala) {
+        if ( horarioSala == null ) {
+            return null;
+        }
+        Sala sala = horarioSala.getSala();
+        if ( sala == null ) {
+            return null;
+        }
+        Long id = sala.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 }
