@@ -166,4 +166,13 @@ public class UsuarioService {
                 usuarioCliente.getTipoUsuario()
         );
     }
+
+    public boolean AdmTestCpf(String cpf) throws NotFoundException {
+        Usuario cpfUsuario = usuarioRepository.findByCpf(cpf);
+
+        if (cpfUsuario != null) {
+            return true;
+        }
+        return false;
+    }
 }
