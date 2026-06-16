@@ -12,4 +12,5 @@ public interface SalaRepository extends JpaRepository<Sala, Long>, JpaSpecificat
     Optional<Sala> findByNome(String nome);
     List<Sala> findByNomeContainingIgnoreCase(String nome);
     boolean existsByNome(String nome);
+    boolean existsByNomeAndLocalizacao(String nome, String localizacao);
 }

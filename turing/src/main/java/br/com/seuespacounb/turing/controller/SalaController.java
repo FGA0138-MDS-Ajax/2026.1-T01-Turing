@@ -3,6 +3,9 @@ package br.com.seuespacounb.turing.controller;
 import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
 import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
+import br.com.seuespacounb.turing.exception.BadRequestException;
+import br.com.seuespacounb.turing.exception.ConflictException;
+import br.com.seuespacounb.turing.exception.MethodArgumentNotValidException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -26,7 +29,7 @@ public class SalaController {
     // GET /salas?status=VAGO&diaSemana=FRIDAY → combinação de filtros
 
     @PostMapping("/salas")
-    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO){
+    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO) throws ConflictException, MethodArgumentNotValidException, BadRequestException {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarSala(requestDTO));
     }
 

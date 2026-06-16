@@ -12,6 +12,6 @@ public record SalaRequestDTO(
         @Min(value = 1, message = "A capacidade deve ser maior que zero")
         int capacidade,
 
-        @NotNull(message = "O campo 'localização' não pode estar vazio")
+        @NotBlank(message = "O campo 'localização' não pode estar vazio")
         String localizacao
 ) {}

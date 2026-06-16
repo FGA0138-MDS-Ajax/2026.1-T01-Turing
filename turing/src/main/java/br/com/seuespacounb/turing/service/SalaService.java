@@ -4,6 +4,9 @@ import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
 import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
 import br.com.seuespacounb.turing.entity.Sala;
+import br.com.seuespacounb.turing.exception.BadRequestException;
+import br.com.seuespacounb.turing.exception.ConflictException;
+import br.com.seuespacounb.turing.exception.MethodArgumentNotValidException;
 import br.com.seuespacounb.turing.exception.ResourceNotFoundException;
 import br.com.seuespacounb.turing.mapstruct.SalaMapper;
 import br.com.seuespacounb.turing.repository.SalaRepository;
@@ -22,12 +25,18 @@ import java.util.List;
 public class SalaService {
 
     private final SalaRepository repository;
-    private final SalaMapper mapper; 
+    private final SalaMapper mapper;
 
-    public SalaResponseDTO salvarSala(SalaRequestDTO requestDTO){
+    public SalaResponseDTO salvarSala(SalaRequestDTO requestDTO) throws ConflictException {
+        if (repository.existsByNomeAndLocalizacao(requestDTO.nome(), requestDTO.localizacao())) {
+            throw new ConflictException("Já existe uma sala com o nome '"
+                    + requestDTO.nome() + "' na localização '" + requestDTO.localizacao() + "'");
+        }
+
         Sala novaSala = mapper.toEntity(requestDTO);
         return mapper.toResponseDTO(repository.saveAndFlush(novaSala));
     }
+
 
     public SalaResponseDTO buscarSalaPorId(Long id){
         Sala sala = buscarOuLancarErro(id);
