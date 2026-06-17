@@ -1,4 +1,4 @@
-package br.com.seuespacounb.turing.dto;
+package br.com.seuespacounb.turing.dto.request;
 
 import br.com.seuespacounb.turing.entity.StatusHorario;
 import java.time.DayOfWeek;

@@ -1,9 +1,8 @@
-package br.com.seuespacounb.turing.dto;
+package br.com.seuespacounb.turing.dto.response;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 public record HorarioSalaResponseDTO(
         Long id,
@@ -13,5 +12,6 @@ public record HorarioSalaResponseDTO(
         LocalTime inicioHora,
         LocalTime fimHora,
         String status,
-        String descricaoOcupacao
+        String descricaoOcupacao,
+        Long salaId
 ) {}

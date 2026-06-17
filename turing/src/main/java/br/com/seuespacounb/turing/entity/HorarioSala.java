@@ -26,6 +26,7 @@ public class HorarioSala {
     @Column(name = "fim_periodo",nullable = false)
     private LocalDate fimPeriodo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "dia_semana",nullable = false)
     private DayOfWeek diaSemana;
 
@@ -37,7 +38,8 @@ public class HorarioSala {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusHorario status;
+    @Builder.Default
+    private StatusHorario status = StatusHorario.VAGO;
 
     @Column(name = "descricao_ocupacao", nullable = false)
     private String descricaoOcupacao;

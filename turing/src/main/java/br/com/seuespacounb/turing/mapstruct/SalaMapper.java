@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import br.com.seuespacounb.turing.dto.SalaRequestDTO;
-import br.com.seuespacounb.turing.dto.SalaResponseDTO;
+import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
+import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
 import br.com.seuespacounb.turing.entity.Sala;
 
 @Mapper(componentModel = "spring")
