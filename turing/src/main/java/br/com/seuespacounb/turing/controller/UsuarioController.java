@@ -1,9 +1,21 @@
 package br.com.seuespacounb.turing.controller;
 
+import br.com.seuespacounb.turing.dto.AdmGetUsuarioDTO;
+import br.com.seuespacounb.turing.dto.UsuarioDTO;
+import br.com.seuespacounb.turing.dto.request.AtualizarUsuarioRequestDTO;
+import br.com.seuespacounb.turing.dto.response.AtualizarUsuarioResponseDTO;
+import br.com.seuespacounb.turing.entity.Usuario;
+import br.com.seuespacounb.turing.exception.NotFoundException;
+import br.com.seuespacounb.turing.exception.UnauthorizedException;
 import br.com.seuespacounb.turing.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -12,34 +24,68 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    //cadastra novo usuario
-    @PostMapping
-    public ResponseEntity<?> cadastrar() {
-        return null;
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public AtualizarUsuarioResponseDTO alterarDadosUsuario(
+            @AuthenticationPrincipal Usuario usuarioLogado,
+            @RequestBody AtualizarUsuarioRequestDTO dados
+    ) throws NotFoundException {
+
+       return usuarioService.alterarDadosProprioUsuario(usuarioLogado.getId(), dados);
     }
 
-    //retorna o usuario por ‘id’
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorId() {
-        return null; //temporario, apenas para compor o esqueleto antes da implementação real
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluirDadosProprioUsuario(
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) throws NotFoundException {
 
+        usuarioService.deletarDadosProprioUsuario(usuarioLogado.getId());
     }
 
-    //retorna lista de usuarios
-    @GetMapping
-    public ResponseEntity<?> listarUsuarios() {
-        return null;
+
+
+
+
+    @GetMapping("/adm")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AdmGetUsuarioDTO> admGetUsuarios(
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) throws NotFoundException {
+
+        return usuarioService.getUsuarios(usuarioLogado.getId());
     }
 
-    //atualiza os dados do usuario
-    @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar() {
-        return null;
+    @PutMapping("/adm/{idUsuarioParaAlterar}")
+    @ResponseStatus(HttpStatus.OK)
+    public void admAlterarDadosUsuario(
+            @PathVariable Long idUsuarioParaAlterar,
+            @AuthenticationPrincipal Usuario usuarioLogado,
+            @RequestBody UsuarioDTO usuarioDTO
+    )throws NotFoundException {
+
+        usuarioService.admAlterarDadosUsuario(
+                usuarioLogado.getId(),
+                idUsuarioParaAlterar,
+                usuarioDTO
+        );
     }
 
-    //remove o usuario
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> excluirUsuario() {
-        return null;
+    @DeleteMapping("/adm/{idUsuarioParaDeletar}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void admDeletarUsuario(
+            @PathVariable Long idUsuarioParaDeletar,
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) throws NotFoundException, UnauthorizedException {
+        usuarioService.admDeletarUsuario(usuarioLogado.getId(), idUsuarioParaDeletar);
+    }
+
+    @GetMapping("/adm/encontrarPorEmail")
+    @ResponseStatus(HttpStatus.OK)
+    public AdmGetUsuarioDTO admEncontrarUsuarioPorEmail(
+            @RequestParam String email,
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) throws NotFoundException {
+        return usuarioService.admEncontrarUsuarioPorEmail(usuarioLogado.getId(), email);
     }
 }
