@@ -1,4 +1,8 @@
 package br.com.seuespacounb.turing.dto.request;
 
-public record JustificaticaSolicitacaoRequestDTO() {
-}
+import jakarta.validation.constraints.NotBlank;
+
+public record JustificaticaSolicitacaoRequestDTO(
+        @NotBlank(message = "A justificativa é obrigatória")
+        String justificativa
+) {}
