@@ -42,4 +42,6 @@ public interface HorarioSalaRepository extends JpaRepository<HorarioSala, Long>{
             @Param("diaSemana") DayOfWeek diaSemana,
             @Param("fimHora") LocalTime fimHora,
             @Param("inicioHora") LocalTime inicioHora);
+
+    boolean existsByIdAndStatus(Long id, StatusHorario status);
 }
