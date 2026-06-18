@@ -6,6 +6,7 @@ import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
 import br.com.seuespacounb.turing.exception.BadRequestException;
 import br.com.seuespacounb.turing.exception.ConflictException;
 import br.com.seuespacounb.turing.exception.MethodArgumentNotValidException;
+import br.com.seuespacounb.turing.exception.NotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -39,26 +40,26 @@ public class SalaController {
     }
 
     @GetMapping("/salas/{id}")
-    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id){
+    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) throws NotFoundException {
         return ResponseEntity.ok(service.buscarSalaPorId(id));
     }
 
     @PutMapping("/salas/{id}")
     public ResponseEntity<SalaResponseDTO> atualizarSala(
             @PathVariable Long id,
-            @Valid @RequestBody SalaRequestDTO requestDTO){
+            @Valid @RequestBody SalaRequestDTO requestDTO) throws NotFoundException {
 
         return ResponseEntity.ok(service.atualizarSala(id, requestDTO));
     }
 
     @DeleteMapping("/salas/{id}")
-    public ResponseEntity<Void> deletarSala(@PathVariable Long id){
+    public ResponseEntity<Void> deletarSala(@PathVariable Long id) throws NotFoundException {
         service.deletarSala(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/salas/filtrar")
-        public ResponseEntity<List<SalaResponseDTO>> filtrarPorNome(@RequestParam String nome){
+        public ResponseEntity<List<SalaResponseDTO>> filtrarPorNome(@RequestParam String nome) throws NotFoundException {
         return ResponseEntity.ok(service.filtrarPorNome(nome));
 }
 

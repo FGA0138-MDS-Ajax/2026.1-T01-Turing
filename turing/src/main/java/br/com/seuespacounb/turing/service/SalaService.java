@@ -4,10 +4,7 @@ import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
 import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
 import br.com.seuespacounb.turing.entity.Sala;
-import br.com.seuespacounb.turing.exception.BadRequestException;
-import br.com.seuespacounb.turing.exception.ConflictException;
-import br.com.seuespacounb.turing.exception.MethodArgumentNotValidException;
-import br.com.seuespacounb.turing.exception.ResourceNotFoundException;
+import br.com.seuespacounb.turing.exception.*;
 import br.com.seuespacounb.turing.mapstruct.SalaMapper;
 import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.specification.SalaSpecifications;
@@ -38,7 +35,7 @@ public class SalaService {
     }
 
 
-    public SalaResponseDTO buscarSalaPorId(Long id){
+    public SalaResponseDTO buscarSalaPorId(Long id) throws NotFoundException {
         Sala sala = buscarOuLancarErro(id);
         return mapper.toResponseDTO(sala);
     }
@@ -47,7 +44,7 @@ public class SalaService {
         return mapper.toListResponseDTO(repository.findAll());
     }
 
-    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO requestDTO){
+    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO requestDTO) throws NotFoundException {
         Sala salaExistente = buscarOuLancarErro(id);
 
         salaExistente.setNome(requestDTO.nome());
@@ -57,12 +54,16 @@ public class SalaService {
         return mapper.toResponseDTO(repository.saveAndFlush(salaExistente));
     }
 
-    public void deletarSala(Long id){
+    public void deletarSala(Long id) throws NotFoundException {
         buscarOuLancarErro(id);
         repository.deleteById(id);
     }
 
-    public List<SalaResponseDTO> filtrarPorNome(String nome){
+    public List<SalaResponseDTO> filtrarPorNome(String nome) throws NotFoundException {
+        if (repository.findByNomeContainingIgnoreCase(nome).isEmpty()) {
+            throw new NotFoundException("Nenhuma sala encontrada com esse nome");
+        }
+
         return mapper.toListResponseDTO(repository.findByNomeContainingIgnoreCase(nome));
     }
 
@@ -96,8 +97,8 @@ public class SalaService {
         return filtradosOrdenados.map(mapper::toResponseDTO);
     }
 
-    public Sala buscarOuLancarErro(Long id) {
+    public Sala buscarOuLancarErro(Long id) throws NotFoundException {
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Sala não encontrada com id: " + id));
+                .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + id));
     }
 }
