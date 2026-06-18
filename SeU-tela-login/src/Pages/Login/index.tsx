@@ -18,6 +18,8 @@ function Login() {
         body: JSON.stringify({ email: usuario, password: senha })
       })
       if (resposta.ok) {
+        const dados = await resposta.json()
+        localStorage.setItem('token', dados.token)
         alert('Login feito com sucesso!')
       } else {
         setErro('Usuário ou senha inválidos.')

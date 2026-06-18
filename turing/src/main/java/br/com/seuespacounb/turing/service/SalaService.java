@@ -1,9 +1,13 @@
 package br.com.seuespacounb.turing.service;
 
-import br.com.seuespacounb.turing.dto.FiltroSalaRequest;
-import br.com.seuespacounb.turing.dto.SalaRequestDTO;
-import br.com.seuespacounb.turing.dto.SalaResponseDTO;
+import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
+import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
+import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
 import br.com.seuespacounb.turing.entity.Sala;
+import br.com.seuespacounb.turing.exception.BadRequestException;
+import br.com.seuespacounb.turing.exception.ConflictException;
+import br.com.seuespacounb.turing.exception.MethodArgumentNotValidException;
+import br.com.seuespacounb.turing.exception.ResourceNotFoundException;
 import br.com.seuespacounb.turing.mapstruct.SalaMapper;
 import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.specification.SalaSpecifications;
@@ -21,16 +25,21 @@ import java.util.List;
 public class SalaService {
 
     private final SalaRepository repository;
-    private final SalaMapper mapper; 
+    private final SalaMapper mapper;
 
-    public SalaResponseDTO salvarSala(SalaRequestDTO requestDTO){
+    public SalaResponseDTO salvarSala(SalaRequestDTO requestDTO) throws ConflictException {
+        if (repository.existsByNomeAndLocalizacao(requestDTO.nome(), requestDTO.localizacao())) {
+            throw new ConflictException("Já existe uma sala com o nome '"
+                    + requestDTO.nome() + "' na localização '" + requestDTO.localizacao() + "'");
+        }
+
         Sala novaSala = mapper.toEntity(requestDTO);
         return mapper.toResponseDTO(repository.saveAndFlush(novaSala));
     }
 
+
     public SalaResponseDTO buscarSalaPorId(Long id){
-        Sala sala = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
+        Sala sala = buscarOuLancarErro(id);
         return mapper.toResponseDTO(sala);
     }
 
@@ -39,8 +48,7 @@ public class SalaService {
     }
 
     public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO requestDTO){
-        Sala salaExistente = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
+        Sala salaExistente = buscarOuLancarErro(id);
 
         salaExistente.setNome(requestDTO.nome());
         salaExistente.setCapacidade(requestDTO.capacidade());
@@ -50,6 +58,7 @@ public class SalaService {
     }
 
     public void deletarSala(Long id){
+        buscarOuLancarErro(id);
         repository.deleteById(id);
     }
 
@@ -57,7 +66,13 @@ public class SalaService {
         return mapper.toListResponseDTO(repository.findByNomeContainingIgnoreCase(nome));
     }
 
-    public Page<SalaResponseDTO> filtrarOrdenar(FiltroSalaRequest filtro, int pagina, int tamanho, String ordenacao, String direcao){
+    public Page<SalaResponseDTO> filtrarOrdenar(
+            FiltroSalaRequest filtro,
+            int pagina,
+            int tamanho,
+            String ordenacao,
+            String direcao
+    ){
         Specification<Sala> spec = Specification
                 .where(SalaSpecifications.possuiNome(filtro.nome()))
                 .and(SalaSpecifications.possuiCapacidade(filtro.capacidade()))
@@ -66,15 +81,23 @@ public class SalaService {
                 .and(SalaSpecifications.possuiInicioHora(filtro.inicioHora()))
                 .and(SalaSpecifications.possuiFimHora(filtro.fimHora()))
                 .and(SalaSpecifications.possuiStatus(filtro.status()));
+
         List<String> camposPermitidos = List.of("nome", "capacidade", "localizacao");
         if(!camposPermitidos.contains(ordenacao)){
             ordenacao = "nome";
         }
+
         Sort sort = direcao != null && direcao.equalsIgnoreCase("desc")
-                ? Sort.by(ordenacao).descending():
-                Sort.by(ordenacao).ascending();
+                ? Sort.by(ordenacao).descending()
+                : Sort.by(ordenacao).ascending();
+
         Pageable pageable = PageRequest.of(pagina, tamanho, sort);
         Page<Sala> filtradosOrdenados = repository.findAll(spec, pageable);
         return filtradosOrdenados.map(mapper::toResponseDTO);
+    }
+
+    public Sala buscarOuLancarErro(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sala não encontrada com id: " + id));
     }
 }

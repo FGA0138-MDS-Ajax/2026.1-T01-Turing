@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/turing")
 @RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @PutMapping
+    @PutMapping("/usuarios")
     @ResponseStatus(HttpStatus.CREATED)
     public AtualizarUsuarioResponseDTO alterarDadosUsuario(
             @AuthenticationPrincipal Usuario usuarioLogado,
@@ -34,7 +34,7 @@ public class UsuarioController {
        return usuarioService.alterarDadosProprioUsuario(usuarioLogado.getId(), dados);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/usuarios")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluirDadosProprioUsuario(
             @AuthenticationPrincipal Usuario usuarioLogado
@@ -47,7 +47,7 @@ public class UsuarioController {
 
 
 
-    @GetMapping("/adm")
+    @GetMapping("/usuarios/adm")
     @ResponseStatus(HttpStatus.OK)
     public List<AdmGetUsuarioDTO> admGetUsuarios(
             @AuthenticationPrincipal Usuario usuarioLogado
@@ -56,7 +56,7 @@ public class UsuarioController {
         return usuarioService.getUsuarios(usuarioLogado.getId());
     }
 
-    @PutMapping("/adm/{idUsuarioParaAlterar}")
+    @PutMapping("/usuarios/adm/{idUsuarioParaAlterar}")
     @ResponseStatus(HttpStatus.OK)
     public void admAlterarDadosUsuario(
             @PathVariable Long idUsuarioParaAlterar,
@@ -71,7 +71,7 @@ public class UsuarioController {
         );
     }
 
-    @DeleteMapping("/adm/{idUsuarioParaDeletar}")
+    @DeleteMapping("/usuarios/adm/{idUsuarioParaDeletar}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void admDeletarUsuario(
             @PathVariable Long idUsuarioParaDeletar,
@@ -80,7 +80,7 @@ public class UsuarioController {
         usuarioService.admDeletarUsuario(usuarioLogado.getId(), idUsuarioParaDeletar);
     }
 
-    @GetMapping("/adm/encontrarPorEmail")
+    @GetMapping("/usuarios/adm/encontrarPorEmail")
     @ResponseStatus(HttpStatus.OK)
     public AdmGetUsuarioDTO admEncontrarUsuarioPorEmail(
             @RequestParam String email,

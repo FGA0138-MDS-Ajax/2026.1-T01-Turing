@@ -1,7 +1,7 @@
 package br.com.seuespacounb.turing.service;
 
-import br.com.seuespacounb.turing.dto.HorarioSalaRequestDTO;
-import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
+import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
+import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.entity.StatusHorario;
@@ -30,26 +30,46 @@ HorarioSalaService {
     public HorarioSalaResponseDTO salvarHorario(HorarioSalaRequestDTO horarioRequestDTO)throws ConflictException, NotFoundException {
         Sala sala = salaRepository.findById(horarioRequestDTO.salaId())
                 .orElseThrow(()-> new NotFoundException("A sala não foi encontrada"));
+
         HorarioSala novoHorario = mapper.paraHorarioSala(horarioRequestDTO);
         novoHorario.setSala(sala);
-        boolean conflitoHorario = horarioRepository.conflito(novoHorario.getSala().getId(), novoHorario.getFimPeriodo(),
-                novoHorario.getInicioPeriodo(), novoHorario.getDiaSemana(),
-                novoHorario.getFimHora(), novoHorario.getInicioHora());
+        boolean conflitoHorario = horarioRepository.conflito(
+                novoHorario.getSala().getId(),
+                -1L,
+                novoHorario.getFimPeriodo(),
+                novoHorario.getInicioPeriodo(),
+                novoHorario.getDiaSemana(),
+                novoHorario.getFimHora(),
+                novoHorario.getInicioHora());
+
         if(conflitoHorario) {
             throw new ConflictException("Infelizmente não foi possivel salvar este horário, pois houve conflito de horário na sala escolhida.");
         }
+
         return mapper.paraHorarioResponseDTO(horarioRepository.saveAndFlush(novoHorario));
     }
 
     @Transactional(readOnly = true)
-    public List<HorarioSalaResponseDTO> listarHorariosPorSala(Long salaId){
+    public List<HorarioSalaResponseDTO> listarHorariosPorSala(Long salaId) throws NotFoundException {
+        salaRepository.findById(salaId)
+                .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + salaId));
+
         return mapper.paraListaHorarioResponseDTO(horarioRepository.findBySalaId(salaId));
     }
 
     @Transactional
-    public void excluirHorarioPorSala(Long salaId, LocalDate inicioPeriodo, DayOfWeek diaSemana, LocalTime inicioHora)throws NotFoundException{
+    public void excluirHorarioPorSala(
+            Long salaId,
+            LocalDate inicioPeriodo,
+            DayOfWeek diaSemana,
+            LocalTime inicioHora) throws NotFoundException{
+
         boolean existeHorario = horarioRepository.existsBySalaIdAndInicioPeriodoAndDiaSemanaAndInicioHora(
-                        salaId, inicioPeriodo, diaSemana, inicioHora);
+                salaId,
+                inicioPeriodo,
+                diaSemana,
+                inicioHora);
+
         if(!existeHorario){
             throw new NotFoundException("Não foi possível excluir, pois o horário informado não foi encontrado.");
         }
@@ -57,10 +77,20 @@ HorarioSalaService {
     }
 
     @Transactional
-    public HorarioSalaResponseDTO atualizarStatusHorario(Long id, StatusHorario novoStatus) throws NotFoundException {
+    public HorarioSalaResponseDTO atualizarStatusHorario(
+            Long id,
+            StatusHorario novoStatus) throws NotFoundException {
+
         HorarioSala horario = horarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Horário não encontrado"));
         horario.setStatus(novoStatus);
         return mapper.paraHorarioResponseDTO(horarioRepository.save(horario));
+    }
+
+    @Transactional(readOnly = true)
+    public HorarioSalaResponseDTO buscarPorId(Long id) throws NotFoundException {
+        HorarioSala horario = horarioRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Horário não encontrado"));
+        return mapper.paraHorarioResponseDTO(horario);
     }
 }

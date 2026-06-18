@@ -6,7 +6,10 @@ import br.com.seuespacounb.turing.dto.request.RegisterUserRequest;
 import br.com.seuespacounb.turing.dto.response.LoginResponse;
 import br.com.seuespacounb.turing.dto.response.RegisterUserResponse;
 import br.com.seuespacounb.turing.entity.Usuario;
+import br.com.seuespacounb.turing.exception.ConflictException;
+import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.repository.UsuarioRepository;
+import br.com.seuespacounb.turing.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,7 @@ import java.net.Authenticator;
 @RequiredArgsConstructor
 
 public class AuthController {
+    private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -44,13 +48,17 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterUserResponse> register(@Valid @RequestBody RegisterUserRequest request) {
+    public ResponseEntity<RegisterUserResponse> register(@Valid @RequestBody RegisterUserRequest request) throws ConflictException, NotFoundException {
         Usuario novoUsuario = new Usuario();
+
+        if (usuarioService.AdmTestCpf(request.cpf())){
+            throw new ConflictException("CPF ja cadastrado no sistema");
+        }
 
         novoUsuario.setName(request.name());
         novoUsuario.setEmail(request.email());
         novoUsuario.setCpf(request.cpf());
-        novoUsuario.setSenha(passwordEncoder.encode(request.password()));
+        novoUsuario.setPassword(passwordEncoder.encode(request.password()));
         novoUsuario.setTipoUsuario(request.tipoUsuario());
 
         usuarioRepository.save(novoUsuario);

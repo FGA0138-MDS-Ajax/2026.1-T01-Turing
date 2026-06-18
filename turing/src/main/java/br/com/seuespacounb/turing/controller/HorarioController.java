@@ -1,8 +1,8 @@
 package br.com.seuespacounb.turing.controller;
 
-import br.com.seuespacounb.turing.dto.AtualizarStatusRequest;
-import br.com.seuespacounb.turing.dto.HorarioSalaRequestDTO;
-import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
+import br.com.seuespacounb.turing.dto.request.AtualizarStatusRequest;
+import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
+import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.exception.ConflictException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.service.HorarioSalaService;
@@ -17,26 +17,29 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/horarios")
+@RequestMapping("/turing")
 @RequiredArgsConstructor
 
 public class HorarioController {
 
     private final HorarioSalaService horarioSalaService;
 
-    @GetMapping("/sala/{salaId}")
-    public ResponseEntity<List<HorarioSalaResponseDTO>> buscarPorSala(@PathVariable Long salaId) {
+    @GetMapping("/horarios/sala/{salaId}")
+    public ResponseEntity<List<HorarioSalaResponseDTO>> buscarPorSala(
+            @PathVariable Long salaId) throws NotFoundException {
         List<HorarioSalaResponseDTO> horarios = horarioSalaService.listarHorariosPorSala(salaId);
         return ResponseEntity.ok(horarios);
     }
 
-    @PostMapping
-    public ResponseEntity<HorarioSalaResponseDTO> salvar(@RequestBody @Valid HorarioSalaRequestDTO horarioSalaRequestDTO) throws ConflictException, NotFoundException{
+    @PostMapping("/horarios")
+    public ResponseEntity<HorarioSalaResponseDTO> salvar(
+            @Valid
+            @RequestBody HorarioSalaRequestDTO horarioSalaRequestDTO) throws ConflictException, NotFoundException{
         HorarioSalaResponseDTO horarioSalvo =  horarioSalaService.salvarHorario(horarioSalaRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(horarioSalvo);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/horarios/{id}")
     public ResponseEntity<String> excluir(
             @PathVariable Long id,
             @RequestParam LocalDate inicioPeriodo,
@@ -46,7 +49,7 @@ public class HorarioController {
         return ResponseEntity.ok("Horário removido");
     }
 
-    @PatchMapping("/{id}/status")
+    @PatchMapping("/horarios/{id}/status")
     public ResponseEntity<HorarioSalaResponseDTO> atualizarStatus(
             @PathVariable Long id,
             @RequestBody @Valid AtualizarStatusRequest request) throws NotFoundException {
@@ -54,5 +57,11 @@ public class HorarioController {
         HorarioSalaResponseDTO horarioAtualizado = horarioSalaService.atualizarStatusHorario(id, request.status());
 
         return ResponseEntity.ok(horarioAtualizado);
+    }
+
+    @GetMapping("/horarios/{id}")
+    public ResponseEntity<HorarioSalaResponseDTO> buscarPorId(
+            @PathVariable Long id) throws NotFoundException {
+        return ResponseEntity.ok(horarioSalaService.buscarPorId(id));
     }
 }

@@ -26,7 +26,7 @@ public class Usuario implements UserDetails {
     private String name;
     private String email;
     private String cpf;
-    private String senha;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
@@ -45,7 +45,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return this.senha;
+        return this.password;
     }
 
     @Override

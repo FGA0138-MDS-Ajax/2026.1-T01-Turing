@@ -28,7 +28,7 @@ public class Sala {
     @Column(nullable = false)
     private String localizacao;
 
-    @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<HorarioSala> horarios = new ArrayList<>();
+//    @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//    @Builder.Default
+//    private List<HorarioSala> horarios = new ArrayList<>();
 }
