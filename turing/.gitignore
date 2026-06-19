@@ -1,2 +1,5 @@
 .env
+
+target/
+*.class
 *.log
