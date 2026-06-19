@@ -34,17 +34,29 @@ public class SecurityConfig {
 
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
 
+                        .requestMatchers(HttpMethod.PUT, "/turing/usuarios").hasAnyRole("CLIENTE", "ADM")
+                        .requestMatchers(HttpMethod.DELETE, "/turing/usuarios").hasAnyRole("CLIENTE", "ADM")
+                        .requestMatchers(HttpMethod.GET, "/turing/usuarios/adm").hasRole("ADM")
+                        .requestMatchers(HttpMethod.GET, "/turing/usuarios/adm/encontrarPorEmail").hasRole("ADM")
+                        .requestMatchers(HttpMethod.PUT, "/turing/usuarios/adm/{idUsuarioParaAlterar}").hasRole("ADM")
+                        .requestMatchers(HttpMethod.DELETE, "/turing/usuarios/adm/{idUsuarioParaDeletar}").hasRole("ADM")
+
+
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+
 
                         .requestMatchers(HttpMethod.GET, "/turing/salas/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/turing/salas").hasRole("ADM")
                         .requestMatchers(HttpMethod.PUT, "/turing/salas/**").hasRole("ADM")
                         .requestMatchers(HttpMethod.DELETE, "/turing/salas/**").hasRole("ADM")
 
+
                         .requestMatchers(HttpMethod.GET, "/turing/horarios/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/turing/horarios/sala/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/turing/horarios").hasRole("ADM")
                         .requestMatchers(HttpMethod.DELETE, "/turing/horarios/**").hasRole("ADM")
+
 
                         .requestMatchers(HttpMethod.GET, "/turing/solicitacoes/sala/**").permitAll()
 
@@ -54,13 +66,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/turing/solicitacoes").hasAnyRole("CLIENTE", "ADM")
                         .requestMatchers(HttpMethod.PATCH, "/turing/solicitacoes/*/cancelar").hasAnyRole("CLIENTE", "ADM")
                         .requestMatchers(HttpMethod.PATCH, "/turing/solicitacoes/*/status").hasRole("ADM")
-
-                        .requestMatchers(HttpMethod.PUT, "/turing/usuarios").hasAnyRole("CLIENTE", "ADM")
-                        .requestMatchers(HttpMethod.DELETE, "/turing/usuarios").hasAnyRole("CLIENTE", "ADM")
-                        .requestMatchers(HttpMethod.GET, "/turing/usuarios/adm").hasRole("ADM")
-                        .requestMatchers(HttpMethod.GET, "/turing/usuarios/adm/encontrarPorEmail").hasRole("ADM")
-                        .requestMatchers(HttpMethod.PUT, "/turing/usuarios/adm/{idUsuarioParaAlterar}").hasRole("ADM")
-                        .requestMatchers(HttpMethod.DELETE, "/turing/usuarios/adm/{idUsuarioParaDeletar}").hasRole("ADM")
 
                         .anyRequest().authenticated())
 
