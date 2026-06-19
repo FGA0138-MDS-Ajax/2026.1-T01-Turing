@@ -35,7 +35,7 @@ public class SalaService {
     }
 
 
-    public SalaResponseDTO buscarSalaPorId(Long id) throws NotFoundException {
+    public SalaResponseDTO buscarSalaPorId(Long id) throws NotFoundException, MethodArgumentTypeMismatchException {
         Sala sala = buscarOuLancarErro(id);
         return mapper.toResponseDTO(sala);
     }
@@ -44,7 +44,7 @@ public class SalaService {
         return mapper.toListResponseDTO(repository.findAll());
     }
 
-    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO requestDTO) throws NotFoundException {
+    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO requestDTO) throws NotFoundException, MethodArgumentTypeMismatchException {
         Sala salaExistente = buscarOuLancarErro(id);
 
         salaExistente.setNome(requestDTO.nome());
@@ -54,12 +54,12 @@ public class SalaService {
         return mapper.toResponseDTO(repository.saveAndFlush(salaExistente));
     }
 
-    public void deletarSala(Long id) throws NotFoundException {
+    public void deletarSala(Long id) throws NotFoundException, MethodArgumentTypeMismatchException {
         buscarOuLancarErro(id);
         repository.deleteById(id);
     }
 
-    public List<SalaResponseDTO> filtrarPorNome(String nome) throws NotFoundException {
+    public List<SalaResponseDTO> filtrarPorNome(String nome) throws NotFoundException, MissingServletRequestParameterException {
         if (repository.findByNomeContainingIgnoreCase(nome).isEmpty()) {
             throw new NotFoundException("Nenhuma sala encontrada com esse nome");
         }
@@ -73,7 +73,8 @@ public class SalaService {
             int tamanho,
             String ordenacao,
             String direcao
-    ){
+    ) throws BadRequestException {
+
         Specification<Sala> spec = Specification
                 .where(SalaSpecifications.possuiNome(filtro.nome()))
                 .and(SalaSpecifications.possuiCapacidade(filtro.capacidade()))
@@ -91,6 +92,10 @@ public class SalaService {
         Sort sort = direcao != null && direcao.equalsIgnoreCase("desc")
                 ? Sort.by(ordenacao).descending()
                 : Sort.by(ordenacao).ascending();
+
+        if (tamanho <= 0) {
+            throw new BadRequestException("O tamanho da página deve ser maior que zero.");
+        }
 
         Pageable pageable = PageRequest.of(pagina, tamanho, sort);
         Page<Sala> filtradosOrdenados = repository.findAll(spec, pageable);

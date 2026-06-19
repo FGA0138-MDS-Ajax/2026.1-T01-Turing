@@ -3,10 +3,7 @@ package br.com.seuespacounb.turing.controller;
 import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
 import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
-import br.com.seuespacounb.turing.exception.BadRequestException;
-import br.com.seuespacounb.turing.exception.ConflictException;
-import br.com.seuespacounb.turing.exception.MethodArgumentNotValidException;
-import br.com.seuespacounb.turing.exception.NotFoundException;
+import br.com.seuespacounb.turing.exception.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -40,7 +37,7 @@ public class SalaController {
     }
 
     @GetMapping("/salas/{id}")
-    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) throws NotFoundException, MethodArgumentTypeMismatchException {
         return ResponseEntity.ok(service.buscarSalaPorId(id));
     }
 
@@ -70,7 +67,7 @@ public class SalaController {
             @RequestParam(defaultValue = "10")int tamanho,
             @RequestParam(defaultValue = "nome")String ordenacao,
             @RequestParam(defaultValue = "asc")String direcao
-    ){
+    ) throws BadRequestException {
         Page<SalaResponseDTO> salas = service.filtrarOrdenar(filtro, pagina,tamanho,ordenacao, direcao);
         return ResponseEntity.ok(salas);
     }
