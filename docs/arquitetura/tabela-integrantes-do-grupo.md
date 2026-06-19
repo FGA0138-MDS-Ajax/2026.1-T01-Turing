@@ -1,3 +1,5 @@
+# Integrantes do Grupo
+
 | Mat | Nome | Função (responsabilidade) | Pontos de participação na elaboração |
 |---|---|---|---|
 | 251005909 | Alan Farias Braga | Backend, Frontend e Product Owner | 8.3333 |
