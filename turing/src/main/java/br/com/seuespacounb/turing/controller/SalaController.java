@@ -21,11 +21,6 @@ public class SalaController {
 
     private final SalaService service;
 
-    // GET /salas                          → lista todas
-    // GET /salas?nome=Sala+A              → filtra por nome
-    // GET /salas?diaSemana=MONDAY         → filtra por dia da semana
-    // GET /salas/filtroOrdenacao?dataUso=2026-07-10&diaSemana=FRIDAY → combinação de filtros
-
     @PostMapping("/salas")
     public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO) throws ConflictException, MethodArgumentNotValidException, BadRequestException {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarSala(requestDTO));
@@ -50,7 +45,7 @@ public class SalaController {
     }
 
     @DeleteMapping("/salas/{id}")
-    public ResponseEntity<Void> deletarSala(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<Void> deletarSala(@PathVariable Long id) throws NotFoundException, ConflictException {
         service.deletarSala(id);
         return ResponseEntity.noContent().build();
     }

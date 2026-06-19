@@ -6,6 +6,7 @@ import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
 import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.exception.*;
 import br.com.seuespacounb.turing.mapstruct.SalaMapper;
+import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
 import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.specification.SalaSpecifications;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SalaService {
 
+    private final HorarioSalaRepository horarioSalaRepository;
     private final SalaRepository repository;
     private final SalaMapper mapper;
 
@@ -54,8 +56,15 @@ public class SalaService {
         return mapper.toResponseDTO(repository.saveAndFlush(salaExistente));
     }
 
-    public void deletarSala(Long id) throws NotFoundException, MethodArgumentTypeMismatchException {
+    public void deletarSala(Long id) throws NotFoundException, MethodArgumentTypeMismatchException, ConflictException {
         buscarOuLancarErro(id);
+
+        if (horarioSalaRepository.existsBySalaId(id)) {
+            throw new ConflictException(
+                    "Não é possível excluir esta sala pois existem horários cadastrados para ela."
+            );
+        }
+
         repository.deleteById(id);
     }
 

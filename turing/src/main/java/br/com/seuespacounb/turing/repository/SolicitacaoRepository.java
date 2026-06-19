@@ -31,4 +31,6 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
             @Param("dataUso") LocalDate dataUso,
             @Param("statusAtivos") List<StatusSolicitacao> statusAtivos,
             @Param("ignorarId") Long ignorarId);
+
+    boolean existsByHorarioSalaId(Long horarioSalaId);
 }

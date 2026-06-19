@@ -28,4 +28,6 @@ public interface HorarioSalaRepository extends JpaRepository<HorarioSala, Long> 
             @Param("inicioHora") LocalTime inicioHora,
             @Param("fimHora") LocalTime fimHora,
             @Param("ignorarId") Long ignorarId);
+
+    boolean existsBySalaId(Long id);
 }
