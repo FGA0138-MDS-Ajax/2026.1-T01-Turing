@@ -27,7 +27,7 @@ public class SalaController {
     // GET /salas                          → lista todas
     // GET /salas?nome=Sala+A              → filtra por nome
     // GET /salas?diaSemana=MONDAY         → filtra por dia da semana
-    // GET /salas?status=VAGO&diaSemana=FRIDAY → combinação de filtros
+    // GET /salas/filtroOrdenacao?dataUso=2026-07-10&diaSemana=FRIDAY → combinação de filtros
 
     @PostMapping("/salas")
     public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO) throws ConflictException, MethodArgumentNotValidException, BadRequestException {

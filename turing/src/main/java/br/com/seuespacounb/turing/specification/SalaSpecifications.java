@@ -2,10 +2,14 @@ package br.com.seuespacounb.turing.specification;
 
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
-import br.com.seuespacounb.turing.entity.StatusHorario;
+import br.com.seuespacounb.turing.entity.Solicitacao;
+import br.com.seuespacounb.turing.entity.StatusSolicitacao;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class SalaSpecifications {
@@ -54,11 +58,24 @@ public class SalaSpecifications {
         };
     }
 
-    public static Specification<Sala> possuiStatus(StatusHorario status) {
+    // Substitui possuiStatus. Só filtra se dataUso for informada —
+    // sem data não dá pra responder "disponível quando?".
+    public static Specification<Sala> disponivelEm(LocalDate dataUso) {
         return (root, query, cb) -> {
-            if (status == null) return cb.conjunction();
+            if (dataUso == null) return cb.conjunction();
+
             Join<Sala, HorarioSala> horarioJoin = root.join("horarios");
-            return cb.equal(horarioJoin.get("status"), status);
+
+            Subquery<Long> subquery = query.subquery(Long.class);
+            var solicitacaoRoot = subquery.from(Solicitacao.class);
+            subquery.select(solicitacaoRoot.get("id"));
+            subquery.where(
+                    cb.equal(solicitacaoRoot.get("horarioSala"), horarioJoin),
+                    cb.equal(solicitacaoRoot.get("dataUso"), dataUso),
+                    solicitacaoRoot.get("status").in(StatusSolicitacao.PENDENTE, StatusSolicitacao.APROVADA)
+            );
+
+            return cb.not(cb.exists(subquery));
         };
     }
 }

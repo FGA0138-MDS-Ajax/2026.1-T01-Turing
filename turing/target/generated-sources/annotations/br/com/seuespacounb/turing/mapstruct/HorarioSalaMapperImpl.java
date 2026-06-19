@@ -4,9 +4,7 @@ import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
-import br.com.seuespacounb.turing.entity.StatusHorario;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-17T23:40:51-0300",
+    date = "2026-06-19T00:54:18-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.16 (Oracle Corporation)"
 )
 @Component
@@ -29,14 +27,9 @@ public class HorarioSalaMapperImpl implements HorarioSalaMapper {
 
         HorarioSala.HorarioSalaBuilder horarioSala = HorarioSala.builder();
 
-        horarioSala.inicioPeriodo( dto.inicioPeriodo() );
-        horarioSala.fimPeriodo( dto.fimPeriodo() );
         horarioSala.diaSemana( dto.diaSemana() );
         horarioSala.inicioHora( dto.inicioHora() );
         horarioSala.fimHora( dto.fimHora() );
-        if ( dto.status() != null ) {
-            horarioSala.status( Enum.valueOf( StatusHorario.class, dto.status() ) );
-        }
         horarioSala.descricaoOcupacao( dto.descricaoOcupacao() );
 
         return horarioSala.build();
@@ -50,27 +43,19 @@ public class HorarioSalaMapperImpl implements HorarioSalaMapper {
 
         Long salaId = null;
         Long id = null;
-        LocalDate inicioPeriodo = null;
-        LocalDate fimPeriodo = null;
         DayOfWeek diaSemana = null;
         LocalTime inicioHora = null;
         LocalTime fimHora = null;
-        String status = null;
         String descricaoOcupacao = null;
 
         salaId = entitySalaId( entity );
         id = entity.getId();
-        inicioPeriodo = entity.getInicioPeriodo();
-        fimPeriodo = entity.getFimPeriodo();
         diaSemana = entity.getDiaSemana();
         inicioHora = entity.getInicioHora();
         fimHora = entity.getFimHora();
-        if ( entity.getStatus() != null ) {
-            status = entity.getStatus().name();
-        }
         descricaoOcupacao = entity.getDescricaoOcupacao();
 
-        HorarioSalaResponseDTO horarioSalaResponseDTO = new HorarioSalaResponseDTO( id, inicioPeriodo, fimPeriodo, diaSemana, inicioHora, fimHora, status, descricaoOcupacao, salaId );
+        HorarioSalaResponseDTO horarioSalaResponseDTO = new HorarioSalaResponseDTO( id, diaSemana, inicioHora, fimHora, descricaoOcupacao, salaId );
 
         return horarioSalaResponseDTO;
     }

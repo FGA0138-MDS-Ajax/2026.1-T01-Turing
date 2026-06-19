@@ -81,7 +81,7 @@ public class SalaService {
                 .and(SalaSpecifications.possuiDiaSemana(filtro.diaSemana()))
                 .and(SalaSpecifications.possuiInicioHora(filtro.inicioHora()))
                 .and(SalaSpecifications.possuiFimHora(filtro.fimHora()))
-                .and(SalaSpecifications.possuiStatus(filtro.status()));
+                .and(SalaSpecifications.disponivelEm(filtro.dataUso()));
 
         List<String> camposPermitidos = List.of("nome", "capacidade", "localizacao");
         if(!camposPermitidos.contains(ordenacao)){
