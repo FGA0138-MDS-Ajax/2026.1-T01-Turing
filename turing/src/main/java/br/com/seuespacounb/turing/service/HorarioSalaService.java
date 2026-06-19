@@ -5,10 +5,12 @@ import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.exception.ConflictException;
+import br.com.seuespacounb.turing.exception.HttpMessageNotReadableException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.mapstruct.HorarioSalaMapper;
 import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
 import br.com.seuespacounb.turing.repository.SalaRepository;
+import br.com.seuespacounb.turing.repository.SolicitacaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +20,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HorarioSalaService {
 
+    private final SolicitacaoRepository solicitacaoRepository;
     private final HorarioSalaRepository horarioRepository;
     private final SalaRepository salaRepository;
     private final HorarioSalaMapper mapper;
 
     @Transactional
     public HorarioSalaResponseDTO salvarHorario(HorarioSalaRequestDTO dto)
-            throws NotFoundException, ConflictException {
+            throws NotFoundException, ConflictException, HttpMessageNotReadableException {
 
         Sala sala = salaRepository.findById(dto.salaId())
                 .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + dto.salaId()));
@@ -55,9 +58,15 @@ public class HorarioSalaService {
     }
 
     @Transactional
-    public void excluirHorario(Long id) throws NotFoundException {
+    public void excluirHorario(Long id) throws NotFoundException, ConflictException {
         HorarioSala horario = horarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Horário não encontrado com id: " + id));
+
+        if (solicitacaoRepository.existsByHorarioSalaId(id)) {
+            throw new ConflictException(
+                    "Não é possível excluir este horário pois existem solicitações vinculadas a ele."
+            );
+        }
 
         horarioRepository.delete(horario);
     }
