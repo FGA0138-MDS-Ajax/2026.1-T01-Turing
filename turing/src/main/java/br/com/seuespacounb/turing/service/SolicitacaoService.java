@@ -32,7 +32,12 @@ public class SolicitacaoService {
         HorarioSala horarioSala = horarioSalaRepository.findById(dto.horarioSalaId())
                 .orElseThrow(() -> new NotFoundException("Horário não encontrado com id: " + dto.horarioSalaId()));
 
-        // garante que a data informada cai no dia da semana correto do slot escolhido
+        if (horarioSala.getDescricaoOcupacao() != null && !horarioSala.getDescricaoOcupacao().isBlank()) {
+            throw new ConflictException(
+                    "Este horário já está ocupado com aula fixa: " + horarioSala.getDescricaoOcupacao()
+            );
+        }
+
         if (!horarioSala.getDiaSemana().equals(dto.dataUso().getDayOfWeek())) {
             throw new ConflictException(
                     "A data informada (" + dto.dataUso() + ") não é uma "
