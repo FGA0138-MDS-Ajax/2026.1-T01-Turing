@@ -1,15 +1,19 @@
 package br.com.seuespacounb.turing.handler;
 
 import br.com.seuespacounb.turing.exception.*;
-import org.apache.coyote.BadRequestException;
+//import org.apache.coyote.BadRequestException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({NotFoundException.class})
@@ -88,6 +92,43 @@ public class GlobalExceptionHandler {
                 .message(exception.getMessage())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ErrorResponse> handlerMethodArgumentTypeMismatch(
+            MethodArgumentTypeMismatchException exception) {
+
+        ErrorResponse response = ErrorResponse.builder()
+                .message("O parâmetro informado possui um formato inválido.")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler({MissingServletRequestParameterException.class})
+    public ResponseEntity<ErrorResponse> handlerMissingServletRequestParameter(
+            MissingServletRequestParameterException exception) {
+
+        ErrorResponse response = ErrorResponse.builder()
+                .message("O parâmetro '" + exception.getParameterName() + "' é obrigatório.")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handlerHttpMessageNotReadable(
+            HttpMessageNotReadableException exception) {
+
+        ErrorResponse response = ErrorResponse.builder()
+                .message("Dia da semana inválido. Utilize: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY ou SUNDAY.")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

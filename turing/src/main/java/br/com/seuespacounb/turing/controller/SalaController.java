@@ -3,10 +3,7 @@ package br.com.seuespacounb.turing.controller;
 import br.com.seuespacounb.turing.dto.request.FiltroSalaRequest;
 import br.com.seuespacounb.turing.dto.request.SalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
-import br.com.seuespacounb.turing.exception.BadRequestException;
-import br.com.seuespacounb.turing.exception.ConflictException;
-import br.com.seuespacounb.turing.exception.MethodArgumentNotValidException;
-import br.com.seuespacounb.turing.exception.NotFoundException;
+import br.com.seuespacounb.turing.exception.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -24,11 +21,6 @@ public class SalaController {
 
     private final SalaService service;
 
-    // GET /salas                          → lista todas
-    // GET /salas?nome=Sala+A              → filtra por nome
-    // GET /salas?diaSemana=MONDAY         → filtra por dia da semana
-    // GET /salas?status=VAGO&diaSemana=FRIDAY → combinação de filtros
-
     @PostMapping("/salas")
     public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO) throws ConflictException, MethodArgumentNotValidException, BadRequestException {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarSala(requestDTO));
@@ -40,7 +32,7 @@ public class SalaController {
     }
 
     @GetMapping("/salas/{id}")
-    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) throws NotFoundException, MethodArgumentTypeMismatchException {
         return ResponseEntity.ok(service.buscarSalaPorId(id));
     }
 
@@ -53,7 +45,7 @@ public class SalaController {
     }
 
     @DeleteMapping("/salas/{id}")
-    public ResponseEntity<Void> deletarSala(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<Void> deletarSala(@PathVariable Long id) throws NotFoundException, ConflictException {
         service.deletarSala(id);
         return ResponseEntity.noContent().build();
     }
@@ -70,7 +62,7 @@ public class SalaController {
             @RequestParam(defaultValue = "10")int tamanho,
             @RequestParam(defaultValue = "nome")String ordenacao,
             @RequestParam(defaultValue = "asc")String direcao
-    ){
+    ) throws BadRequestException {
         Page<SalaResponseDTO> salas = service.filtrarOrdenar(filtro, pagina,tamanho,ordenacao, direcao);
         return ResponseEntity.ok(salas);
     }

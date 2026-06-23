@@ -6,6 +6,7 @@ import br.com.seuespacounb.turing.dto.response.SalaResponseDTO;
 import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.exception.*;
 import br.com.seuespacounb.turing.mapstruct.SalaMapper;
+import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
 import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.specification.SalaSpecifications;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SalaService {
 
+    private final HorarioSalaRepository horarioSalaRepository;
     private final SalaRepository repository;
     private final SalaMapper mapper;
 
@@ -35,7 +37,7 @@ public class SalaService {
     }
 
 
-    public SalaResponseDTO buscarSalaPorId(Long id) throws NotFoundException {
+    public SalaResponseDTO buscarSalaPorId(Long id) throws NotFoundException, MethodArgumentTypeMismatchException {
         Sala sala = buscarOuLancarErro(id);
         return mapper.toResponseDTO(sala);
     }
@@ -44,7 +46,7 @@ public class SalaService {
         return mapper.toListResponseDTO(repository.findAll());
     }
 
-    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO requestDTO) throws NotFoundException {
+    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO requestDTO) throws NotFoundException, MethodArgumentTypeMismatchException {
         Sala salaExistente = buscarOuLancarErro(id);
 
         salaExistente.setNome(requestDTO.nome());
@@ -54,12 +56,19 @@ public class SalaService {
         return mapper.toResponseDTO(repository.saveAndFlush(salaExistente));
     }
 
-    public void deletarSala(Long id) throws NotFoundException {
+    public void deletarSala(Long id) throws NotFoundException, MethodArgumentTypeMismatchException, ConflictException {
         buscarOuLancarErro(id);
+
+        if (horarioSalaRepository.existsBySalaId(id)) {
+            throw new ConflictException(
+                    "Não é possível excluir esta sala pois existem horários cadastrados para ela."
+            );
+        }
+
         repository.deleteById(id);
     }
 
-    public List<SalaResponseDTO> filtrarPorNome(String nome) throws NotFoundException {
+    public List<SalaResponseDTO> filtrarPorNome(String nome) throws NotFoundException, MissingServletRequestParameterException {
         if (repository.findByNomeContainingIgnoreCase(nome).isEmpty()) {
             throw new NotFoundException("Nenhuma sala encontrada com esse nome");
         }
@@ -73,7 +82,8 @@ public class SalaService {
             int tamanho,
             String ordenacao,
             String direcao
-    ){
+    ) throws BadRequestException {
+
         Specification<Sala> spec = Specification
                 .where(SalaSpecifications.possuiNome(filtro.nome()))
                 .and(SalaSpecifications.possuiCapacidade(filtro.capacidade()))
@@ -81,7 +91,7 @@ public class SalaService {
                 .and(SalaSpecifications.possuiDiaSemana(filtro.diaSemana()))
                 .and(SalaSpecifications.possuiInicioHora(filtro.inicioHora()))
                 .and(SalaSpecifications.possuiFimHora(filtro.fimHora()))
-                .and(SalaSpecifications.possuiStatus(filtro.status()));
+                .and(SalaSpecifications.disponivelEm(filtro.dataUso()));
 
         List<String> camposPermitidos = List.of("nome", "capacidade", "localizacao");
         if(!camposPermitidos.contains(ordenacao)){
@@ -91,6 +101,10 @@ public class SalaService {
         Sort sort = direcao != null && direcao.equalsIgnoreCase("desc")
                 ? Sort.by(ordenacao).descending()
                 : Sort.by(ordenacao).ascending();
+
+        if (tamanho <= 0) {
+            throw new BadRequestException("O tamanho da página deve ser maior que zero.");
+        }
 
         Pageable pageable = PageRequest.of(pagina, tamanho, sort);
         Page<Sala> filtradosOrdenados = repository.findAll(spec, pageable);
