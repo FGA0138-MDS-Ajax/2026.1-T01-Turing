@@ -7,13 +7,21 @@ nav:
     - Ata 2: atas-reuniao/ata-reuniao-27-04.md
     - Ata 3: atas-reuniao/ata-reuniao-29-04.md
     - Ata 4: atas-reuniao/ata-reuniao-04-05.md
-  - Documentos:
+    - Ata 5: 
+  - Documentos de Visão do Produto e do projeto:
     - Tabela - Integrantes do Grupo: visao-do-produto/tabela-integrantes-do-grupo.md
     - Tabela - Histórico de Revisões: visao-do-produto/tabela-historico-de-revisoes.md
     - Visão geral do produto: visao-do-produto/visao-geral-do-produto.md
     - Processo de desenvolvimento de software: visao-do-produto/processo-de-desenvolvimento-de-software.md
     - Declaração do escopo do projeto: visao-do-produto/declaracao-de-escopo-do-projeto.md
     - Métricas e Medições: visao-do-produto/metrica-e-medicoes.md
+  - Documentos de Arquitetura: 
+    - Tabela - Integrantes do Grupo: arquitetura/tabela-integrantes-do-grupo.md
+    - Tabela - historico de Revisões: arquitetura/tabela-historico-revisoes.md
+    - Introdução: arquitetura/introducao.md
+    - Representação Arquitetural: arquitetura/representacao-arquitetural.md
+    - Bibliografia: arquitetura/bibliografia.md
+    
 
 theme:
   name: material
