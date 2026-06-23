@@ -53,7 +53,7 @@ public class SolicitacaoController {
     @PatchMapping("/solicitacoes/{id}/status")
     public ResponseEntity<SolicitacaoResponseDTO> atualizarStatus(
             @PathVariable Long id,
-            @Valid @RequestBody AtualizarStatusSolicitacaoRequest request) throws NotFoundException, HttpRequestMethodNotSupportedException{
+            @Valid @RequestBody AtualizarStatusSolicitacaoRequest request) throws NotFoundException, HttpRequestMethodNotSupportedException, ConflictException {
         return ResponseEntity.ok(solicitacaoService.atualizarStatus(id, request));
     }
 

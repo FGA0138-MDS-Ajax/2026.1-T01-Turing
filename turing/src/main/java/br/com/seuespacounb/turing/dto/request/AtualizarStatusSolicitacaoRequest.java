@@ -7,5 +7,5 @@ public record AtualizarStatusSolicitacaoRequest(
         @NotNull(message = "O novo status é obrigatório")
         StatusSolicitacao status,
 
-        String observacaoAdm // opcional, usado ao rejeitar
+        String observacaoAdm
 ) {}
