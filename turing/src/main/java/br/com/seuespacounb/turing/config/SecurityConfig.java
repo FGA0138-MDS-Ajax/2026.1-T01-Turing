@@ -45,6 +45,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/index.html").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs",
+                                "/webjars/**"
+                        ).permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/turing/salas/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/turing/salas").hasRole("ADM")
