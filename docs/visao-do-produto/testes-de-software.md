@@ -34,7 +34,7 @@ Quadro x - Roteiro de Testes do Sistema Seu Espaço UnB
  
 | ID | Nome do Teste | Objetivo do Teste | Nível | Tipo | Pré-condições | Critério de Aceite | Resultado | Evidências | Reparos | Ciclos |
 |---|---|---|---|---|---|---|---|---|---|---|
-| CT-01 | Cadastro de usuário | Verificar cadastro | Sistema | Funcional | Usuário não cadastrado | Cadastro realizado | A ser executado | — | — | — |
+| CT-01 | Cadastro de usuário | Verificar cadastro | Sistema | Funcional | Usuário não cadastrado | Cadastro realizado | A ser executado | ![teste-ct01](../static/ct01.png)  | Nenhum | 1 |
 | CT-02 | Login válido | Validar login correto | Sistema | Funcional | Usuário cadastrado | Acesso permitido | A ser executado | — | — | — |
 | CT-03 | Login inválido | Validar erro no login | Sistema | Funcional | Usuário cadastrado | Mensagem de erro | A ser executado | — | — | — |
 | CT-04 | Validação de login | Validar função de autenticação | Unitário | Funcional | Dados válidos | Retorna sucesso | A ser executado | — | — | — |

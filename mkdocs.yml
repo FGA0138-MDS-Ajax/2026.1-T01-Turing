@@ -14,6 +14,7 @@ nav:
     - Processo de desenvolvimento de software: visao-do-produto/processo-de-desenvolvimento-de-software.md
     - Declaração do escopo do projeto: visao-do-produto/declaracao-de-escopo-do-projeto.md
     - Métricas e Medições: visao-do-produto/metrica-e-medicoes.md
+    - Testes de Software: visao-do-produto/testes-de-software.md
   - Documentos de Arquitetura: 
     - Tabela - Integrantes do Grupo: arquitetura/tabela-integrantes-do-grupo.md
     - Tabela - historico de Revisões: arquitetura/tabela-historico-revisoes.md
