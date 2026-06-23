@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -26,33 +27,33 @@ public class SolicitacaoController {
     @PostMapping("/solicitacoes")
     public ResponseEntity<SolicitacaoResponseDTO> criar(
             @Valid @RequestBody SolicitacaoRequestDTO dto,
-            @AuthenticationPrincipal Usuario usuarioLogado) throws NotFoundException, ConflictException {
+            @AuthenticationPrincipal Usuario usuarioLogado) throws NotFoundException, ConflictException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(solicitacaoService.criarSolicitacao(dto, usuarioLogado));
     }
 
     @GetMapping("/solicitacoes/sala/{salaId}")
     public ResponseEntity<List<SolicitacaoResponseDTO>> listarPorSala(
-            @PathVariable Long salaId) {
+            @PathVariable Long salaId) throws HttpRequestMethodNotSupportedException {
         return ResponseEntity.ok(solicitacaoService.listarSolicitacoesPorSala(salaId));
     }
 
     @GetMapping("/solicitacoes/minhas")
     public ResponseEntity<List<SolicitacaoResponseDTO>> listarMinhas(
-            @AuthenticationPrincipal Usuario usuarioLogado) {
+            @AuthenticationPrincipal Usuario usuarioLogado) throws HttpRequestMethodNotSupportedException {
         return ResponseEntity.ok(solicitacaoService.listarMinhasSolicitacoes(usuarioLogado.getId()));
     }
 
     @GetMapping("/solicitacoes/{id}")
     public ResponseEntity<SolicitacaoResponseDTO> buscarPorId(
-            @PathVariable Long id) throws NotFoundException {
+            @PathVariable Long id) throws NotFoundException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.ok(solicitacaoService.buscarPorId(id));
     }
 
     @PatchMapping("/solicitacoes/{id}/status")
     public ResponseEntity<SolicitacaoResponseDTO> atualizarStatus(
             @PathVariable Long id,
-            @Valid @RequestBody AtualizarStatusSolicitacaoRequest request) throws NotFoundException {
+            @Valid @RequestBody AtualizarStatusSolicitacaoRequest request) throws NotFoundException, HttpRequestMethodNotSupportedException{
         return ResponseEntity.ok(solicitacaoService.atualizarStatus(id, request));
     }
 
@@ -61,7 +62,7 @@ public class SolicitacaoController {
     public void cancelar(
             @PathVariable Long id,
             @AuthenticationPrincipal Usuario usuarioLogado)
-            throws NotFoundException, UnauthorizedException, ConflictException {
+            throws NotFoundException, UnauthorizedException, ConflictException, HttpRequestMethodNotSupportedException {
         solicitacaoService.cancelarSolicitacao(id, usuarioLogado);
     }
 }
