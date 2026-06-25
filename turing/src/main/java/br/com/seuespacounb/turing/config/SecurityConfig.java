@@ -1,5 +1,9 @@
 package br.com.seuespacounb.turing.config;
 
+import br.com.seuespacounb.turing.handler.CustomAccessDeniedHandler;
+import br.com.seuespacounb.turing.handler.CustomAuthenticationEntryPoint;
+import jakarta.servlet.DispatcherType;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +27,8 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig {
 
     private final SecurityFilter securityFilter;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -30,6 +36,9 @@ public class SecurityConfig {
                 .csrf(csrf->csrf.disable())
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(accessDeniedHandler)
+                        .authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests(authorize->authorize
 
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()

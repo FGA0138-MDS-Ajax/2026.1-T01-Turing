@@ -32,5 +32,17 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
             @Param("statusAtivos") List<StatusSolicitacao> statusAtivos,
             @Param("ignorarId") Long ignorarId);
 
+    @Query("""
+    SELECT s FROM Solicitacao s
+    WHERE s.horarioSala.id = :horarioSalaId
+      AND s.dataUso = :dataUso
+      AND s.status = 'PENDENTE'
+      AND s.id <> :excludeId
+""")
+    List<Solicitacao> findConcorrentesPendentes(
+            @Param("horarioSalaId") Long horarioSalaId,
+            @Param("dataUso") LocalDate dataUso,
+            @Param("excludeId") Long excludeId);
+
     boolean existsByHorarioSalaId(Long horarioSalaId);
 }
