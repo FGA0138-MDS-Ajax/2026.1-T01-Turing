@@ -1,7 +1,7 @@
-package br.com.seuespacounb.turing.dto;
+package br.com.seuespacounb.turing.dto.request;
 
-import br.com.seuespacounb.turing.entity.StatusHorario;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record FiltroSalaRequest(
@@ -11,5 +11,5 @@ public record FiltroSalaRequest(
         DayOfWeek diaSemana,
         LocalTime inicioHora,
         LocalTime fimHora,
-        StatusHorario status
+        LocalDate dataUso
 ) {}
