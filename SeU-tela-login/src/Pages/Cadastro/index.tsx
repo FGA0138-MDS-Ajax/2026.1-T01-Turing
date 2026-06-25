@@ -56,7 +56,7 @@ function Cadastro() {
         <img src={meio_arco_azul} style={{position:'absolute', right:0, top:'150px', width:'150px', zIndex: -1}} />
         <img src={triangulo_verde} style={{position:'absolute', right:'0', bottom:'10%', width:'200px', transform:'rotate(-90deg)', zIndex: -1}} />
         <img src={logo} alt="Logo" className='logo' />
-        
+
         <img src={logo} alt="Logo" className='logo' />
 
         <button className='btn-login' onClick={() => navigate('/')}>Entrar</button>
@@ -70,7 +70,7 @@ function Cadastro() {
             <label>CPF:</label>
             <input name='cpf' type='text' value={cpf} onChange={e => setCpf(e.target.value)} placeholder='Digite seu CPF...'/>
           </div>
-          <div className='inputs'>  
+          <div className='inputs'>
             <label>Email:</label>
             <input name='email' type='email' value={email} onChange={e => setEmail(e.target.value)} placeholder='Digite seu email...'/>
           </div>
