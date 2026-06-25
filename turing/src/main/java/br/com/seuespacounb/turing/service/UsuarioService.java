@@ -43,7 +43,7 @@ public class UsuarioService {
         }
 
         if (dados.senha() != null) {
-            usuario.setSenha(passwordEncoder.encode(dados.senha()));
+            usuario.setPassword(passwordEncoder.encode(dados.senha()));
         }
 
         if (dados.tipoUsuario() != null) {
@@ -58,7 +58,7 @@ public class UsuarioService {
                 usuario.getName(),
                 usuario.getEmail(),
                 usuario.getCpf(),
-                usuario.getSenha(),
+                usuario.getPassword(),
                 usuario.getTipoUsuario()
         );
 
@@ -165,5 +165,14 @@ public class UsuarioService {
                 usuarioCliente.getCpf(),
                 usuarioCliente.getTipoUsuario()
         );
+    }
+
+    public boolean AdmTestCpf(String cpf) throws NotFoundException {
+        Usuario cpfUsuario = usuarioRepository.findByCpf(cpf);
+
+        if (cpfUsuario != null) {
+            return true;
+        }
+        return false;
     }
 }

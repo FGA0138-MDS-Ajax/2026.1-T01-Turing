@@ -1,50 +1,56 @@
 package br.com.seuespacounb.turing.service;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import br.com.seuespacounb.turing.dto.HorarioSalaRequestDTO;
-import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
+import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
+import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
-import br.com.seuespacounb.turing.entity.StatusHorario;
 import br.com.seuespacounb.turing.exception.ConflictException;
+import br.com.seuespacounb.turing.exception.HttpMessageNotReadableException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.mapstruct.HorarioSalaMapper;
 import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
 import br.com.seuespacounb.turing.repository.SalaRepository;
+import br.com.seuespacounb.turing.repository.SolicitacaoRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class
+public class HorarioSalaService {
 
-HorarioSalaService {
+    private final SolicitacaoRepository solicitacaoRepository;
     private final HorarioSalaRepository horarioRepository;
     private final SalaRepository salaRepository;
     private final HorarioSalaMapper mapper;
 
-    public HorarioSalaResponseDTO salvarHorario(HorarioSalaRequestDTO horarioRequestDTO)throws ConflictException, NotFoundException {
-        Sala sala = salaRepository.findById(horarioRequestDTO.salaId())
-                .orElseThrow(()-> new NotFoundException("A sala não foi encontrada"));
-        HorarioSala novoHorario = mapper.paraHorarioSala(horarioRequestDTO);
-        novoHorario.setSala(sala);
-        boolean conflitoHorario = horarioRepository.conflito(novoHorario.getSala().getId(), novoHorario.getFimPeriodo(),
-                novoHorario.getInicioPeriodo(), novoHorario.getDiaSemana(),
-                novoHorario.getFimHora(), novoHorario.getInicioHora());
-        if(conflitoHorario) {
-            throw new ConflictException("Infelizmente não foi possivel salvar este horário, pois houve conflito de horário na sala escolhida.");
+    @Transactional
+    public HorarioSalaResponseDTO salvarHorario(HorarioSalaRequestDTO dto)
+            throws NotFoundException, ConflictException, HttpMessageNotReadableException {
+
+        Sala sala = salaRepository.findById(dto.salaId())
+                .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + dto.salaId()));
+
+        boolean temConflito = horarioRepository.existeConflito(
+                dto.salaId(),
+                dto.diaSemana(),
+                dto.inicioHora(),
+                dto.fimHora(),
+                -1L);
+
+        if (temConflito) {
+            throw new ConflictException("Já existe um horário cadastrado neste dia e horário para esta sala.");
         }
-        return mapper.paraHorarioResponseDTO(horarioRepository.saveAndFlush(novoHorario));
+
+        HorarioSala horario = mapper.paraHorarioSala(dto);
+        horario.setSala(sala);
+
+        return mapper.paraHorarioResponseDTO(horarioRepository.saveAndFlush(horario));
     }
 
     @Transactional(readOnly = true)
-    public List<HorarioSalaResponseDTO> listarHorariosPorSala(Long salaId){
+    public List<HorarioSalaResponseDTO> listarHorariosPorSala(Long salaId) throws NotFoundException {
+        salaRepository.findById(salaId)
+                .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + salaId));
+
         return mapper.paraListaHorarioResponseDTO(horarioRepository.findBySalaId(salaId));
     }
 
@@ -54,20 +60,24 @@ HorarioSalaService {
     }
 
     @Transactional
-    public void excluirHorarioPorSala(Long salaId, LocalDate inicioPeriodo, DayOfWeek diaSemana, LocalTime inicioHora)throws NotFoundException{
-        boolean existeHorario = horarioRepository.existsBySalaIdAndInicioPeriodoAndDiaSemanaAndInicioHora(
-                        salaId, inicioPeriodo, diaSemana, inicioHora);
-        if(!existeHorario){
-            throw new NotFoundException("Não foi possível excluir, pois o horário informado não foi encontrado.");
+    public void excluirHorario(Long id) throws NotFoundException, ConflictException {
+        HorarioSala horario = horarioRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Horário não encontrado com id: " + id));
+
+        if (solicitacaoRepository.existsByHorarioSalaId(id)) {
+            throw new ConflictException(
+                    "Não é possível excluir este horário pois existem solicitações vinculadas a ele."
+            );
         }
-        horarioRepository.deleteBySalaIdAndInicioPeriodoAndDiaSemanaAndInicioHora(salaId, inicioPeriodo, diaSemana, inicioHora);
+
+        horarioRepository.delete(horario);
     }
 
-    @Transactional
-    public HorarioSalaResponseDTO atualizarStatusHorario(Long id, StatusHorario novoStatus) throws NotFoundException {
+    @Transactional(readOnly = true)
+    public HorarioSalaResponseDTO buscarPorId(Long id) throws NotFoundException {
         HorarioSala horario = horarioRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Horário não encontrado"));
-        horario.setStatus(novoStatus);
-        return mapper.paraHorarioResponseDTO(horarioRepository.save(horario));
+                .orElseThrow(() -> new NotFoundException("Horário não encontrado com id: " + id));
+
+        return mapper.paraHorarioResponseDTO(horario);
     }
 }
