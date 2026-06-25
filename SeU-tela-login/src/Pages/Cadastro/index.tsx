@@ -74,6 +74,10 @@ function Cadastro() {
             <label>Email:</label>
             <input name='email' type='email' value={email} onChange={e => setEmail(e.target.value)} placeholder='Digite seu email...'/>
           </div>
+          <div className='inputs'>
+            <label>CPF:</label>
+            <input name='cpf' type='text' value={cpf} onChange={e => setCpf(e.target.value)} placeholder='Digite seu Cpf...'/>
+          </div>
           <div className='inputs'>  
             <label>Senha:</label>
             <input name='password' type='password' value={password} onChange={e => setPassword(e.target.value)} placeholder='Digite sua senha...'/>

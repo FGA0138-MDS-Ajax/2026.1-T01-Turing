@@ -11,6 +11,10 @@
 # Build
 target/
 
+# Maven wrapper
+/turing/mvnw
+/turing/mvnw.cmd
+
 # IDE - Shelf
 /shelf/
 /workspace.xml
