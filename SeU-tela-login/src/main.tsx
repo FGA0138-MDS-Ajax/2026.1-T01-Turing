@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './Pages/Login'
 import Cadastro from './Pages/Cadastro'
 import CalendarioAdmin from './Pages/Calendario'
+import './index.css'
 
 
 createRoot(document.getElementById('root')!).render(
