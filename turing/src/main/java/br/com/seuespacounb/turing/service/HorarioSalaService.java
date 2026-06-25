@@ -2,6 +2,16 @@ package br.com.seuespacounb.turing.service;
 
 import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.seuespacounb.turing.dto.HorarioSalaRequestDTO;
+import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.exception.ConflictException;
@@ -55,6 +65,11 @@ public class HorarioSalaService {
                 .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + salaId));
 
         return mapper.paraListaHorarioResponseDTO(horarioRepository.findBySalaId(salaId));
+    }
+
+    @Transactional(readOnly = true)
+    public List<HorarioSalaResponseDTO> listarTodosHorarios() {
+        return mapper.paraListaHorarioResponseDTO(horarioRepository.findAll());
     }
 
     @Transactional
