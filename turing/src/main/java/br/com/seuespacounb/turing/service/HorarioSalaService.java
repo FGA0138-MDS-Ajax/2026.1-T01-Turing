@@ -12,9 +12,6 @@ import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
 import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.repository.SolicitacaoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +52,11 @@ public class HorarioSalaService {
                 .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + salaId));
 
         return mapper.paraListaHorarioResponseDTO(horarioRepository.findBySalaId(salaId));
+    }
+
+    @Transactional(readOnly = true)
+    public List<HorarioSalaResponseDTO> listarTodosHorarios() {
+        return mapper.paraListaHorarioResponseDTO(horarioRepository.findAll());
     }
 
     @Transactional
