@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,25 +23,25 @@ public class HorarioController {
 
     @GetMapping("/horarios/sala/{salaId}")
     public ResponseEntity<List<HorarioSalaResponseDTO>> buscarHorarioPorSala(
-            @PathVariable Long salaId) throws NotFoundException {
+            @PathVariable Long salaId) throws NotFoundException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.ok(horarioSalaService.listarHorariosPorSala(salaId));
     }
 
     @GetMapping("/horarios/{id}")
     public ResponseEntity<HorarioSalaResponseDTO> buscarPorId(
-            @PathVariable Long id) throws NotFoundException {
+            @PathVariable Long id) throws NotFoundException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.ok(horarioSalaService.buscarPorId(id));
     }
 
     @PostMapping("/horarios")
     public ResponseEntity<HorarioSalaResponseDTO> salvar(
-            @Valid @RequestBody HorarioSalaRequestDTO dto) throws NotFoundException, ConflictException, HttpMessageNotReadableException {
+            @Valid @RequestBody HorarioSalaRequestDTO dto) throws NotFoundException, ConflictException, HttpMessageNotReadableException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.status(HttpStatus.CREATED).body(horarioSalaService.salvarHorario(dto));
     }
 
     @DeleteMapping("/horarios/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable Long id) throws NotFoundException, ConflictException {
+    public void excluir(@PathVariable Long id) throws NotFoundException, ConflictException, HttpRequestMethodNotSupportedException {
         horarioSalaService.excluirHorario(id);
     }
 }
