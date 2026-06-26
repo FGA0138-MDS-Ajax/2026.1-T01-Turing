@@ -11,8 +11,6 @@ public record RegisterUserRequest(
         @NotEmpty(message = "Cpf é obrigatório")
         String cpf,
         @NotEmpty(message = "Senha é obrigatória")
-        String password,
-
-        TipoUsuario tipoUsuario
+        String password
 ) {
 }
