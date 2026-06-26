@@ -2,6 +2,14 @@ package br.com.seuespacounb.turing.service;
 
 import br.com.seuespacounb.turing.dto.request.HorarioSalaRequestDTO;
 import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.exception.ConflictException;
@@ -12,6 +20,9 @@ import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
 import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.repository.SolicitacaoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
