@@ -1,0 +1,36 @@
+# IDE
+.idea/
+*.iml
+
+# Environment
+.env
+
+# Logs
+*.log
+
+# Build
+/turing/target/
+
+# Maven wrapper
+/turing/mvnw
+/turing/mvnw.cmd
+
+# IDE - Shelf
+/shelf/
+/workspace.xml
+
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Ignored default folder with query files
+/queries/
+
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+

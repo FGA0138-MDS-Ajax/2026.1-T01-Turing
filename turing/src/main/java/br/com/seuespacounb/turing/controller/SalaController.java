@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import br.com.seuespacounb.turing.service.SalaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,36 +23,36 @@ public class SalaController {
     private final SalaService service;
 
     @PostMapping("/salas")
-    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO) throws ConflictException, MethodArgumentNotValidException, BadRequestException {
+    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO requestDTO) throws ConflictException, MethodArgumentNotValidException, BadRequestException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarSala(requestDTO));
     }
 
     @GetMapping("/salas")
-    public ResponseEntity<List<SalaResponseDTO>> listarSalas(){
+    public ResponseEntity<List<SalaResponseDTO>> listarSalas() throws HttpRequestMethodNotSupportedException{
         return ResponseEntity.ok(service.listarSalas());
     }
 
     @GetMapping("/salas/{id}")
-    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) throws NotFoundException, MethodArgumentTypeMismatchException {
+    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) throws NotFoundException, MethodArgumentTypeMismatchException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.ok(service.buscarSalaPorId(id));
     }
 
     @PutMapping("/salas/{id}")
     public ResponseEntity<SalaResponseDTO> atualizarSala(
             @PathVariable Long id,
-            @Valid @RequestBody SalaRequestDTO requestDTO) throws NotFoundException {
+            @Valid @RequestBody SalaRequestDTO requestDTO) throws NotFoundException, HttpRequestMethodNotSupportedException{
 
         return ResponseEntity.ok(service.atualizarSala(id, requestDTO));
     }
 
     @DeleteMapping("/salas/{id}")
-    public ResponseEntity<Void> deletarSala(@PathVariable Long id) throws NotFoundException, ConflictException {
+    public ResponseEntity<Void> deletarSala(@PathVariable Long id) throws NotFoundException, ConflictException, HttpRequestMethodNotSupportedException{
         service.deletarSala(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/salas/filtrar")
-        public ResponseEntity<List<SalaResponseDTO>> filtrarPorNome(@RequestParam String nome) throws NotFoundException {
+        public ResponseEntity<List<SalaResponseDTO>> filtrarPorNome(@RequestParam String nome) throws NotFoundException, HttpRequestMethodNotSupportedException {
         return ResponseEntity.ok(service.filtrarPorNome(nome));
 }
 
@@ -62,7 +63,7 @@ public class SalaController {
             @RequestParam(defaultValue = "10")int tamanho,
             @RequestParam(defaultValue = "nome")String ordenacao,
             @RequestParam(defaultValue = "asc")String direcao
-    ) throws BadRequestException {
+    ) throws BadRequestException, HttpRequestMethodNotSupportedException {
         Page<SalaResponseDTO> salas = service.filtrarOrdenar(filtro, pagina,tamanho,ordenacao, direcao);
         return ResponseEntity.ok(salas);
     }

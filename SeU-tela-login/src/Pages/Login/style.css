@@ -1,0 +1,80 @@
+.container{
+  display:flex;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+  position: relative;
+}
+
+h1 {
+  color: #000000;
+  font-size: 28px;
+  font-weight: 300;
+
+}
+
+form {
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 40px;
+  border-radius: 30px;
+  align-items: center;
+  background-color: #e9e7e7;
+  max-width: 350px;
+  width: 100%;
+}
+.container input{
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color:  #bdbcbc;
+  width: 100%;
+}
+.inputs input{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+}
+
+.btn-recuperar{
+  background-color: #6e6e6e;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  color: white;
+  cursor: pointer;
+  font-size:14px;
+}
+.btn-Entrar{
+  background-color: #003366;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  width: 100%;
+  cursor: pointer;
+
+}
+.btn-cadastro{
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background-color: #2e8b57;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.logo{
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  width: 180px;
+  object-fit: contain;
+}
