@@ -10,8 +10,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.seuespacounb.turing.dto.HorarioSalaRequestDTO;
-import br.com.seuespacounb.turing.dto.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.entity.HorarioSala;
 import br.com.seuespacounb.turing.entity.Sala;
 import br.com.seuespacounb.turing.exception.ConflictException;
