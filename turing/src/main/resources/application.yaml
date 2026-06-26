@@ -20,3 +20,9 @@ api:
   security:
     token:
       secret: minha-chave-super-secreta-do-projeto-turing-2026
+
+admin:
+  seed:
+    email: ${ADMIN_EMAIL:adm@gmail.com}
+    senha: ${ADMIN_SENHA:123}
+    cpf: ${ADMIN_CPF:00000000000}

@@ -5,6 +5,7 @@ import br.com.seuespacounb.turing.dto.request.LoginRequest;
 import br.com.seuespacounb.turing.dto.request.RegisterUserRequest;
 import br.com.seuespacounb.turing.dto.response.LoginResponse;
 import br.com.seuespacounb.turing.dto.response.RegisterUserResponse;
+import br.com.seuespacounb.turing.entity.TipoUsuario;
 import br.com.seuespacounb.turing.entity.Usuario;
 import br.com.seuespacounb.turing.exception.ConflictException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
@@ -60,7 +61,7 @@ public class AuthController {
         novoUsuario.setEmail(request.email());
         novoUsuario.setCpf(request.cpf());
         novoUsuario.setPassword(passwordEncoder.encode(request.password()));
-        novoUsuario.setTipoUsuario(request.tipoUsuario());
+        novoUsuario.setTipoUsuario(TipoUsuario.CLIENTE);
 
         usuarioRepository.save(novoUsuario);
 
