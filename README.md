@@ -1,7 +1,10 @@
 # Seu Espaço UnB (SeU)
-Sistema de reserva de espaços acadêmicos da Universidade de Brasília — desenvolvido na disciplina de Métodos de Desenvolvimento de Software (MDS).
+Sistema de reserva de espaços acadêmicos da Universidade de Brasília — desenvolvido na disciplina de Métodos de Desenvolvimento de Software (MDS). O Repositório Conta com os documentos de Visão de arquitetura e documentos de Visão de produto e projeto dentro da pasta DOCS, Além disso: Estamos passando tudo do documento para arquivos .md. A pasta Turing contém a pasta src que é o local dos nossos códigos.
 
-👥 Equipe
+---
+ 
+## 👥 Equipe
+ 
 <div align="center">
 <table>
 <tr>
@@ -109,21 +112,41 @@ Sistema de reserva de espaços acadêmicos da Universidade de Brasília — dese
 </tr>
 </table>
 </div>
+---
 
-  
+## 🛠️ Tecnologias
+ 
+### Frontend
+- React · TypeScript · Vite
+### Backend
+- Java · Spring Boot · Spring Security · JWT
+### Banco de Dados
+- MySQL
+### Ferramentas
+- Git · GitHub · Docker · Render · Railway · MkDocs · Figma
+---
 
-
-
-O Repositório Conta com os documentos de Visão de arquitetura e documentos de Visão de produto e projeto dentro da pasta DOCS, Além disso: Estamos passando tudo do documento para arquivos .md
-A pasta Turing contém a pasta src que é o local dos nossos códigos
 
 # Política de Branches
-Branch Main: Principal branch, só deve ser atualizada ao final do desenvolvimento + testes
-Branch developer(backend/frontend): um nível abaixo da main, deve ser atualizada ao final da conclusão dentro das branches de features, é onde ocorre os testes de integração
-Branch de features: criada para uma determinada feature e apagada pós integração com developer
+| Branch | Descrição |
+|--------|-----------|
+| `main` | Versão estável e pronta para produção. Commits diretos proibidos. |
+| `developer` | Integração das features; testes de integração são executados aqui. |
+| `feature<nome>` | Desenvolvimento de funcionalidade específica.|
+
+---
 
 # Política de commit
-ADD/FEAT: Quando feita novas adições ao projeto
-FIX: Arrumar alguma parte de código do projeto
-REFACTOR: Alterar alguma regra de negócio específica
+| Prefixo | Uso |
+|---------|-----|
+| `add/ feat:` | Nova funcionalidade |
+| `fix:` | Correção de bug |
+| `refactor:` | Alteração de regra de negócio |
+| `docs:` | Mudanças em documentação |
+| `style:` | Formatação sem impacto na lógica |
+| `test:` | Adição ou correção de testes |
+| `chore:` | Tarefas de build, CI/CD, dependências |
+ 
+> Exemplo: `git commit -m "feat: adiciona endpoint de reserva de sala"`
+ 
 
