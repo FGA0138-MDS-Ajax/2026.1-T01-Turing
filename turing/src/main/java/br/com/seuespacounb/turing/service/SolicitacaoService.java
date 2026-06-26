@@ -48,11 +48,11 @@ public class SolicitacaoService {
         boolean temConflito = solicitacaoRepository.existeConflito(
                 dto.horarioSalaId(),
                 dto.dataUso(),
-                List.of(StatusSolicitacao.PENDENTE, StatusSolicitacao.APROVADA),
+                List.of(StatusSolicitacao.APROVADA),
                 -1L);
 
         if (temConflito) {
-            throw new ConflictException("Já existe uma solicitação pendente ou aprovada para este horário nesta data.");
+            throw new ConflictException("Já existe uma solicitação aprovada para este horário nesta data.");
         }
 
         Solicitacao solicitacao = Solicitacao.builder()
@@ -82,10 +82,35 @@ public class SolicitacaoService {
 
     @Transactional
     public SolicitacaoResponseDTO atualizarStatus(Long id, AtualizarStatusSolicitacaoRequest request)
-            throws NotFoundException {
+            throws NotFoundException, ConflictException {
 
         Solicitacao solicitacao = solicitacaoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Solicitação não encontrada com id: " + id));
+
+        if (request.status() == StatusSolicitacao.APROVADA) {
+            boolean temConflito = solicitacaoRepository.existeConflito(
+                    solicitacao.getHorarioSala().getId(),
+                    solicitacao.getDataUso(),
+                    List.of(StatusSolicitacao.APROVADA),
+                    solicitacao.getId());
+
+            if (temConflito) {
+                throw new ConflictException("Já existe uma solicitação aprovada para este horário nesta data.");
+            }
+
+            List<Solicitacao> concorrentes = solicitacaoRepository
+                    .findConcorrentesPendentes(
+                            solicitacao.getHorarioSala().getId(),
+                            solicitacao.getDataUso(),
+                            solicitacao.getId());
+
+            concorrentes.forEach(c -> {
+                c.setStatus(StatusSolicitacao.REJEITADA);
+                c.setObservacaoAdm("Rejeitada automaticamente: outra solicitação foi aprovada para este horário.");
+            });
+
+            solicitacaoRepository.saveAll(concorrentes);
+        }
 
         solicitacao.setStatus(request.status());
 

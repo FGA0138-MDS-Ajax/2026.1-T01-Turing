@@ -5,6 +5,7 @@ import br.com.seuespacounb.turing.exception.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -71,10 +72,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({MethodNotAllowedException.class})
     public ResponseEntity<ErrorResponse> handlerMethodNotAllowedException(MethodNotAllowedException exception){
         ErrorResponse response = ErrorResponse.builder()
-                .message(exception.getMessage())
+                .message("Método HTTP incorreto!")
                 .status(HttpStatus.METHOD_NOT_ALLOWED.value())
                 .build();
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(response);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> handlerMethodNotAllowed(
+            HttpRequestMethodNotSupportedException ex
+    ) {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(new ErrorResponse(
+                        "Método HTTP não permitido",
+                        405
+                                ));
     }
 
     @ExceptionHandler({DataIntegrityViolationException.class})
