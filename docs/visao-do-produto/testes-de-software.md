@@ -49,3 +49,10 @@ Quadro x - Roteiro de Testes do Sistema Seu Espaço UnB
 | CT-13 | Rejeitar reserva | Rejeitar reserva | Sistema | Funcional | Reserva pendente | Reserva rejeitada | Aprovado | ![teste-ct13](../static/ct13.png) | Nenhum | 1 |
 | CT-14 | Desempenho de resposta | Tempo de resposta | Sistema | Não Funcional | Sistema ativo | < 2 segundos | Aprovado | ![teste-ct14](../static/ct14.png) | Nenhum | 1 |
 | CT-15 | Acessibilidade e Responsividade da Interface | Facilidade de uso | Sistema | Não Funcional | Interface ativa | Sistema responsivo em dispositivos móveis e fluxo de reserva concluído em no máximo 4 interações | Pendente | - | - | - |
+| CT-16 | Cadastro com email duplicado | Validar bloqueio de e-mail já existente | Integração | Funcional | Usuário já cadastrado no banco | Status 400 ou 409 | Aprovado | ![teste-ct16](../static/ct16.png) | Nenhum | 1 |
+| CT-17 | Cadastro com CPF duplicado | Validar bloqueio de CPF já existente | Integração | Funcional | Usuário já cadastrado no banco | Status 400 ou 409 | Aprovado | ![teste-ct17](../static/ct17.png) | Nenhum | 1 |
+| CT-18 | Acesso sem token | Validar bloqueio de acesso sem autenticação | Integração | Funcional | Usuário não autenticado | Status 401 ou 403 | Aprovado | ![teste-ct18](../static/ct18.png) | Nenhum | 1 |
+| CT-19 | Buscar sala inexistente | Garantir tratamento de erro para recurso não encontrado | Integração | Funcional | Usuário autenticado | Status 404 | Aprovado | ![teste-ct19](../static/ct19.png) | Nenhum | 1 |
+| CT-20 | Solicitação sem token | Validar bloqueio de criação de reserva sem autenticação | Integração | Funcional | Usuário não autenticado | Status 401 ou 403 | Aprovado | ![teste-ct20](../static/ct20.png) | Nenhum | 1 |
+| CT-21 | Aprovação por perfil Aluno (RBAC) | Validar restrição de perfil para aprovação de solicitações | Integração | Funcional | Usuário autenticado com perfil Aluno | Status 403 | Aprovado | ![teste-ct21](../static/ct21.png) | Renovação do token no fluxo do teste | 1 |
+
