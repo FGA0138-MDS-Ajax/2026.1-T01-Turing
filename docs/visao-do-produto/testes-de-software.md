@@ -48,4 +48,4 @@ Quadro x - Roteiro de Testes do Sistema Seu Espaço UnB
 | CT-12 | Aprovar reserva | Aprovar reserva | Sistema | Funcional | Reserva pendente | Reserva aprovada | Aprovado | ![teste-ct12](../static/ct12.png) | Nenhum | 1 |
 | CT-13 | Rejeitar reserva | Rejeitar reserva | Sistema | Funcional | Reserva pendente | Reserva rejeitada | Aprovado | ![teste-ct13](../static/ct13.png) | Nenhum | 1 |
 | CT-14 | Desempenho de resposta | Tempo de resposta | Sistema | Não Funcional | Sistema ativo | < 2 segundos | Aprovado | ![teste-ct14](../static/ct14.png) | Nenhum | 1 |
-| CT-15 | Usabilidade | Facilidade de uso | Sistema | Não Funcional | Interface ativa | Uso intuitivo | Pendente | - | - | - |
+| CT-15 | Acessibilidade e Responsividade da Interface | Facilidade de uso | Sistema | Não Funcional | Interface ativa | Sistema responsivo em dispositivos móveis e fluxo de reserva concluído em no máximo 4 interações | Pendente | - | - | - |
