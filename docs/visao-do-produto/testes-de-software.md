@@ -10,7 +10,7 @@ Para a análise dos testes, será feita a validação no sistema por meio da com
 
 Figura 6 - Diagrama do Processo de Desenvolvimento
 
-![Diagrama do processo de desenvolvimento]()
+![Diagrama do processo de desenvolvimento](../static/figura6-white.png)
 
 Fonte: Elaborado pelo grupo
 
