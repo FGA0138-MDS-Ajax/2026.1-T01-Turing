@@ -65,16 +65,17 @@ Cada sprint possui objetivos específicos e entregáveis definidos, sendo revisa
  
 Quadro 3 - Planejamento das fases e/ou iterações do projeto
  
-| Sprint | Produto (Entrega) | Data Início | Data Fim | Entregável(eis) | Responsáveis | % conclusão |
-|---|---|---|---|---|---|---|
-| Sprint 1 | Definição produto e visão do projeto | 25/04/2026 | 02/05/2026 | Documento de visão do produto e projeto | Todos | — |
-| Sprint 2 | Protótipo e Arquitetura | 02/05/2026 | 09/05/2026 | Documento de Arquitetura e Protótipo Figma | Todos | — |
-| Sprint 3 | Discussão do produto de software | 09/05/2026 | 16/05/2026 | Atualização do Documento de visão e Arquitetura | Todos | — |
-| Sprint 4 | Cadastro/Login de Usuários (Autenticação) | 16/05/2026 | 23/05/2026 | Tela e Lógica de negócio do Cadastro/Login de usuários | Todos | — |
-| Sprint 5 | — | — | — | — | — | — |
-| Sprint 6 | — | — | — | — | — | — |
-| Sprint 7 | — | — | — | — | — | — |
-| Sprint 8 | — | — | — | — | — | — |
+| Sprint | Produto (Entrega) | Data Início | Data Fim | Entregável(eis) | Responsáveis | % Conclusão |
+|--------|-------------------|-------------|----------|-----------------|--------------|-------------|
+| Sprint 1 | Definição produto e projeto | 25/04/2026 | 02/05/2026 | Documento de visão do produto e projeto | Todos | 100% |
+| Sprint 2 | Protótipo e Arquitetura | 02/05/2026 | 09/05/2026 | Documento de Arquitetura e Protótipo Figma | Todos | 100% |
+| Sprint 3 | Discussão do produto de software | 09/05/2026 | 16/05/2026 | Atualização do Documento de visão e Arquitetura | Todos | 100% |
+| Sprint 4 | Cadastro/Login de Usuários (Autenticação) | 16/05/2026 | 23/05/2026 | Tela e Lógica de negócio do Cadastro/Login de usuários | Todos | 100% |
+| Sprint 5 | Consulta de espaços e disponibilidade | 23/05/2026 | 30/05/2026 | Listagem e filtros de salas (backend), HorarioSala | Todos | 100% |
+| Sprint 6 | Solicitação e aprovação de reservas | 30/05/2026 | 06/06/2026 | Lógica de reserva, aprovação/rejeição pelo ADM, cancelamento | Todos | 100% |
+| Sprint 7 | Painel Usuário / Painel Administrador | 06/06/2026 | 13/06/2026 | Histórico de reservas, calendário de ocupação, integração front-back | Todos | 70% |
+| Sprint 8 | Usabilidade e integração front-back | 13/06/2026 | 20/06/2026 | Refatoração, tratamento de exceções, Swagger, hospedagem, testes | Todos | 30% |
+| Sprint 9 | Integrações finais e entrega | 20/06/2026 | 27/06/2026 | Google Agenda, testes finais, documentação atualizada, apresentação | Todos | 30% |
  
 Fonte: Elaborado pelos autores, 2026.
  
