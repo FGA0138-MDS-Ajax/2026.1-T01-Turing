@@ -21,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -153,6 +154,16 @@ public class SolicitacaoService {
         Solicitacao solicitacao = solicitacaoRepository
                 .findById(solicitacaoId)
                 .orElseThrow(()-> new NotFoundException("A solicitacao não foi encontrada"));
+
+                if (solicitacao.getStatus() == StatusSolicitacao.REJEITADA ||
+                        solicitacao.getStatus() == StatusSolicitacao.CANCELADA) {
+                    throw new ConflictException("Não é possível cancelar uma solicitação que já está " + solicitacao.getStatus().name().toLowerCase() + ".");
+                }
+
+                if (solicitacao.getDataUso() != null && solicitacao.getDataUso().isBefore(LocalDate.now().plusDays(1))) {
+                    throw new ConflictException("O cancelamento deve ser feito com antecedência mínima de 1 dia.");
+                }
+                
         solicitacao.setStatus(StatusSolicitacao.CANCELADA);
         solicitacao.setJustificativa(justificativaSolicitacao.justificativa());
         return mapper.paraSolicitacaoResponseDTO(solicitacaoRepository.save(solicitacao));
