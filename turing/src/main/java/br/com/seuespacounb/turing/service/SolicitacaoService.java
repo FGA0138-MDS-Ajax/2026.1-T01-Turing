@@ -56,8 +56,38 @@ public class SolicitacaoService {
         boolean conflitoSolicitacao = solicitacaoRepository
                 .conflitoSolicitacao(dataLimite, novaSolicitacao.getHorario().getId());
 
+<<<<<<< Updated upstream
         if(conflitoSolicitacao)
             throw new ConflictException("Não foi possível solicitar este horário, pois já foi solicitado no intervalo de uma semana.");
+=======
+        if (!horarioSala.getDiaSemana().equals(dto.dataUso().getDayOfWeek())) {
+            throw new ConflictException(
+                    "A data informada (" + dto.dataUso() + ") não é uma "
+                            + horarioSala.getDiaSemana() + ", que é o dia deste horário."
+            );
+        }
+
+        boolean temConflito = solicitacaoRepository.existeConflito(
+                dto.horarioSalaId(),
+                dto.dataUso(),
+                List.of(StatusSolicitacao.PENDENTE, StatusSolicitacao.APROVADA),
+                -1L);
+
+        if (temConflito) {
+            throw new ConflictException("Já existe uma solicitação pendente ou aprovada para este horário nesta data.");
+        }
+
+        Solicitacao solicitacao = Solicitacao.builder()
+                .motivo(dto.motivo())
+                .dataSolicitacao(LocalDateTime.now())
+                .dataUso(dto.dataUso())
+                .horarioSala(horarioSala)
+                .solicitante(solicitante)
+                .quantidadeParticipantes(dto.quantidadeParticipantes())
+                .build();
+
+        return mapper.paraSolicitacaoResponseDTO(solicitacaoRepository.saveAndFlush(solicitacao));
+>>>>>>> Stashed changes
     }
 
     @Transactional(readOnly = true)

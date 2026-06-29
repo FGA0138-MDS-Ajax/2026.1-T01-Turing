@@ -21,6 +21,13 @@ public class Solicitacao {
     @Column(name = "motivo_solicitacao", nullable = false)
     private String motivoSolicitacao;
 
+<<<<<<< Updated upstream
+=======
+    @Column(name = "quantidade_participantes", nullable = false)
+    private Integer quantidadeParticipantes;
+
+    // quando a solicitação foi feita (timestamp automático)
+>>>>>>> Stashed changes
     @Column(name = "data_solicitacao", nullable = false)
     private LocalDateTime dataSolicitacao = LocalDateTime.now();
 
