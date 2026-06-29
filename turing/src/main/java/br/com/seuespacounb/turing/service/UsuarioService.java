@@ -7,6 +7,7 @@ import br.com.seuespacounb.turing.dto.request.AtualizarUsuarioRequestDTO;
 import br.com.seuespacounb.turing.dto.response.AtualizarUsuarioResponseDTO;
 import br.com.seuespacounb.turing.entity.TipoUsuario;
 import br.com.seuespacounb.turing.entity.Usuario;
+import br.com.seuespacounb.turing.exception.MethodNotAllowedException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.exception.UnauthorizedException;
 import br.com.seuespacounb.turing.repository.UsuarioRepository;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class UsuarioService {
         }
 
         if (dados.senha() != null) {
-            usuario.setSenha(passwordEncoder.encode(dados.senha()));
+            usuario.setPassword(passwordEncoder.encode(dados.senha()));
         }
 
         if (dados.tipoUsuario() != null) {
@@ -58,7 +60,7 @@ public class UsuarioService {
                 usuario.getName(),
                 usuario.getEmail(),
                 usuario.getCpf(),
-                usuario.getSenha(),
+                usuario.getPassword(),
                 usuario.getTipoUsuario()
         );
 
@@ -77,7 +79,7 @@ public class UsuarioService {
 
 
 
-    public List<AdmGetUsuarioDTO> getUsuarios(Long idAdm) throws NotFoundException {
+    public List<AdmGetUsuarioDTO> getUsuarios(Long idAdm) throws NotFoundException, AccessDeniedException {
         Usuario usuarioAdm = usuarioRepository.findById(idAdm)
                 .orElseThrow(() -> new NotFoundException("Usuario não encontrado"));
 
@@ -165,5 +167,14 @@ public class UsuarioService {
                 usuarioCliente.getCpf(),
                 usuarioCliente.getTipoUsuario()
         );
+    }
+
+    public boolean AdmTestCpf(String cpf) throws NotFoundException {
+        Usuario cpfUsuario = usuarioRepository.findByCpf(cpf);
+
+        if (cpfUsuario != null) {
+            return true;
+        }
+        return false;
     }
 }
