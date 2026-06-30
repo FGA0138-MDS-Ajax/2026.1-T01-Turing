@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { UserCircle, LogIn, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom'; 
-import logo from '/src/assets/Assinatura Versão Preferencial Horizontal.svg';
+import logo from '/src/assets/assinatura_versao_preferencial_horizontal.svg';
 import './Header.css';
 
 interface HeaderProps {
