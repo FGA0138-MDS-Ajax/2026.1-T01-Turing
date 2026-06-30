@@ -43,6 +43,8 @@ O Diagrama abaixo ilustra as atividades encadeadas do nosso processo adotado, de
 
 ![Diagrama de Fluxo de Trabalho](<../static/Diagrama-processo-software.jpeg>)
 
+Fonte: Elaborado pelos autores,2026.
+
 
 
 

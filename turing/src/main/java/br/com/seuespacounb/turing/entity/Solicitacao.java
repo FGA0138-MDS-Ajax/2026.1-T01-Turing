@@ -2,48 +2,46 @@ package br.com.seuespacounb.turing.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "solicitacao")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Builder
-@ToString
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder @ToString
 public class Solicitacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "motivo_solicitacao", nullable = false)
-    private String motivoSolicitacao;
+    @Column(nullable = false)
+    private String motivo;
 
-<<<<<<< Updated upstream
-=======
     @Column(name = "quantidade_participantes", nullable = false)
     private Integer quantidadeParticipantes;
 
     // quando a solicitação foi feita (timestamp automático)
->>>>>>> Stashed changes
     @Column(name = "data_solicitacao", nullable = false)
-    private LocalDateTime dataSolicitacao = LocalDateTime.now();
+    private LocalDateTime dataSolicitacao;
 
-    @Column(name = "justificativa")
-    private String justificativa;
+    // o dia específico que o usuário quer usar a sala
+    @Column(name = "data_uso", nullable = false)
+    private LocalDate dataUso;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
     private StatusSolicitacao status = StatusSolicitacao.PENDENTE;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    // preenchido pelo admin ao rejeitar
+    @Column(name = "observacao_adm")
+    private String observacaoAdm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "horario_id", nullable = false)
-    private HorarioSala horario;
+    @JoinColumn(name = "horario_sala_id", nullable = false)
+    private HorarioSala horarioSala;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario solicitante;
 }

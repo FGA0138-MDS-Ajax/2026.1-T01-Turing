@@ -1,20 +1,17 @@
 package br.com.seuespacounb.turing.dto.response;
 
 import br.com.seuespacounb.turing.entity.StatusSolicitacao;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record SolicitacaoResponseDTO(
         Long id,
-<<<<<<< Updated upstream
-        String motivoSolicitacao,
-=======
         String motivo,
         Integer quantidadeParticipantes,
->>>>>>> Stashed changes
         LocalDateTime dataSolicitacao,
+        LocalDate dataUso,
         StatusSolicitacao status,
-        String justificativa,
-        Long usuarioId,
-        Long horarioId
+        String observacaoAdm,
+        Long horarioSalaId,
+        Long solicitanteId
 ) {}

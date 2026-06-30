@@ -6,20 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "sala")
+@Table(name = "sala", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"nome", "localizacao"})
+})
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "horarios")
+@ToString
 public class Sala {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false)
@@ -27,8 +29,4 @@ public class Sala {
 
     @Column(nullable = false)
     private String localizacao;
-
-//    @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    @Builder.Default
-//    private List<HorarioSala> horarios = new ArrayList<>();
 }
