@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> {
 
-    // lista solicitações ativas (dataUso >= hoje) de uma sala
     @Query("SELECT s FROM Solicitacao s WHERE s.horarioSala.sala.id = :salaId AND s.dataUso >= :hoje")
     List<Solicitacao> findAtivasPorSala(
             @Param("salaId") Long salaId,

@@ -23,7 +23,6 @@ public class TokenConfig {
         return JWT.create()
                 .withClaim("userId", usuario.getId())
                 .withSubject(usuario.getEmail())
-//                .withClaim("ROLE_", usuario.getTipoUsuario().name())
                 .withExpiresAt(Instant.now().plusSeconds(3600))
                 .withIssuedAt(Instant.now())
                 .sign(algorithm);
