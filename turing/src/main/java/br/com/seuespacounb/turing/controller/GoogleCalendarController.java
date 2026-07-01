@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class GoogleCalendarController {
     private final GoogleCalendarService calendarService;
 
-    @GetMapping("/google-calendar/{id}")
+    @GetMapping("/agenda/evento/{id}")
     public ResponseEntity<GoogleCalendarResponse> pegarUrlGoogleCalendar(
             @PathVariable Long id)throws NotFoundException, BadRequestException{
-        return ResponseEntity.ok(calendarService.montarUrlGoogleCalendar(id));
+        return ResponseEntity.ok(calendarService.retornarUrlGoogleCalendar(id));
     }
 }

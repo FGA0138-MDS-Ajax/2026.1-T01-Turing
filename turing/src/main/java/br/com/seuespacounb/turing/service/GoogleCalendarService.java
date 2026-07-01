@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 public class GoogleCalendarService {
     private final SolicitacaoRepository solicitacaoRepository;
 
-    private Solicitacao pegarSolicitacao(Long solicitacaoId) throws NotFoundException,BadRequestException{
+    private Solicitacao pegarSolicitacao(Long solicitacaoId) throws NotFoundException, BadRequestException{
         Solicitacao solicitacao = solicitacaoRepository
                 .findByIdAndStatus(solicitacaoId, StatusSolicitacao.APROVADA)
                 .orElseThrow(()-> new NotFoundException("A solicitação não foi encontrada ou não foi aprovada."));
@@ -33,13 +33,12 @@ public class GoogleCalendarService {
         return dateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss"));
     }
 
-    public GoogleCalendarResponse montarUrlGoogleCalendar(Long solicitacaoId) throws NotFoundException{
-        Solicitacao solicitacao = pegarSolicitacao(solicitacaoId);
-        String titulo = "Sua sala reservada: " + solicitacao.getHorarioSala().getSala().getNome();
+    private String montarUrlGoogleCalendar(Solicitacao solicitacao){
+        String titulo = String.format("Sala reservada (%s)", solicitacao.getHorarioSala().getSala().getNome());
         String inicioHora = formatarDataHorario(solicitacao.getDataUso(), solicitacao.getHorarioSala().getInicioHora());
         String fimHora = formatarDataHorario(solicitacao.getDataUso(), solicitacao.getHorarioSala().getFimHora());
         String localizacao = solicitacao.getHorarioSala().getSala().getLocalizacao();
-        String linkCalendar = UriComponentsBuilder
+        return UriComponentsBuilder
                 .fromUriString("https://calendar.google.com/calendar/render")
                 .queryParam("action", "TEMPLATE")
                 .queryParam("text", titulo)
@@ -48,6 +47,11 @@ public class GoogleCalendarService {
                 .queryParam("details", solicitacao.getMotivo())
                 .queryParam("location", localizacao)
                 .toUriString();
-        return new GoogleCalendarResponse(linkCalendar);
+    }
+
+    public GoogleCalendarResponse retornarUrlGoogleCalendar(Long solicitacaoId) throws NotFoundException, BadRequestException{
+        Solicitacao solicitacao = pegarSolicitacao(solicitacaoId);
+        String url = montarUrlGoogleCalendar(solicitacao);
+        return new GoogleCalendarResponse(url);
     }
 }
