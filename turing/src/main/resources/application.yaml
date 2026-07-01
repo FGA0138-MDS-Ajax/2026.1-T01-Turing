@@ -15,7 +15,17 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 api:
   security:
     token:
@@ -26,3 +36,4 @@ admin:
     email: ${ADMIN_EMAIL:adm@gmail.com}
     senha: ${ADMIN_SENHA:123}
     cpf: ${ADMIN_CPF:00000000000}
+

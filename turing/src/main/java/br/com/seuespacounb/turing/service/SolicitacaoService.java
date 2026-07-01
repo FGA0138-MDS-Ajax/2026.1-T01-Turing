@@ -13,6 +13,8 @@ import br.com.seuespacounb.turing.repository.SolicitacaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +26,7 @@ public class SolicitacaoService {
     private final SolicitacaoRepository solicitacaoRepository;
     private final HorarioSalaRepository horarioSalaRepository;
     private final SolicitacaoMapper mapper;
+    private final EmailService emailService;
 
     @Transactional
     public SolicitacaoResponseDTO criarSolicitacao(SolicitacaoRequestDTO dto, Usuario solicitante)
@@ -64,7 +67,24 @@ public class SolicitacaoService {
                 .quantidadeParticipantes(dto.quantidadeParticipantes())
                 .build();
 
-        return mapper.paraSolicitacaoResponseDTO(solicitacaoRepository.saveAndFlush(solicitacao));
+
+        // salva primeiro para garantir que o id ja exista antes de montar o email
+        Solicitacao solicitacaoSalva = solicitacaoRepository.saveAndFlush(solicitacao);
+
+        // envia comprovante ao criar a solicitação
+        Context context = new Context();
+        context.setVariable("nomeUsuario", solicitante.getName());
+        context.setVariable("id", solicitacao.getId());
+        context.setVariable("nomeSala", horarioSala.getSala().getNome());
+        context.setVariable("localizacao", horarioSala.getSala().getLocalizacao());
+        context.setVariable("dataSolicitacao", solicitacao.getDataUso().toString());
+        context.setVariable("horario", horarioSala.getInicioHora() + " - " + horarioSala.getFimHora());
+        context.setVariable("dataCriacao", solicitacao.getDataSolicitacao().toString());
+        context.setVariable("status", "Em análise");
+
+        emailService.enviarEmailHtml(solicitante.getEmail(), "Comprovante de Solicitação - Seu Espaço UnB", "ComprovanteSolicitacao", context);
+
+        return mapper.paraSolicitacaoResponseDTO(solicitacaoSalva);
     }
 
     @Transactional(readOnly = true)
@@ -110,7 +130,8 @@ public class SolicitacaoService {
                 c.setObservacaoAdm("Rejeitada automaticamente: outra solicitação foi aprovada para este horário.");
             });
 
-            solicitacaoRepository.saveAll(concorrentes);
+            List<Solicitacao> concorrentesSalvos = solicitacaoRepository.saveAll(concorrentes);
+            concorrentesSalvos.forEach(this::enviarEmailNotificacao);
         }
 
         solicitacao.setStatus(request.status());
@@ -119,7 +140,12 @@ public class SolicitacaoService {
             solicitacao.setObservacaoAdm(request.observacaoAdm());
         }
 
-        return mapper.paraSolicitacaoResponseDTO(solicitacaoRepository.save(solicitacao));
+        Solicitacao solicitacaoAtualizada = solicitacaoRepository.save(solicitacao);
+
+        // dispara o email para a solicitação principal (aprovada ou rejeitada pelo admin)
+        enviarEmailNotificacao(solicitacaoAtualizada);
+
+        return mapper.paraSolicitacaoResponseDTO(solicitacaoAtualizada);
     }
 
     @Transactional
@@ -156,5 +182,38 @@ public class SolicitacaoService {
                 .orElseThrow(() -> new NotFoundException("Solicitação não encontrada com id: " + id));
 
         return mapper.paraSolicitacaoResponseDTO(solicitacao);
+    }
+
+    private void enviarEmailNotificacao(Solicitacao solicitacao) {
+        String destinatario = solicitacao.getSolicitante().getEmail();
+        String assunto;
+        String nomeTemplate;
+
+        Context context = new Context();
+        context.setVariable("nomeUsuario", solicitacao.getSolicitante().getName());
+        context.setVariable("id", solicitacao.getId());
+        context.setVariable("nomeSala", solicitacao.getHorarioSala().getSala().getNome());
+        context.setVariable("localizacao", solicitacao.getHorarioSala().getSala().getLocalizacao());
+        context.setVariable("dataSolicitacao", solicitacao.getDataUso().toString());
+        context.setVariable("horario", solicitacao.getHorarioSala().getInicioHora() + " - " + solicitacao.getHorarioSala().getFimHora());
+        context.setVariable("dataCriacao", solicitacao.getDataSolicitacao().toString());
+        context.setVariable("linkSistema", "http://localhost:3000");
+        context.setVariable("linkAgenda", "http://localhost:3000");
+
+        if (solicitacao.getStatus() == StatusSolicitacao.APROVADA) {
+            assunto = "Solicitação Aprovada - Seu Espaço UnB";
+            nomeTemplate = "SolicitacaoAprovada";
+
+        } else if (solicitacao.getStatus() == StatusSolicitacao.REJEITADA) {
+            assunto = "Solicitação Rejeitada - Seu Espaço UnB";
+            nomeTemplate = "SolicitacaoNegada";
+            context.setVariable("justificativa", solicitacao.getObservacaoAdm() != null
+                    ? solicitacao.getObservacaoAdm()
+                    : "Nenhuma justificativa fornecida.");
+        } else {
+            return;
+        }
+
+        emailService.enviarEmailHtml(destinatario, assunto, nomeTemplate, context);
     }
 }
