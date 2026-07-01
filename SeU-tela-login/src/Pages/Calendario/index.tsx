@@ -20,7 +20,7 @@ const localizer = dateFnsLocalizer({
 export default function CalendarioAdmin() {
   const [eventos, setEventos] = useState([]);
   
-  const [view, setView] = useState(Views.MONTH);
+  const [view, setView] = useState<any>(Views.MONTH);
   const [dataAtual, setDataAtual] = useState(new Date());
 
   useEffect(() => {

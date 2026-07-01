@@ -17,6 +17,9 @@ public class Solicitacao {
     @Column(nullable = false)
     private String motivo;
 
+    @Column(name = "quantidade_participantes", nullable = false)
+    private Integer quantidadeParticipantes;
+
     // quando a solicitação foi feita (timestamp automático)
     @Column(name = "data_solicitacao", nullable = false)
     private LocalDateTime dataSolicitacao;

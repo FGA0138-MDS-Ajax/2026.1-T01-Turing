@@ -61,6 +61,7 @@ public class SolicitacaoService {
                 .dataUso(dto.dataUso())
                 .horarioSala(horarioSala)
                 .solicitante(solicitante)
+                .quantidadeParticipantes(dto.quantidadeParticipantes())
                 .build();
 
         return mapper.paraSolicitacaoResponseDTO(solicitacaoRepository.saveAndFlush(solicitacao));
@@ -133,11 +134,16 @@ public class SolicitacaoService {
         }
 
         if (solicitacao.getStatus() == StatusSolicitacao.APROVADA ||
-                solicitacao.getStatus() == StatusSolicitacao.REJEITADA) {
+                solicitacao.getStatus() == StatusSolicitacao.REJEITADA ||
+                solicitacao.getStatus() == StatusSolicitacao.CANCELADA) {
             throw new ConflictException(
-                    "Não é possível cancelar uma solicitação já " +
+                    "Não é possível cancelar uma solicitação que já está " +
                             solicitacao.getStatus().name().toLowerCase() + "."
             );
+        }
+
+        if (solicitacao.getDataUso() != null && solicitacao.getDataUso().isBefore(LocalDate.now().plusDays(1))) {
+            throw new ConflictException("O cancelamento deve ser feito com antecedência mínima de 1 dia.");
         }
 
         solicitacao.setStatus(StatusSolicitacao.CANCELADA);
