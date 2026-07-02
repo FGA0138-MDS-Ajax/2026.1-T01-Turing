@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public record SolicitacaoResponseDTO(
         Long id,
         String motivo,
+        Integer quantidadeParticipantes,
         LocalDateTime dataSolicitacao,
         LocalDate dataUso,
         StatusSolicitacao status,

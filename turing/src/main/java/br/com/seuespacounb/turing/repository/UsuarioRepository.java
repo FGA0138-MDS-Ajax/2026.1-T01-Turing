@@ -1,5 +1,6 @@
 package br.com.seuespacounb.turing.repository;
 
+import br.com.seuespacounb.turing.entity.TipoUsuario;
 import br.com.seuespacounb.turing.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +13,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findUserByEmail(String email);
     Usuario findByEmail(String email);
     Usuario findByCpf(String cpf);
+    boolean existsByTipoUsuario(TipoUsuario tipoUsuario);
 //    Optional<Usuario> findByCpf(String cpf);
 }

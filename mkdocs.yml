@@ -7,13 +7,29 @@ nav:
     - Ata 2: atas-reuniao/ata-reuniao-27-04.md
     - Ata 3: atas-reuniao/ata-reuniao-29-04.md
     - Ata 4: atas-reuniao/ata-reuniao-04-05.md
-  - Documentos:
+    - Ata 5: atas-reuniao/ata-reuniao-11-05.md
+    - Ata 6: atas-reuniao/ata-reuniao-18-05.md
+    - Ata 7: atas-reuniao/ata-reuniao-25-05.md
+    - Ata 8: atas-reuniao/ata-reuniao-08-06.md
+    - Ata 9: atas-reuniao/ata-reuniao-15-06.md
+    - Ata 10: atas-reuniao/ata-reuniao-18-06.md
+    - Ata 11: atas-reuniao/ata-reuniao-23-06.md
+    - Ata 12: atas-reuniao/ata-reuniao-25-06.md
+  - Documentos de Visão do Produto e do projeto:
     - Tabela - Integrantes do Grupo: visao-do-produto/tabela-integrantes-do-grupo.md
     - Tabela - Histórico de Revisões: visao-do-produto/tabela-historico-de-revisoes.md
     - Visão geral do produto: visao-do-produto/visao-geral-do-produto.md
     - Processo de desenvolvimento de software: visao-do-produto/processo-de-desenvolvimento-de-software.md
     - Declaração do escopo do projeto: visao-do-produto/declaracao-de-escopo-do-projeto.md
     - Métricas e Medições: visao-do-produto/metrica-e-medicoes.md
+    - Testes de Software: visao-do-produto/testes-de-software.md
+  - Documentos de Arquitetura: 
+    - Tabela - Integrantes do Grupo: arquitetura/tabela-integrantes-do-grupo.md
+    - Tabela - historico de Revisões: arquitetura/tabela-historico-revisoes.md
+    - Introdução: arquitetura/introducao.md
+    - Representação Arquitetural: arquitetura/representacao-arquitetural.md
+    - Bibliografia: arquitetura/bibliografia.md
+    
 
 theme:
   name: material
