@@ -4,11 +4,13 @@ import br.com.seuespacounb.turing.dto.request.AtualizarStatusSolicitacaoRequest;
 import br.com.seuespacounb.turing.dto.request.SolicitacaoRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SolicitacaoResponseDTO;
 import br.com.seuespacounb.turing.entity.*;
+import br.com.seuespacounb.turing.exception.BadRequestException;
 import br.com.seuespacounb.turing.exception.ConflictException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.exception.UnauthorizedException;
 import br.com.seuespacounb.turing.mapstruct.SolicitacaoMapper;
 import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
+import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.repository.SolicitacaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class SolicitacaoService {
 
     private final SolicitacaoRepository solicitacaoRepository;
     private final HorarioSalaRepository horarioSalaRepository;
+    private final SalaRepository salaRepository;
     private final SolicitacaoMapper mapper;
 
     @Transactional
@@ -31,6 +34,9 @@ public class SolicitacaoService {
 
         HorarioSala horarioSala = horarioSalaRepository.findById(dto.horarioSalaId())
                 .orElseThrow(() -> new NotFoundException("Horário não encontrado com id: " + dto.horarioSalaId()));
+
+        Sala sala = salaRepository.findById(horarioSala.getSala().getId())
+                .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + horarioSala.getSala().getId()));
 
         if (horarioSala.getDescricaoOcupacao() != null && !horarioSala.getDescricaoOcupacao().isBlank()) {
             throw new ConflictException(
@@ -43,6 +49,10 @@ public class SolicitacaoService {
                     "A data informada (" + dto.dataUso() + ") não é uma "
                             + horarioSala.getDiaSemana() + ", que é o dia deste horário."
             );
+        }
+
+        if (dto.quantidadeParticipantes() > sala.getCapacidade()){
+            throw new BadRequestException("Quantidade de participantes ultrapassa o limite da capacidade da sala");
         }
 
         boolean temConflito = solicitacaoRepository.existeConflito(
@@ -61,6 +71,7 @@ public class SolicitacaoService {
                 .dataUso(dto.dataUso())
                 .horarioSala(horarioSala)
                 .solicitante(solicitante)
+                .quantidadeParticipantes(dto.quantidadeParticipantes())
                 .build();
 
         return mapper.paraSolicitacaoResponseDTO(solicitacaoRepository.saveAndFlush(solicitacao));
@@ -133,11 +144,16 @@ public class SolicitacaoService {
         }
 
         if (solicitacao.getStatus() == StatusSolicitacao.APROVADA ||
-                solicitacao.getStatus() == StatusSolicitacao.REJEITADA) {
+                solicitacao.getStatus() == StatusSolicitacao.REJEITADA ||
+                solicitacao.getStatus() == StatusSolicitacao.CANCELADA) {
             throw new ConflictException(
-                    "Não é possível cancelar uma solicitação já " +
+                    "Não é possível cancelar uma solicitação que já está " +
                             solicitacao.getStatus().name().toLowerCase() + "."
             );
+        }
+
+        if (solicitacao.getDataUso() != null && solicitacao.getDataUso().isBefore(LocalDate.now().plusDays(1))) {
+            throw new ConflictException("O cancelamento deve ser feito com antecedência mínima de 1 dia.");
         }
 
         solicitacao.setStatus(StatusSolicitacao.CANCELADA);

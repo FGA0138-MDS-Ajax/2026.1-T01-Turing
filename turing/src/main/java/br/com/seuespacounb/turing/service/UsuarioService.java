@@ -48,10 +48,6 @@ public class UsuarioService {
             usuario.setPassword(passwordEncoder.encode(dados.senha()));
         }
 
-        if (dados.tipoUsuario() != null) {
-            usuario.setTipoUsuario(dados.tipoUsuario());
-        }
-
         usuarioRepository.save(usuario);
 
         String novoToken = tokenConfig.generateToken(usuario);

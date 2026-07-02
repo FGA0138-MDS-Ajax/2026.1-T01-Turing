@@ -17,11 +17,12 @@ public class Solicitacao {
     @Column(nullable = false)
     private String motivo;
 
-    // quando a solicitação foi feita (timestamp automático)
+    @Column(name = "quantidade_participantes", nullable = false)
+    private Integer quantidadeParticipantes;
+
     @Column(name = "data_solicitacao", nullable = false)
     private LocalDateTime dataSolicitacao;
 
-    // o dia específico que o usuário quer usar a sala
     @Column(name = "data_uso", nullable = false)
     private LocalDate dataUso;
 
@@ -30,7 +31,6 @@ public class Solicitacao {
     @Builder.Default
     private StatusSolicitacao status = StatusSolicitacao.PENDENTE;
 
-    // preenchido pelo admin ao rejeitar
     @Column(name = "observacao_adm")
     private String observacaoAdm;
 

@@ -108,4 +108,63 @@ Densidade = Número de defeitos / Número de cenários desenvolvidos
 |Valor esperado   | < 0.5 |
 |Análise   |Valores elevados indicam falhas na implementação e testes insuficientes   |
 
+
 **Métrica 4 - Débito Técnico**
+
+**Ligação com GQM: Goal → Q4 → Métrica 4**
+ 
+**Definição:**
+Quantidade de pendências técnicas acumuladas no projeto.
+ 
+**5W1H:**
+ 
+| Item | Descrição |
+|---|---|
+| What | Pendências técnicas |
+| Why | Avaliar qualidade do código |
+| Who | Equipe |
+| Where | GitHub |
+| When | Por sprint |
+| How | Contagem de tarefas técnicas pendentes |
+ 
+**Fórmula:**
+Débito técnico = Número de pendências técnicas
+ 
+| | |
+|---|---|
+| Unidade | Quantidade |
+| Escala | >= 0 |
+| Valor esperado | Redução ao longo do tempo |
+| Análise | Aumento contínuo indica risco para manutenção futura do sistema |
+ 
+**Métrica 5 – Taxa de Conclusão de Cenários Funcionais**
+ 
+**Ligação com GQM: Goal → Q5 → Métrica 5**
+ 
+**Definição:**
+Percentual de cenários funcionais concluídos em relação ao planejado para cada sprint.
+ 
+**5W1H:**
+ 
+| Item | Descrição |
+|---|---|
+| What | Cenários funcionais concluídos |
+| Why | Avaliar progresso |
+| Who | Equipe |
+| Where | Planejamento de sprints / GitHub |
+| When | Por sprint |
+| How | Comparação entre planejado e entregue |
+ 
+**Fórmula:**
+ 
+$\text{Taxa} = \frac{\text{Cenários concluídos}}{\text{Cenários planejados}} \times 100$
+ 
+| | |
+|---|---|
+| Unidade | Porcentagem |
+| Escala | 0% a 100% |
+| Valor esperado | >= 90% |
+| Análise | Valores abaixo indicam atrasos ou falhas no planejamento |
+ 
+As métricas serão analisadas ao final de cada sprint semanal, por meio da comparação com os valores esperados e da observação de tendências ao longo do tempo. A análise poderá utilizar gráficos para identificar evolução ou degradação do processo. Desvios significativos indicarão a necessidade de ações corretivas, discutidas durante as reuniões de retrospectiva da equipe.
+ 

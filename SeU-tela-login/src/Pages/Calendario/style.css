@@ -1,0 +1,406 @@
+.calendar-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(0, 130, 46, 0.12), transparent 25rem),
+    radial-gradient(circle at 88% 2%, rgba(0, 58, 122, 0.14), transparent 26rem),
+    var(--background);
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.app-header__inner {
+  display: flex;
+  min-height: 4.25rem;
+  max-width: 1180px;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+}
+
+.app-nav {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 1rem;
+}
+
+.app-nav__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 0.7rem;
+  padding: 0.65rem 0.85rem;
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.app-nav__item--active {
+  color: var(--primary);
+  background: var(--secondary);
+}
+
+.app-header__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.app-admin-badge {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.42rem 0.7rem;
+  color: var(--success);
+  background: var(--success-soft);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.app-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 0.95rem;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--card) 86%, transparent);
+  font-weight: 800;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.app-logout:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
+  background: var(--secondary);
+}
+
+.calendar-main {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 2.5rem;
+}
+
+.calendar-hero {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-hero__copy {
+  min-width: 0;
+}
+
+.calendar-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  color: var(--success);
+  background: var(--success-soft);
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.calendar-hero h1 {
+  max-width: 46rem;
+  margin: 0.75rem 0 0;
+  color: var(--foreground);
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.calendar-hero p {
+  max-width: 42rem;
+  margin: 0.85rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.calendar-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.85rem;
+}
+
+.calendar-stat {
+  border: 1px solid var(--border);
+  border-radius: 1.1rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.calendar-stat span {
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.calendar-stat strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--foreground);
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.calendar-shell {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.35rem;
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  box-shadow: var(--shadow-card);
+}
+
+.calendar-shell__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  border-bottom: 1px solid var(--border);
+  padding: 1.1rem;
+}
+
+.calendar-shell__header h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+}
+
+.calendar-shell__header p {
+  margin: 0.25rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.calendar-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.5rem 0.75rem;
+  color: var(--success);
+  background: var(--success-soft);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.calendar-status--danger {
+  color: var(--destructive);
+  background: var(--destructive-soft);
+}
+
+.calendar-status__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.calendar-surface {
+  min-height: 41rem;
+  padding: 1rem;
+}
+
+.calendar-loading,
+.calendar-error {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  color: var(--muted-foreground);
+  background: var(--secondary);
+  font-size: 0.92rem;
+}
+
+.calendar-error {
+  border-color: color-mix(in srgb, var(--destructive) 30%, var(--border));
+  color: var(--destructive);
+  background: var(--destructive-soft);
+}
+
+.calendar-surface .rbc-calendar {
+  color: var(--foreground);
+  font-family: inherit;
+}
+
+.calendar-surface .rbc-toolbar {
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-surface .rbc-toolbar-label {
+  color: var(--foreground);
+  font-size: 1.05rem;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+}
+
+.calendar-surface .rbc-btn-group {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  background: var(--card);
+}
+
+.calendar-surface .rbc-btn-group button {
+  border: 0;
+  border-right: 1px solid var(--border);
+  padding: 0.55rem 0.75rem;
+  color: var(--muted-foreground);
+  background: transparent;
+  font-weight: 750;
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.calendar-surface .rbc-btn-group button:last-child {
+  border-right: 0;
+}
+
+.calendar-surface .rbc-btn-group button:hover,
+.calendar-surface .rbc-btn-group button:focus,
+.calendar-surface .rbc-btn-group button.rbc-active {
+  color: var(--primary);
+  background: var(--secondary);
+  box-shadow: none;
+}
+
+.calendar-surface .rbc-month-view,
+.calendar-surface .rbc-time-view,
+.calendar-surface .rbc-agenda-view {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--card);
+}
+
+.calendar-surface .rbc-header {
+  border-color: var(--border);
+  padding: 0.65rem 0.4rem;
+  color: var(--muted-foreground);
+  background: var(--secondary);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.calendar-surface .rbc-month-row,
+.calendar-surface .rbc-day-bg,
+.calendar-surface .rbc-time-content,
+.calendar-surface .rbc-timeslot-group,
+.calendar-surface .rbc-time-header-content,
+.calendar-surface .rbc-time-header,
+.calendar-surface .rbc-agenda-table,
+.calendar-surface .rbc-agenda-table tbody > tr > td,
+.calendar-surface .rbc-agenda-table thead > tr > th {
+  border-color: var(--border);
+}
+
+.calendar-surface .rbc-off-range-bg {
+  background: color-mix(in srgb, var(--muted) 62%, transparent);
+}
+
+.calendar-surface .rbc-today {
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+.calendar-surface .rbc-date-cell {
+  padding: 0.4rem;
+  color: var(--muted-foreground);
+  font-weight: 700;
+}
+
+.calendar-surface .rbc-event,
+.calendar-surface .rbc-day-slot .rbc-background-event {
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0.25rem 0.45rem;
+  color: var(--primary-foreground);
+  background: var(--gradient-brand);
+  box-shadow: 0 8px 18px -14px var(--primary);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.calendar-surface .rbc-agenda-empty {
+  color: var(--muted-foreground);
+}
+
+@media (min-width: 760px) {
+  .app-nav {
+    display: flex;
+  }
+
+  .app-admin-badge {
+    display: inline-flex;
+  }
+
+  .calendar-shell__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 980px) {
+  .calendar-hero {
+    grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
+    align-items: end;
+  }
+}
+
+@media (max-width: 680px) {
+  .app-header__inner {
+    flex-wrap: wrap;
+  }
+
+  .calendar-main {
+    width: min(100% - 1rem, 1180px);
+    padding-top: 1.25rem;
+  }
+
+  .calendar-surface {
+    min-height: 36rem;
+    padding: 0.75rem;
+  }
+
+  .calendar-surface .rbc-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .calendar-surface .rbc-toolbar-label {
+    order: -1;
+    text-align: left;
+  }
+
+  .calendar-surface .rbc-btn-group {
+    width: 100%;
+  }
+
+  .calendar-surface .rbc-btn-group button {
+    flex: 1;
+    padding-inline: 0.4rem;
+    font-size: 0.78rem;
+  }
+}
