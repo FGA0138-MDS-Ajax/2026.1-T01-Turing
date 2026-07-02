@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-30T18:57:31-0300",
+    date = "2026-07-01T22:26:05-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.16 (Oracle Corporation)"
 )
 @Component
@@ -30,6 +30,7 @@ public class SolicitacaoMapperImpl implements SolicitacaoMapper {
         Long solicitanteId = null;
         Long id = null;
         String motivo = null;
+        Integer quantidadeParticipantes = null;
         LocalDateTime dataSolicitacao = null;
         LocalDate dataUso = null;
         StatusSolicitacao status = null;
@@ -39,12 +40,13 @@ public class SolicitacaoMapperImpl implements SolicitacaoMapper {
         solicitanteId = entitySolicitanteId( entity );
         id = entity.getId();
         motivo = entity.getMotivo();
+        quantidadeParticipantes = entity.getQuantidadeParticipantes();
         dataSolicitacao = entity.getDataSolicitacao();
         dataUso = entity.getDataUso();
         status = entity.getStatus();
         observacaoAdm = entity.getObservacaoAdm();
 
-        SolicitacaoResponseDTO solicitacaoResponseDTO = new SolicitacaoResponseDTO( id, motivo, dataSolicitacao, dataUso, status, observacaoAdm, horarioSalaId, solicitanteId );
+        SolicitacaoResponseDTO solicitacaoResponseDTO = new SolicitacaoResponseDTO( id, motivo, quantidadeParticipantes, dataSolicitacao, dataUso, status, observacaoAdm, horarioSalaId, solicitanteId );
 
         return solicitacaoResponseDTO;
     }
