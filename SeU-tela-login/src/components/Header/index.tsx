@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { UserCircle, LogIn, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom'; 
 import logo from '/src/assets/assinatura_versao_preferencial_horizontal.svg';
-import './Header.css';
+import './style.css';
 
 interface HeaderProps {
   isLogged?: boolean;
@@ -22,6 +22,7 @@ export const Header = ({ isLogged = false, onToggleLogin }: HeaderProps) => {
       </div>
 
       <nav className="nav-links">
+        <Link to="/">Tela Inicial</Link>
         <Link to="/agendar">Agendar</Link>
         <Link to="/agendamentos">Meus Agendamentos</Link>
       </nav>

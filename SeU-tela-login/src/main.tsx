@@ -7,7 +7,7 @@ import TelaInicial from './Pages/TelaInicial';
 import CalendarioAdmin from './Pages/Calendario'
 import Agendar from './Pages/Agendar' 
 import AgendarSala from './Pages/AgendarSala';
-import Agendamentos from './Pages/Agendar/Agendamentos';
+import Agendamentos from './Pages/Agendamentos';
 import './index.css'
 
 

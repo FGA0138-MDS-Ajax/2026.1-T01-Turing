@@ -31,7 +31,7 @@ function Cadastro() {
         const dados = await resposta.json()
         console.log(dados)
         alert('Cadastro feito com sucesso!')
-        navigate('/')
+        navigate('/login')
       } else {
         setErro('Erro ao cadastrar usuário. Tente novamente.')
       }
