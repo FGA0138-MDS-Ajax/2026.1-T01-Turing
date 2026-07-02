@@ -6,6 +6,7 @@ import Cadastro from './Pages/Cadastro'
 import TelaInicial from './Pages/TelaInicial';
 import CalendarioAdmin from './Pages/Calendario'
 import Agendar from './Pages/Agendar' 
+import AgendarSala from './Pages/AgendarSala';
 import Agendamentos from './Pages/Agendar/Agendamentos';
 import './index.css'
 
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/agendar" element={<Agendar />} />
+        <Route path="/agendar/sala/:id" element={<AgendarSala />} />
         <Route path="/agendamentos" element={<Agendamentos />} />
         <Route path="/" element={<TelaInicial />} />
         <Route path="/home" element={<TelaInicial />} />

@@ -181,3 +181,29 @@
   color: white;
   border-color: #3b82f6;
 }
+/* --- Estilização da Paginação --- */
+.paginacao button {
+  background: #173a6e;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.paginacao button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.paginacao button:hover:not(:disabled) {
+  background: #173a6e;
+}
+
+.paginacao span {
+  font-weight: 600;
+  color: #333;
+}

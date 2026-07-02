@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Header } from '../../components/Header';
 import { Calendar, Clock, MapPin, Trash2 } from 'lucide-react';
@@ -6,12 +6,66 @@ import './style-agendamentos.css';
 
 export const Agendamentos = () => {
   const [isLogged, setIsLogged] = useState(true);
-  const [minhasReservas, setMinhasReservas] = useState([
-    { id: 1, sala: 'Sala S10', data: '28/06/2026', horario: '14:00 - 16:00', campus: 'FCTE' },
-  ]);
+  const [minhasReservas, setMinhasReservas] = useState<any[]>([]);
 
-  const cancelarReserva = (id: number) => {
-    setMinhasReservas(minhasReservas.filter((reserva) => reserva.id !== id)); 
+  const carregarReservas = async () => {
+    const token = localStorage.getItem('token');
+    
+    // Se não houver token, não fazemos a requisição (evita o erro 401 desnecessário)
+    if (!token) {
+      console.warn("Usuário não está logado ou token ausente.");
+      return;
+    }
+
+    try {
+      const resposta = await fetch('https://two026-turing.onrender.com/turing/solicitacoes/minhas', {
+        method: 'GET',
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' 
+        }
+      });
+      
+      if (resposta.ok) {
+        const dados = await resposta.json();
+        setMinhasReservas(dados);
+      } else if (resposta.status === 401) {
+        console.error("Token inválido ou expirado. Faça login novamente.");
+        // Opcional: localStorage.removeItem('token'); navigate('/login');
+      } else {
+        console.error("Erro ao buscar reservas:", resposta.status);
+      }
+    } catch (e) {
+      console.error("Falha na conexão com o servidor", e);
+    }
+  };
+
+  useEffect(() => {
+    carregarReservas();
+  }, []);
+
+  const cancelarReserva = async (id: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const resposta = await fetch(`https://two026-turing.onrender.com/turing/solicitacoes/${id}/cancelar`, {
+        method: 'PATCH',
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (resposta.ok) {
+        setMinhasReservas(minhasReservas.filter((reserva: any) => reserva.id !== id));
+        alert("Reserva cancelada com sucesso!");
+      } else {
+        alert("Não foi possível cancelar a reserva.");
+      }
+    } catch (e) {
+      alert("Erro de conexão ao cancelar.");
+    }
   };
 
   return (
@@ -33,7 +87,7 @@ export const Agendamentos = () => {
           ) : (
             <div className="reservas-grid">
               <AnimatePresence>
-                {minhasReservas.map((reserva) => (
+                {minhasReservas.map((reserva: any) => (
                   <motion.div 
                     key={reserva.id} 
                     className="reserva-card" 
@@ -43,15 +97,15 @@ export const Agendamentos = () => {
                     whileHover={{ y: -5 }}
                   >
                     <div className="card-header">
-                      <h3>{reserva.sala}</h3>
+                      <h3>Reserva #{reserva.id}</h3>
                       <button className="delete-btn" onClick={() => cancelarReserva(reserva.id)}>
                         <Trash2 size={18} />
                       </button>
                     </div>
                     <div className="card-details">
-                      <span><Calendar size={14} /> {reserva.data}</span>
-                      <span><Clock size={14} /> {reserva.horario}</span>
-                      <span><MapPin size={14} /> {reserva.campus}</span>
+                      <span><Calendar size={14} /> {reserva.dataUso}</span>
+                      <span><Clock size={14} /> Status: {reserva.status}</span>
+                      <span><MapPin size={14} /> Motivo: {reserva.motivo}</span>
                     </div>
                   </motion.div>
                 ))}
