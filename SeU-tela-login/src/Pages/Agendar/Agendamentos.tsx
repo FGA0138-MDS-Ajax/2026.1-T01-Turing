@@ -28,6 +28,8 @@ export const Agendamentos = () => {
       
       if (resposta.ok) {
         const dados = await resposta.json();
+        console.log(dados);
+
         setMinhasReservas(dados);
       } else if (resposta.status === 401) {
         console.error("Token inválido ou expirado. Faça login novamente.");
@@ -44,6 +46,8 @@ export const Agendamentos = () => {
     carregarReservas();
   }, []);
 
+
+  
   const cancelarReserva = async (id: number) => {
     const token = localStorage.getItem('token');
     if (!token) return;
@@ -67,6 +71,15 @@ export const Agendamentos = () => {
       alert("Erro de conexão ao cancelar.");
     }
   };
+
+  const statusTraduzido = {
+    PENDENTE: "🟡 Pendente",
+    APROVADA: "🟢 Aprovada",
+    REJEITADA: "🔴 Rejeitada",
+    CANCELADA: "⚫ Cancelada"
+};
+
+
 
   return (
     <>
@@ -104,7 +117,7 @@ export const Agendamentos = () => {
                     </div>
                     <div className="card-details">
                       <span><Calendar size={14} /> {reserva.dataUso}</span>
-                      <span><Clock size={14} /> Status: {reserva.status}</span>
+                      <span> <Clock size={14} />  Status: {statusTraduzido[reserva.status] ?? reserva.status}</span>
                       <span><MapPin size={14} /> Motivo: {reserva.motivo}</span>
                     </div>
                   </motion.div>

@@ -452,9 +452,7 @@ function horarioEstaOcupado(horario: any) {
 
         >
 
-            {enviando
-                ? "Reservando..."
-                : "Reservar sala"}
+            {enviando  ? "Reservando..." : "Reservar sala"}
 
         </button>
 
