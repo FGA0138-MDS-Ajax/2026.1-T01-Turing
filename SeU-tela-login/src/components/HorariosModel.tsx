@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from "react";
 import { motion } from 'framer-motion';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ptBR } from 'date-fns/locale/pt-BR';
@@ -9,23 +9,69 @@ registerLocale('pt-BR', ptBR);
  
 export const HorariosModal = ({ sala, onClose }: { sala: any, onClose: () => void }) => {
   const [data, setData] = useState<Date | null>(new Date());
-  const [horarioSelecionado, setHorarioSelecionado] = useState<string | null>(null);
+  const [horarios, setHorarios] = useState<any[]>([]);
+  const [horarioSelecionado, setHorarioSelecionado] = useState<any | null>(null);
+  const [etapa, setEtapa] = useState(1); // Controla o passo 1 e 2
+  const [motivo, setMotivo] = useState('');
 
-  const horariosDisponiveis = useMemo(() => {
-    const todos = ["08:00", "10:00", "14:00", "16:00"];
-    const agora = new Date();
 
-    if (data && data.toDateString() === agora.toDateString()) {
-      const horaAtual = agora.getHours();
-      return todos.filter((h) => parseInt(h.split(':')[0]) > horaAtual);
+  useEffect(() => {
+  const buscarHorarios = async () => {
+    try {
+      const resposta = await fetch(
+        `https://two026-turing.onrender.com/turing/horarios/sala/${sala.id}`
+      );
+
+      if (!resposta.ok) {
+        throw new Error();
+      }
+
+      const dados = await resposta.json();
+
+      setHorarios(dados);
+
+    } catch (erro) {
+      console.error("Erro ao buscar horários", erro);
     }
-    
-    return todos;
-  }, [data]);
+  };
 
-  const handleConfirmar = () => {
-    alert(`Reserva confirmada para a ${sala.nome} no dia ${data?.toLocaleDateString('pt-BR')} às ${horarioSelecionado}!`);
-    onClose();
+  buscarHorarios();
+}, [sala.id]);
+
+  const handleConfirmar = async () => {
+    if (!data || horarioSelecionado === null ||  !motivo.trim()
+) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    const dataFormatada = data.toISOString().split('T')[0];
+
+    try {
+      const resposta = await fetch('https://two026-turing.onrender.com/turing/solicitacoes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+        horarioSalaId: horarioSelecionado.id,
+        dataUso: dataFormatada,
+        motivo: motivo.trim()
+    })
+      });
+
+      if (resposta.ok) {
+        alert('Reserva confirmada com sucesso!');
+        onClose();
+      } else {
+        const erro = await resposta.json();
+        alert('Erro ao reservar: ' + (erro.message || 'Verifique sua conexão'));
+      }
+    } catch (e) {
+      alert('Erro de conexão com o servidor.');
+    }
   };
 
   return (
@@ -33,46 +79,60 @@ export const HorariosModal = ({ sala, onClose }: { sala: any, onClose: () => voi
       <motion.div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}><X size={20}/></button>
         <h2>{sala.nome}</h2>
-        <p>Selecione o dia e horário para reserva:</p>
 
-        <div className="calendar-wrapper">
-          <DatePicker 
-            selected={data} 
-            onChange={(date: Date | null) => {
-              setData(date);
-              setHorarioSelecionado(null); 
-            }} 
-            inline 
-            locale="pt-BR"
-            minDate={new Date()}
-          />
-        </div>
-
-        <div className="horarios-grid">
-          {horariosDisponiveis.length > 0 ? (
-            horariosDisponiveis.map((h) => (
-              <button 
-                key={h} 
-                className={horarioSelecionado === h ? 'active' : ''} 
-                onClick={() => setHorarioSelecionado(h)}
-              >
-                {h}
-              </button>
-            ))
-          ) : (
-            <p style={{ gridColumn: 'span 2', textAlign: 'center', color: '#666' }}>
-              Não há horários disponíveis para hoje.
-            </p>
-          )}
-        </div>
-
-        <button 
-          className="btn-confirmar" 
-          disabled={!horarioSelecionado}
-          onClick={handleConfirmar}
-        >
-          Confirmar Reserva
-        </button>
+        {etapa === 1 ? (
+          <>
+            <p>Selecione dia e horário:</p>
+            <div className="calendar-wrapper">
+              <DatePicker 
+                inline 
+                selected={data} 
+                onChange={(date: Date | null) => { setData(date); setHorarioSelecionado(null); }} 
+                locale="pt-BR" 
+                minDate={new Date()} 
+              />
+            </div>
+            <div className="horarios-grid">
+              {horarios.length > 0 ? (
+                horarios.map((horario) => (
+                  <button
+                    key={horario.id}
+                    className={
+                        horarioSelecionado?.id === horario.id
+                            ? "active"
+                            : ""
+                    }
+                    onClick={() => setHorarioSelecionado(horario)}
+                >
+                    {horario.inicioHora} - 
+                {horario.fimHora}
+                </button>
+                ))
+              ) : <p>Sem horários disponíveis hoje.</p>}
+            </div>
+            <button 
+              className="btn-confirmar" 
+              disabled={!horarioSelecionado} 
+              onClick={() => setEtapa(2)}
+            >
+              Continuar
+            </button>
+          </>
+        ) : (
+          <>
+            <p>Qual o motivo da reserva?</p>
+            <textarea 
+              value={motivo} 
+              onChange={(e) => setMotivo(e.target.value)}
+              placeholder="Ex: Reunião do grupo de estudos..."
+              style={{ width: '100%', height: '100px', margin: '20px 0', borderRadius: '10px', padding: '10px', border: '1px solid #ccc' }}
+            />
+            <button className="btn-confirmar" onClick={handleConfirmar}>Finalizar Reserva</button>
+            <button className="close-btn" style={{ position: 'relative', marginTop: '10px', background: 'transparent', width: '100%' }} onClick={() => setEtapa(1)}>
+              Voltar
+            </button>
+          </>
+        )}
       </motion.div>
     </motion.div>
   );
