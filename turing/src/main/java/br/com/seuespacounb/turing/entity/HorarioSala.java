@@ -25,7 +25,7 @@ public class HorarioSala {
     private LocalTime fimHora;
 
     @Column(name = "descricao_ocupacao")
-    private String descricaoOcupacao; // nullable — slot vago não tem descrição
+    private String descricaoOcupacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sala_id", nullable = false)

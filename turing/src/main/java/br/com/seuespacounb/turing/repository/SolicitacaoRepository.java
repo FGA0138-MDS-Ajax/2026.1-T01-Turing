@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> {
 
-    // lista solicitações ativas (dataUso >= hoje) de uma sala
     @Query("SELECT s FROM Solicitacao s WHERE s.horarioSala.sala.id = :salaId AND s.dataUso >= :hoje")
     List<Solicitacao> findAtivasPorSala(
             @Param("salaId") Long salaId,
@@ -20,7 +19,6 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
 
     List<Solicitacao> findBySolicitanteId(Long solicitanteId);
 
-    // verifica conflito: mesmo horário, mesma data, status PENDENTE ou APROVADA
     @Query("SELECT CASE WHEN COUNT(s) > 0 THEN TRUE ELSE FALSE END FROM Solicitacao s " +
             "WHERE s.horarioSala.id = :horarioSalaId " +
             "AND s.dataUso = :dataUso " +
