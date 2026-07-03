@@ -12,6 +12,6 @@ public record SolicitacaoResponseDTO(
         LocalDate dataUso,
         StatusSolicitacao status,
         String observacaoAdm,
-        Long horarioSalaId,
-        Long solicitanteId
+        HorarioSalaResponseDTO horarioSala,
+        UsuarioResumoDTO solicitante
 ) {}
