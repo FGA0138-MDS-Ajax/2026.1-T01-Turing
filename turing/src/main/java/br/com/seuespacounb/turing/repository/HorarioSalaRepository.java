@@ -14,8 +14,6 @@ public interface HorarioSalaRepository extends JpaRepository<HorarioSala, Long> 
 
     List<HorarioSala> findBySalaId(Long salaId);
 
-    // verifica se já existe outro horário fixo nessa sala/dia/horário
-    // ignorarId = -1L no create, id real no update
     @Query("SELECT CASE WHEN COUNT(h) > 0 THEN TRUE ELSE FALSE END FROM HorarioSala h " +
             "WHERE h.sala.id = :salaId " +
             "AND h.diaSemana = :diaSemana " +
