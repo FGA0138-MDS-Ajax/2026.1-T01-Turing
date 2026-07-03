@@ -6,11 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {HorarioSalaMapper.class, UsuarioMapper.class})
 public interface SolicitacaoMapper {
 
-    @Mapping(source = "horarioSala.id", target = "horarioSalaId")
-    @Mapping(source = "solicitante.id", target = "solicitanteId")
     SolicitacaoResponseDTO paraSolicitacaoResponseDTO(Solicitacao entity);
 
     List<SolicitacaoResponseDTO> paraListaSolicitacaoResponseDTO(List<Solicitacao> entities);

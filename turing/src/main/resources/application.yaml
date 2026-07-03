@@ -2,9 +2,9 @@ spring:
   application:
     name: turing
   datasource:
-    url: jdbc:mysql://zephyr.proxy.rlwy.net:43560/railway?createDatabaseIfNotExist=true
-    username: root
-    password: WLaNUvMrhFHFIZFbWCAHuGGzPKgPtjHV
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -29,7 +29,7 @@ spring:
 api:
   security:
     token:
-      secret: minha-chave-super-secreta-do-projeto-turing-2026
+      secret: ${JWT_SECRET}
 
 admin:
   seed:

@@ -4,11 +4,13 @@ import br.com.seuespacounb.turing.dto.request.AtualizarStatusSolicitacaoRequest;
 import br.com.seuespacounb.turing.dto.request.SolicitacaoRequestDTO;
 import br.com.seuespacounb.turing.dto.response.SolicitacaoResponseDTO;
 import br.com.seuespacounb.turing.entity.*;
+import br.com.seuespacounb.turing.exception.BadRequestException;
 import br.com.seuespacounb.turing.exception.ConflictException;
 import br.com.seuespacounb.turing.exception.NotFoundException;
 import br.com.seuespacounb.turing.exception.UnauthorizedException;
 import br.com.seuespacounb.turing.mapstruct.SolicitacaoMapper;
 import br.com.seuespacounb.turing.repository.HorarioSalaRepository;
+import br.com.seuespacounb.turing.repository.SalaRepository;
 import br.com.seuespacounb.turing.repository.SolicitacaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class SolicitacaoService {
 
     private final SolicitacaoRepository solicitacaoRepository;
     private final HorarioSalaRepository horarioSalaRepository;
+    private final SalaRepository salaRepository;
     private final SolicitacaoMapper mapper;
     private final EmailService emailService;
 
@@ -34,6 +37,9 @@ public class SolicitacaoService {
 
         HorarioSala horarioSala = horarioSalaRepository.findById(dto.horarioSalaId())
                 .orElseThrow(() -> new NotFoundException("Horário não encontrado com id: " + dto.horarioSalaId()));
+
+        Sala sala = salaRepository.findById(horarioSala.getSala().getId())
+                .orElseThrow(() -> new NotFoundException("Sala não encontrada com id: " + horarioSala.getSala().getId()));
 
         if (horarioSala.getDescricaoOcupacao() != null && !horarioSala.getDescricaoOcupacao().isBlank()) {
             throw new ConflictException(
@@ -46,6 +52,10 @@ public class SolicitacaoService {
                     "A data informada (" + dto.dataUso() + ") não é uma "
                             + horarioSala.getDiaSemana() + ", que é o dia deste horário."
             );
+        }
+
+        if (dto.quantidadeParticipantes() > sala.getCapacidade()){
+            throw new BadRequestException("Quantidade de participantes ultrapassa o limite da capacidade da sala");
         }
 
         boolean temConflito = solicitacaoRepository.existeConflito(

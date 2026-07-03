@@ -7,14 +7,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = SalaMapper.class)
 public interface HorarioSalaMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sala", ignore = true)
     HorarioSala paraHorarioSala(HorarioSalaRequestDTO dto);
 
-    @Mapping(source = "sala.id", target = "salaId")
     HorarioSalaResponseDTO paraHorarioResponseDTO(HorarioSala entity);
 
     List<HorarioSalaResponseDTO> paraListaHorarioResponseDTO(List<HorarioSala> entities);
