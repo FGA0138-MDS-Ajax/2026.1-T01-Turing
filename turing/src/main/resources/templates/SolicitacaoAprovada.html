@@ -122,7 +122,6 @@
      <img src="https://github.com/FGA0138-MDS-Ajax/2026.1-T01-Turing/blob/main/docs/static/logomarca-horizontal-reduzida.png?raw=true" alt="Logo" width="400"/>
     </div>
 
-    <!-- Título e introdução -->
     <div class="intro-section">
      <h1>Resultado da<br/>Solicitação</h1>
      <br/>
@@ -132,7 +131,6 @@
      <br/>
     </div>
 
-    <!-- Detalhes da solicitação -->
     <div class="details-section">
 
      <div class="detail-row">
@@ -156,6 +154,16 @@
      </div>
 
      <div class="detail-row">
+      <p class="detail-label">Capacidade da Sala:</p>
+      <p class="detail-value" th:text="${capacidadeSala} + ' pessoas'">00 pessoas</p>
+     </div>
+
+     <div class="detail-row">
+      <p class="detail-label">Quantidade de Participantes:</p>
+      <p class="detail-value" th:text="${quantidadePessoas} + ' pessoas'">00 pessoas</p>
+     </div>
+
+     <div class="detail-row">
       <p class="detail-label">Data de Uso</p>
       <p class="detail-value" th:text="${dataSolicitacao}">00/00/0000</p>
      </div>
@@ -172,16 +180,19 @@
 
     </div>
 
-    <!-- Texto pós-detalhes -->
     <div class="intro-section">
      <p>Recomendamos que chegue com alguns minutos de antecedência ao local para evitar imprevistos. Caso haja necessidade de efetuar qualquer alteração nos dados ou realizar o cancelamento desta reserva, solicitamos que entre em contato ou realize o procedimento diretamente pela plataforma com a máxima antecedência possível.</p>
      <br/>
      <p>Caso queira adicionar este evento à sua agenda pessoal para não perder nenhum compromisso, você pode realizar esta ação diretamente pelo nosso sistema:</p>
      <br/>
-     <a th:href="${linkAgenda}" href="#" style="display:inline-block;padding:10px 28px;background-color:#38761d;color:#ffffff;font-family:Prompt,sans-serif;font-size:15px;font-weight:500;text-decoration:none;border-radius:4px;">Acessar o Sistema</a>
+     <a th:href="@{https://seuespacounb.netlify.app/}"
+        href="https://seuespacounb.netlify.app/"
+        target="_blank"
+        style="display: inline-block; padding: 10px 28px; background-color: #38761d; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+      Acessar Seu espaço UnB
+     </a>
     </div>
 
-    <!-- Rodapé -->
     <div class="footer-section">
      <p>Agradecemos pela confiança em nossos serviços e desejamos um excelente uso do espaço.</p>
      <br/>

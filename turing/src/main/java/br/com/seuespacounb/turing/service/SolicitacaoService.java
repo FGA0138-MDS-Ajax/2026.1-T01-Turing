@@ -86,6 +86,8 @@ public class SolicitacaoService {
         context.setVariable("nomeUsuario", solicitante.getName());
         context.setVariable("id", solicitacao.getId());
         context.setVariable("nomeSala", horarioSala.getSala().getNome());
+        context.setVariable("capacidadeSala", solicitacao.getHorarioSala().getSala().getCapacidade());
+        context.setVariable("quantidadePessoas", solicitacao.getQuantidadeParticipantes());
         context.setVariable("localizacao", horarioSala.getSala().getLocalizacao());
         context.setVariable("dataSolicitacao", solicitacao.getDataUso().toString());
         context.setVariable("horario", horarioSala.getInicioHora() + " - " + horarioSala.getFimHora());
@@ -204,11 +206,11 @@ public class SolicitacaoService {
         context.setVariable("id", solicitacao.getId());
         context.setVariable("nomeSala", solicitacao.getHorarioSala().getSala().getNome());
         context.setVariable("localizacao", solicitacao.getHorarioSala().getSala().getLocalizacao());
+        context.setVariable("capacidadeSala", solicitacao.getHorarioSala().getSala().getCapacidade());
+        context.setVariable("quantidadePessoas", solicitacao.getQuantidadeParticipantes());
         context.setVariable("dataSolicitacao", solicitacao.getDataUso().toString());
         context.setVariable("horario", solicitacao.getHorarioSala().getInicioHora() + " - " + solicitacao.getHorarioSala().getFimHora());
         context.setVariable("dataCriacao", solicitacao.getDataSolicitacao().toString());
-        context.setVariable("linkSistema", "http://localhost:3000");
-        context.setVariable("linkAgenda", "http://localhost:3000");
 
         if (solicitacao.getStatus() == StatusSolicitacao.APROVADA) {
             assunto = "Solicitação Aprovada - Seu Espaço UnB";

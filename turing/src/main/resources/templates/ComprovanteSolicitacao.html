@@ -150,6 +150,21 @@
      </div>
 
      <div class="detail-row">
+      <p class="detail-label">Localização:</p>
+      <p class="detail-value" th:text="${localizacao}">Localização</p>
+     </div>
+
+     <div class="detail-row">
+      <p class="detail-label">Capacidade da Sala:</p>
+      <p class="detail-value" th:text="${capacidadeSala} + ' pessoas'">00 pessoas</p>
+     </div>
+
+     <div class="detail-row">
+      <p class="detail-label">Quantidade de Participantes:</p>
+      <p class="detail-value" th:text="${quantidadePessoas} + ' pessoas'">00 pessoas</p>
+     </div>
+
+     <div class="detail-row">
       <p class="detail-label">Data de Uso:</p>
       <p class="detail-value" th:text="${dataSolicitacao}">00/00/0000</p>
      </div>
