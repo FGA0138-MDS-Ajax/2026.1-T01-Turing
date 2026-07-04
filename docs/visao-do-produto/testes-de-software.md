@@ -10,7 +10,7 @@ Para a análise dos testes, será feita a validação no sistema por meio da com
 
 Figura 6 - Diagrama do Processo de Desenvolvimento
 
-![Diagrama do processo de desenvolvimento](../static/diagrama-Processo-Desenvolvimento.png)
+![Diagrama do processo de desenvolvimento](../static/figura6-white.png)
 
 Fonte: Elaborado pelo grupo
 
@@ -34,18 +34,32 @@ Quadro x - Roteiro de Testes do Sistema Seu Espaço UnB
  
 | ID | Nome do Teste | Objetivo do Teste | Nível | Tipo | Pré-condições | Critério de Aceite | Resultado | Evidências | Reparos | Ciclos |
 |---|---|---|---|---|---|---|---|---|---|---|
-| CT-01 | Cadastro de usuário | Verificar cadastro | Sistema | Funcional | Usuário não cadastrado | Cadastro realizado | A ser executado | ![teste-ct01](../static/ct01.png)  | Nenhum | 1 |
-| CT-02 | Login válido | Validar login correto | Sistema | Funcional | Usuário cadastrado | Acesso permitido | A ser executado | — | — | — |
-| CT-03 | Login inválido | Validar erro no login | Sistema | Funcional | Usuário cadastrado | Mensagem de erro | A ser executado | — | — | — |
-| CT-04 | Validação de login | Validar função de autenticação | Unitário | Funcional | Dados válidos | Retorna sucesso | A ser executado | — | — | — |
-| CT-05 | Consulta de espaços | Verificar listagem | Integração | Funcional | Usuário logado | Lista exibida | A ser executado | — | — | — |
-| CT-06 | Verificar disponibilidade | Validar horários disponíveis | Unitário | Funcional | Horários definidos | Retorna disponibilidade correta | A ser executado | — | — | — |
-| CT-07 | Filtro de espaços | Validar filtro | Integração | Funcional | Lista disponível | Filtro correto | A ser executado | — | — | — |
-| CT-08 | Detalhes da sala | Verificar detalhes | Sistema | Funcional | Sala selecionada | Detalhes exibidos | A ser executado | — | — | — |
-| CT-09 | Solicitação de reserva | Criar reserva | Sistema | Funcional | Usuário logado | Reserva criada | A ser executado | — | — | — |
-| CT-10 | Criação de reserva | Validar função de criação | Unitário | Funcional | Dados válidos | Reserva criada corretamente | A ser executado | — | — | — |
-| CT-11 | Cancelar reserva | Cancelar reserva | Sistema | Funcional | Reserva existente | Reserva cancelada | A ser executado | — | — | — |
-| CT-12 | Aprovar reserva | Aprovar reserva | Sistema | Funcional | Reserva pendente | Reserva aprovada | A ser executado | — | — | — |
-| CT-13 | Rejeitar reserva | Rejeitar reserva | Sistema | Funcional | Reserva pendente | Reserva rejeitada | A ser executado | — | — | — |
-| CT-14 | Desempenho de resposta | Tempo de resposta | Sistema | Não Funcional | Sistema ativo | < 2 segundos | A ser executado | — | — | — |
-| CT-15 | Usabilidade | Facilidade de uso | Sistema | Não Funcional | Interface ativa | Uso intuitivo | A ser executado | — | — | — |
+| CT-01 | Cadastro de usuário | Verificar cadastro | Sistema | Funcional | Usuário não cadastrado | Cadastro realizado | Aprovado | ![teste-ct01](../static/ct01.png)  | Nenhum | 1 |
+| CT-02 | Login válido | Validar login correto | Sistema | Funcional | Usuário cadastrado | Acesso permitido | Aprovado | ![teste-ct02](../static/ct02.png) | Nenhum | 1 |
+| CT-03 | Login inválido | Validar erro no login | Sistema | Funcional | Usuário cadastrado | Mensagem de erro | Aprovado | ![teste-ct03](../static/ct03.png) | Nenhum | 1 |
+| CT-04 | Validação de login | Validar função de autenticação | Unitário | Funcional | Dados válidos | Retorna sucesso | Aprovado | ![teste-ct04](../static/cts040610.png) | Nenhum | 1 |
+| CT-05 | Consulta de espaços | Verificar listagem | Integração | Funcional | Usuário logado | Lista exibida | Aprovado | ![teste-ct05](../static/ct05.png) | Nenhum | 1 |
+| CT-06 | Verificar disponibilidade | Validar horários disponíveis | Unitário | Funcional | Horários definidos | Retorna disponibilidade correta | Aprovado | ![teste-ct06](../static/cts040610.png) | Nenhum | 1 |
+| CT-07 | Filtro de espaços | Validar filtro | Integração | Funcional | Lista disponível | Filtro correto | Aprovado | ![teste-ct07](../static/ct07.png) | Nenhum | 1 |
+| CT-08 | Detalhes da sala | Verificar detalhes | Sistema | Funcional | Sala selecionada | Detalhes exibidos | Aprovado | ![teste-ct08](../static/ct08.png) | Nenhum | 1 |
+| CT-09 | Solicitação de reserva | Criar reserva | Sistema | Funcional | Usuário logado | Reserva criada | Aprovado | ![teste-ct09](../static/ct09.png) | Nenhum | 1 |
+| CT-10 | Criação de reserva | Validar função de criação | Unitário | Funcional | Dados válidos | Reserva criada corretamente | Aprovado | ![teste-ct10](../static/cts040610.png) | Nenhum | 1 |
+| CT-11 | Cancelar reserva | Cancelar reserva | Sistema | Funcional | Reserva existente | Reserva cancelada | Aprovado | ![teste-ct11](../static/ct11.png) | Nenhum | 1 |
+| CT-12 | Aprovar reserva | Aprovar reserva | Sistema | Funcional | Reserva pendente | Reserva aprovada | Aprovado | ![teste-ct12](../static/ct12.png) | Nenhum | 1 |
+| CT-13 | Rejeitar reserva | Rejeitar reserva | Sistema | Funcional | Reserva pendente | Reserva rejeitada | Aprovado | ![teste-ct13](../static/ct13.png) | Nenhum | 1 |
+| CT-14 | Desempenho de resposta | Tempo de resposta | Sistema | Não Funcional | Sistema ativo | < 2 segundos | Aprovado | ![teste-ct14](../static/ct14.png) | Nenhum | 1 |
+| CT-15 | Acessibilidade e Responsividade da Interface | Facilidade de uso | Sistema | Não Funcional | Interface ativa | Sistema responsivo em dispositivos móveis e fluxo de reserva concluído em no máximo 4 interações | Aprovado | ![teste-ct15](../static/ct15.png) | Nenhum | 1 |
+| CT-16 | Cadastro com email duplicado | Validar bloqueio de e-mail já existente | Integração | Funcional | Usuário já cadastrado no banco | Status 400 ou 409 | Aprovado | ![teste-ct16](../static/ct16.png) | Nenhum | 1 |
+| CT-17 | Cadastro com CPF duplicado | Validar bloqueio de CPF já existente | Integração | Funcional | Usuário já cadastrado no banco | Status 400 ou 409 | Aprovado | ![teste-ct17](../static/ct17.png) | Nenhum | 1 |
+| CT-18 | Acesso sem token | Validar bloqueio de acesso sem autenticação | Integração | Funcional | Usuário não autenticado | Status 401 ou 403 | Aprovado | ![teste-ct18](../static/ct18.png) | Nenhum | 1 |
+| CT-19 | Buscar sala inexistente | Garantir tratamento de erro para recurso não encontrado | Integração | Funcional | Usuário autenticado | Status 404 | Aprovado | ![teste-ct19](../static/ct19.png) | Nenhum | 1 |
+| CT-20 | Solicitação sem token | Validar bloqueio de criação de reserva sem autenticação | Integração | Funcional | Usuário não autenticado | Status 401 ou 403 | Aprovado | ![teste-ct20](../static/ct20.png) | Nenhum | 1 |
+| CT-21 | Aprovação por perfil Aluno (RBAC) | Validar restrição de perfil para aprovação de solicitações | Integração | Funcional | Usuário autenticado com perfil Aluno | Status 403 | Aprovado | ![teste-ct21](../static/ct21.png) | Renovação do token no fluxo do teste | 1 |
+| CT-22 | Fluxo Usuário — Cadastro a Cancelamento | Validar fluxo completo do usuário desde o cadastro até o cancelamento de reserva | Sistema | Funcional | API ativa e banco disponível | Todos os passos retornam sucesso (201, 200, 204) | Aprovado | ![ct22-p1](../static/ct22-p1.png) ![ct22-p2](../static/ct22-p2.png) ![ct22-p3](../static/ct22-p3.png) ![ct22-p4](../static/ct22-p4.png) ![ct22-p5](../static/ct22-p5.png) ![ct22-p6](../static/ct22-p6.png) ![ct22-p7](../static/ct22-p7.png) | Nenhum | 1 |
+| CT-23 | Fluxo ADM — Aprovação e Rejeição Automática | Validar fluxo completo do ADM com aprovação e rejeição automática de concorrentes | Sistema | Funcional | Usuário ADM autenticado e duas solicitações pendentes para o mesmo horário | Solicitação aprovada com 200 e concorrente rejeitada automaticamente | Aprovado | ![ct23-p1](../static/ct23-p1.png) ![ct23-p2](../static/ct23-p2.png) ![ct23-p3](../static/ct23-p3.png) ![ct23-p4a](../static/ct23-p4a.png) ![ct23-p4b](../static/ct23-p4b.png) ![ct23-p4](../static/ct23-p4.png) ![ct23-p5](../static/ct23-p5.png) ![ct23-p6](../static/ct23-p6.png) ![ct23-p7](../static/ct23-p7.png) | Nenhum | 1 |
+| CT-24 | Fluxo Google Agenda — Geração de URL | Validar geração de URL do Google Calendar após aprovação de solicitação | Sistema | Funcional | Solicitação aprovada existente | Status 200 e URL válida do Google Calendar retornada | Aprovado | ![ct24-p1](../static/ct24-p1.png) ![ct24-p2](../static/ct24-p2.png) | Nenhum | 1 |
+| CT-25 | Listagem de salas | Validar carregamento das salas disponíveis | Integração | Funcional | API de salas disponível | Lista de salas exibida corretamente | Aprovado |![ct25](../static/ct25.png)| Nenhum | 1 |
+| CT-26 | Busca por nome da sala | Validar pesquisa por nome | Sistema | Funcional | Lista de salas carregada | Apenas salas compatíveis são exibidas | Aprovado |![ct26](../static/ct26.png)| Nenhum | 1 |
+| CT-27 | Filtro por prédio | Validar filtro de prédio | Sistema | Funcional | Lista de salas carregada | Apenas salas do prédio selecionado são exibidas | Aprovado |![ct27](../static/ct27.png)| Nenhum | 1 |
+| CT-28 | Filtro por capacidade | Validar filtro de capacidade mínima | Sistema | Funcional | Lista de salas carregada | Apenas salas com capacidade suficiente são exibidas | Aprovado |..| Nenhum | 1 |
+| CT-29 | Paginação das salas | Validar navegação entre páginas | Sistema | Funcional | Mais de seis salas cadastradas | Navegação entre páginas funcionando corretamente | Aprovado | . | Nenhum | 1 |
