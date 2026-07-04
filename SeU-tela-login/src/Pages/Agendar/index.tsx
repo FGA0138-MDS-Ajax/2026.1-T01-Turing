@@ -60,7 +60,7 @@ export const Agendar = () => {
 
   return (
     <>
-      <Header isLogged={isLogged} onToggleLogin={() => setIsLogged(!isLogged)} />
+      <Header isLogged={isLogged} />
 
       <div className="agendar-container">
         <header className="hero">
