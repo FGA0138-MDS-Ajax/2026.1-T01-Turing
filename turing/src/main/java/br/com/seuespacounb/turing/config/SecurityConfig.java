@@ -45,6 +45,7 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.PUT, "/turing/usuarios").hasAnyRole("CLIENTE", "ADM")
                         .requestMatchers(HttpMethod.DELETE, "/turing/usuarios").hasAnyRole("CLIENTE", "ADM")
+                        .requestMatchers(HttpMethod.GET, "/turing/usuarios/me").hasAnyRole("CLIENTE", "ADM")
                         .requestMatchers(HttpMethod.GET, "/turing/usuarios/adm").hasRole("ADM")
                         .requestMatchers(HttpMethod.GET, "/turing/usuarios/adm/encontrarPorEmail").hasRole("ADM")
                         .requestMatchers(HttpMethod.PUT, "/turing/usuarios/adm/{idUsuarioParaAlterar}").hasRole("ADM")
