@@ -19,21 +19,33 @@ function Cadastro() {
     setErro('')
     setCarregando(true)
     try {
+      const cpfLimpo = cpf.replace(/\D/g, '')
+      const dadosParaOBackend = {
+        name: name,
+        email: email,
+        cpf: cpfLimpo,
+        password: password,
+        role: 'USER'
+      }
+
       const resposta = await fetch('https://two026-turing.onrender.com/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, cpf, password, tipousuario: 'CLIENTE' })
+        body: JSON.stringify(dadosParaOBackend)
       })
 
       if (resposta.ok) {
         const dados = await resposta.json()
-        console.log(dados)
+        console.log("Sucesso:", dados)
         alert('Cadastro feito com sucesso!')
-        navigate('/')
+        navigate('/') // Joga o usuário para a tela de Login
       } else {
-        setErro('Erro ao cadastrar usuário. Tente novamente.')
+        // Se der erro 400 novamente, tentamos ler a mensagem exata que o Java mandou
+        const erroDoServidor = await resposta.text()
+        console.error("Motivo da recusa pelo backend:", erroDoServidor)
+        setErro('Erro ao cadastrar. Verifique se o CPF é válido ou se o email já existe.')
       }
     } catch {
       setErro('Não foi possível conectar ao servidor!')

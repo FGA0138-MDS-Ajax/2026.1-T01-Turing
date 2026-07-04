@@ -25,6 +25,7 @@ function Login() {
         const dados = await resposta.json()
         localStorage.setItem('token', dados.token)
         alert('Login feito com sucesso!')
+        navigate('/agendamentos')
       } else {
         setErro('Usuário ou senha inválidos.')
       }
