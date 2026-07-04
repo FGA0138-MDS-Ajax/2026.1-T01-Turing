@@ -11,7 +11,6 @@ export const Agendamentos = () => {
   const carregarReservas = async () => {
     const token = localStorage.getItem('token');
     
-    // Se não houver token, não fazemos a requisição (evita o erro 401 desnecessário)
     if (!token) {
       console.warn("Usuário não está logado ou token ausente.");
       return;
@@ -33,7 +32,6 @@ export const Agendamentos = () => {
         setMinhasReservas(dados);
       } else if (resposta.status === 401) {
         console.error("Token inválido ou expirado. Faça login novamente.");
-        // Opcional: localStorage.removeItem('token'); navigate('/login');
       } else {
         console.error("Erro ao buscar reservas:", resposta.status);
       }
@@ -83,7 +81,7 @@ export const Agendamentos = () => {
 
   return (
     <>
-      <Header isLogged={isLogged} onToggleLogin={() => setIsLogged(!isLogged)} />
+      <Header isLogged={true} />
       
       <div className="agendar-container">
         <main className="content">

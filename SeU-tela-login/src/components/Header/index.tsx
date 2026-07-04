@@ -1,40 +1,96 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { UserCircle, LogIn, LogOut } from 'lucide-react';
-import { Link } from 'react-router-dom'; 
+import { UserCircle, LogIn, LogOut, Shield, ArrowLeft } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'sonner';
 import logo from '/src/assets/assinatura_versao_preferencial_horizontal.svg';
 import './style.css';
 
 interface HeaderProps {
   isLogged?: boolean;
-  onToggleLogin?: () => void;
 }
 
-export const Header = ({ isLogged = false, onToggleLogin }: HeaderProps) => {
+export const Header = ({ isLogged = false }: HeaderProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const isAdminRoute = location.pathname.includes('/admin');
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setIsAdmin(false);
+      return;
+    }
+
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const payload = JSON.parse(window.atob(base64));
+      const adminsAutorizados = ["adm@gmail.com", "seu-email@unb.br"];
+      const ehAdmin = adminsAutorizados.includes(payload.sub);
+      
+      console.log("É ADMIN?", ehAdmin);
+      setIsAdmin(ehAdmin);
+    } catch (e) {
+      setIsAdmin(false);
+    }
+  }, [isLogged]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  const handleVoltarClick = () => {
+    navigate('/agendamentos');
+  };
+
   return (
-    <motion.header 
-      className="navbar"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.header className="navbar" initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>
       <div className="header-logo">
         <img src={logo} alt="Logo Seu Espaço UnB" className="header-logo-img" />
       </div>
 
+<<<<<<< HEAD:SeU-tela-login/src/components/Header.tsx
+      {!isAdminRoute && (
+        <nav className="nav-links">
+          <Link to="/agendar">Agendar</Link>
+          <Link to="/agendamentos">Meus Agendamentos</Link>
+        </nav>
+      )}
+=======
       <nav className="nav-links">
         <Link to="/">Tela Inicial</Link>
         <Link to="/agendar">Agendar</Link>
         <Link to="/agendamentos">Meus Agendamentos</Link>
       </nav>
+>>>>>>> 1b474fe9df8ecac6aacb0112591957b2c50abcaa:SeU-tela-login/src/components/Header/index.tsx
 
       <div className="user-profile">
         {isLogged ? (
           <>
-            <Link to="/perfil" className="login-btn">
-               <UserCircle size={24} />
-               <span>Olá, Estudante</span>
+            {isAdmin && (
+              isAdminRoute ? (
+                <button onClick={handleVoltarClick} className="login-btn" style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <ArrowLeft size={20} />
+                  <span>Voltar</span>
+                </button>
+              ) : (
+                <button onClick={() => navigate('/admin')} className="login-btn" style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <Shield size={20} />
+                  <span>Admin</span>
+                </button>
+              )
+            )}
+
+            <Link to="/perfil" className="login-btn" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <UserCircle size={24} />
+              <span>Olá, Estudante</span>
             </Link>
-            <button onClick={onToggleLogin} className="login-btn">
+            
+            <button onClick={handleLogout} className="login-btn" title="Sair">
               <LogOut size={18} />
             </button>
           </>

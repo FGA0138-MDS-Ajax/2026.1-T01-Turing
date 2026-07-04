@@ -247,10 +247,7 @@ function horarioEstaOcupado(horario: any) {
 
         <>
 
-            <Header
-                isLogged={isLogged}
-                onToggleLogin={() => setIsLogged(!isLogged)}
-            />
+            <Header isLogged={isLogged} />
 
             <div className="agendar-sala-container">
 
@@ -321,7 +318,7 @@ function horarioEstaOcupado(horario: any) {
 
                                     minDate={new Date()}
 
-                                    onChange={(date) => {
+                                    onChange={(date: any) => {
 
                                         if (date) {
 
