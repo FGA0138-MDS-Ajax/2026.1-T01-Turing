@@ -44,11 +44,11 @@
 package br.com.seuespacounb.turing.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import lombok.RequiredArgsConstructor;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -63,13 +63,13 @@ public class EmailService {
 
     private final TemplateEngine templateEngine;
 
-    @Value("${brevo.api-key}")
+    @Value("${resend.api-key}")
     private String apiKey;
 
-    @Value("${brevo.sender-email}")
+    @Value("${resend.sender-email}")
     private String senderEmail;
 
-    @Value("${brevo.sender-name}")
+    @Value("${resend.sender-name}")
     private String senderName;
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
@@ -77,28 +77,26 @@ public class EmailService {
 
     public void enviarEmailHtml(String destinatario, String assunto, String nomeTemplate, Context context) {
         try {
-            // processa o template HTML com as variáveis do Context (igual antes)
             String conteudoHtml = templateEngine.process(nomeTemplate, context);
 
             Map<String, Object> body = Map.of(
-                    "sender", Map.of("name", senderName, "email", senderEmail),
-                    "to", List.of(Map.of("email", destinatario)),
+                    "from", senderName + " <" + senderEmail + ">",
+                    "to", List.of(destinatario),
                     "subject", assunto,
-                    "htmlContent", conteudoHtml
+                    "html", conteudoHtml
             );
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.brevo.com/v3/smtp/email"))
-                    .header("accept", "application/json")
-                    .header("api-key", apiKey)
-                    .header("content-type", "application/json")
+                    .uri(URI.create("https://api.resend.com/emails"))
+                    .header("Authorization", "Bearer " + apiKey)
+                    .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body)))
                     .build();
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 201) {
-                throw new RuntimeException("Falha ao enviar email via Brevo para " + destinatario + ": " + response.body());
+            if (response.statusCode() != 200) {
+                throw new RuntimeException("Falha ao enviar email via Resend para " + destinatario + ": " + response.body());
             }
 
         } catch (Exception e) {

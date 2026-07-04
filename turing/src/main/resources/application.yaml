@@ -29,9 +29,9 @@ spring:
 #          starttls:
 #            enable: true
 
-    brevo:
-      api-key: ${BREVO_API_KEY}
-      sender-email: ${BREVO_SENDER_EMAIL}
+    resend:
+      api-key: ${RESEND_API_KEY}
+      sender-email: ${RESEND_SENDER_EMAIL}
       sender-name: "Seu Espaço UnB"
 
 api:
