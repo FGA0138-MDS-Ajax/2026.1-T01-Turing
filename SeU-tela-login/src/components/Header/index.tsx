@@ -39,7 +39,7 @@ export const Header = ({ isLogged = false }: HeaderProps) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/", { replace:true });
   };
 
   const handleVoltarClick = () => {

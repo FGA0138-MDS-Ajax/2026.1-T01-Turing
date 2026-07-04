@@ -80,7 +80,7 @@ export const Agendamentos = () => {
 
   return (
     <>
-      <Header isLogged={true} />
+      
       
       <div className="agendar-container">
         <main className="content">

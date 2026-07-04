@@ -14,8 +14,22 @@ function Cadastro() {
   const [password, setPassword] = useState('')
   const [erro, setErro] = useState('')
   const [carregando, setCarregando] = useState(false)
+  const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-]).{8,20}$/;
+
 
   async function handleCadastro() {
+if (!senhaRegex.test(password)) {
+  setErro(
+    "A senha deve possuir entre 8 e 20 caracteres, letra maiúscula, letra minúscula, número e símbolo."
+  );
+  return;
+}
+
+if (cpf.length !== 11) {
+  setErro("CPF deve possuir exatamente 11 números.");
+  return;
+}
+
     setErro('')
     setCarregando(true)
     try {
@@ -30,7 +44,6 @@ function Cadastro() {
       if (resposta.ok) {
         const dados = await resposta.json()
         console.log(dados)
-        alert('Cadastro feito com sucesso!')
         navigate('/login')
       } else {
         const erroDoServidor = await resposta.text()
@@ -50,7 +63,7 @@ function Cadastro() {
         <div className="auth-hero__content">
           <div className="auth-hero__top">
             <BrandLogo light />
-            <button type="button" className="auth-ghost-link" onClick={() => navigate('/')}>
+            <button type="button" className="auth-ghost-link" onClick={() => navigate('/login')}>
               Entrar
             </button>
           </div>
