@@ -45,6 +45,7 @@ package br.com.seuespacounb.turing.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -57,6 +58,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
@@ -96,11 +98,12 @@ public class EmailService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200) {
-                throw new RuntimeException("Falha ao enviar email via Resend para " + destinatario + ": " + response.body());
+                log.error("Falha ao enviar email via Resend para {}: {}", destinatario, response.body());
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao enviar email para: " + destinatario, e);
+            // não propaga o erro: falha no envio de email não deve impedir a criação/atualização da solicitação
+            log.error("Erro ao enviar email para: {}", destinatario, e);
         }
     }
 }
