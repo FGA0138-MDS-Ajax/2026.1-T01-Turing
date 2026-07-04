@@ -57,7 +57,7 @@ export default function AgendarSala() {
             );
 
             const dados = await resposta.json();
-
+            console.log(dados);
             setSala(dados);
 
         } catch (erro) {
@@ -86,7 +86,8 @@ async function buscarHorarios() {
         }
 
         const dados = await resposta.json();
-
+        console.log(JSON.stringify(dados, null, 2));
+        
         setHorarios(dados);
 
     } catch (erro) {
@@ -109,7 +110,7 @@ async function buscarSolicitacoes() {
         }
 
         const dados = await resposta.json();
-
+        console.log(dados);
         setSolicitacoes(dados);
 
     } catch (erro) {

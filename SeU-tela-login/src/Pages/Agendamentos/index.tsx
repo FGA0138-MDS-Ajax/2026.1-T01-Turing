@@ -110,13 +110,24 @@ export const Agendamentos = () => {
                     whileHover={{ y: -5 }}
                   >
                     <div className="card-header">
-                      <h3>Reserva #{reserva.id}</h3>
+                      <h3>{reserva.horarioSala.sala.nome} • Reserva #{reserva.id}</h3>
                       <button className="delete-btn" onClick={() => cancelarReserva(reserva.id)}>
                         <Trash2 size={18} />
                       </button>
                     </div>
                     <div className="card-details">
-                      <span><Calendar size={14} /> {reserva.dataUso}</span>
+                      <span>
+                    <Calendar size={14}/>{reserva.dataUso}
+                  </span>
+
+                  <span>
+                    <Clock size={14}/>
+                    {reserva.horarioSala.inicioHora.slice(0,5)} - {reserva.horarioSala.fimHora.slice(0,5)}
+                  </span>
+                  <span>
+                    <MapPin size={14}/>
+                   {reserva.horarioSala.sala.localizacao}
+                  </span>
                       <span> <Clock size={14} />  Status: {statusTraduzido[reserva.status] ?? reserva.status}</span>
                       <span><MapPin size={14} /> Motivo: {reserva.motivo}</span>
                     </div>
