@@ -198,7 +198,7 @@ No que diz respeito às características de qualidade de software, destacam-se:
 - **Portabilidade:** por ser uma aplicação web, o sistema deve funcionar nos principais navegadores modernos sem necessidade de instalação; 
 - **Segurança:** o sistema garante a criptografia de dados sensíveis e a proteção contra acessos não autorizados. A autenticação é gerenciada pelo Spring Security de forma *stateless* via tokens JWT, com os perfis de acesso centralizados em uma entidade única `Usuario` através de um enumerador (`TipoUsuario`), assegurando um controle de permissões leve e eficiente.
  
-A diferenciação de permissões ocorre por meio da especialização da classe base:
+A diferenciação de permissões ocorre com base no papel atribuído ao usuário:
  
 - O perfil **Cliente** possui acesso às operações de consulta e solicitação, podendo consultar salas, visualizar horários disponíveis, solicitar reservas e cancelar solicitações;
 - O perfil **Administrador** possui permissões de gestão, sendo responsável por consultar solicitações pendentes, aprovar reservas e rejeitar solicitações com observações, além de ser o único perfil capaz de alterar o estado de uma solicitação.
