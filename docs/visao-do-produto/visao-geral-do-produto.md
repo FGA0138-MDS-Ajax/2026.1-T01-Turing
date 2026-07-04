@@ -7,7 +7,7 @@
 
 -                                       Figura 1 - Diagrama de Ishikawa
 
-![Diagrama de Ishikawa](../static/Diagrama-de-Ishikawa.jpg)
+![Diagrama de Ishikawa](../static/Diagrama-Ishikawa.jpeg)
 
 -   
 Fonte: Elaborado pelos autores, 2026
@@ -15,7 +15,7 @@ Fonte: Elaborado pelos autores, 2026
 - Diante do exposto, para resolver esse problema, a solução proposta é o Seu espaço UnB. O SeU (Seu espaço UnB) é uma aplicação web que integra a administração da FCTE e a comunidade acadêmica, com o objetivo de digitalizar a consulta e a reserva de espaços físicos dentro da faculdade. O sistema contará com algumas funcionalidades como permitir que os usuários consultem em tempo real a disponibilidade dos espaços, visualizem as características e recursos disponíveis e realizem solicitações de forma remota. Para a administração e os funcionários técnicos, será possível aprovar ou rejeitar solicitações, gerenciar a ocupação dos espaços e manter suas informações atualizadas. Espera-se, dessa forma, eliminar deslocamentos desnecessários, reduzir os conflitos de horários e aumentar a eficiência no uso da infraestrutura da FCTE.
 
 # 1.2 Declaração de Posição do Produto
-- Um sistema web que permite a consulta da disponibilidade e a reserva de espaços físicos da FCTE, promovendo maior integração entre a administração e a comunidade acadêmica. Iniciativas semelhantes já foram desenvolvidas em outras instituições, como o UniEspaços, aplicativo criado na Universidade Estadual do Sudoeste da Bahia (UESB), que centraliza o processo de solicitação e aprovação de reservas de espaços acadêmicos (PINHEIRO, 2026). O sistema propõe-se a oferecer uma busca mais precisa por critérios pré-definidos, notificações sobre os status das solicitações e integração com o Google Agenda, com uma interface moderna e atualizada.
+- Um sistema web que permite a consulta da disponibilidade e a reserva de espaços físicos da FCTE, promovendo maior integração entre a administração e a comunidade acadêmica. Iniciativas semelhantes já foram desenvolvidas em outras instituições, como o UniEspaços, aplicativo criado na Universidade Estadual do Sudoeste da Bahia (UESB), que centraliza o processo de solicitação e aprovação de reservas de espaços acadêmicos (PINHEIRO, 2026). O sistema se diferencia por oferecer uma busca mais precisa por critérios pré-definidos, notificações sobre os status das solicitações e integração com o Google Agenda, com uma interface moderna e atualizada. 
 Os usuários do sistema são a comunidade acadêmica da FCTE, composta por solicitantes - alunos, professores, monitores, equipes de competição e empresas juniores - que consultam a disponibilidade e realizam reservas de espaços; e por gestores - secretaria, técnicos, porteiros e equipes de segurança - responsáveis por aprovar solicitações e gerenciar a ocupação dos espaços. O cliente do produto é a própria instituição, representada pela FCTE, interessada em otimizar o uso da infraestrutura e reduzir conflitos de ocupação.
 A adoção do sistema permitiria à FCTE centralizar a gestão de seus espaços físicos em uma única plataforma digital, reduzindo conflitos de ocupação, eliminando processos manuais de verificação e tornando o acesso aos espaços mais ágil e organizado para toda a comunidade acadêmica.
 A escolha do nome “Seu espaço UnB” foi pautada na intenção de traduzir a complexidade da gestão de espaços físicos em uma experiência intuitiva e integrada ao cotidiano acadêmico. Além de transmitir a ideia de pertencimento, autonomia e acessibilidade, esse nome coloca a comunidade no centro da experiência e rompe a percepção de que a busca por um espaço na faculdade é algo complexo e burocrático.
@@ -62,16 +62,16 @@ Para complementar essa funcionalidade, o sistema permite realizar reservas de fo
  
 # 1.4 Tecnologias a Serem Utilizadas
  
-● Java com Spring Boot (back-end): combinação consolidada no mercado para o
-desenvolvimento de APIs REST, e escolhida pela estrutura organizada que o
-framework oferece.
+**Back-end:**
+- Linguagem: Java
+- Framework: Spring Boot
 
-● HTML, CSS, JavaScript e React (front-end): o React foi adotado por sua
-abordagem baseada em componentes reutilizáveis, o que facilita a construção
-modular das telas e a manutenção da interface ao longo das sprints.
-● Figma (prototipagem): utilizado para definir e validar a experiência do usuário
-antes da implementação, permitindo ajustes colaborativos no design sem custo
-de desenvolvimento.
+**Front-end:**
 
-● MySQL (banco de dados): escolhido pela ampla documentação, facilidade de
-configuração e boa integração com o Spring Boot via JPA/Hibernate.
+- Linguagem: HTML, CSS, JavaScript
+- Framework: React
+- Prototipação: Figma
+
+**Banco de dados:**
+
+- MySQL

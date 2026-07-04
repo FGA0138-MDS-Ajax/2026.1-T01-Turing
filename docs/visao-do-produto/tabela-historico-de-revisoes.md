@@ -3,8 +3,3 @@
 | Data       | Versão | Descrição                                                          | Autor         |
 |------------|--------|--------------------------------------------------------------------|---------------|
 | 29/04/2026 | 1.0    | Elaboração do protótipo do documento de visão do produto e projeto | Toda a Equipe |
-| 25/06/2026 | 2.0    | Ajuste na tabela das sprints(quadro 3), com a adição de uma última sprint para ajustes finais. | Samuel Carvalho |
-| 25/06/2026 | 2.1    | Adicionado coluna de status/aderência do projeto na backlog do produto(quadro 8). | Samuel Carvalho |
-| 27/06/2026 | 2.2    | Atualização da seção de testes: preencher do readme pro docs o roteiro de teste, correção do diagrama do processo de desenvolvimento (adição de losango de decisão por nível de teste, testes não funcionais e setas de retorno), atualização do roteiro de testes com evidências e critério de aceite do CT-15 | Evellyn De Sousa e Samuel Carvalho |
-| 28/06/2026 | 2.3    | Atualização de diagramas, justificativa das tecnologias e maior desenvolvimento na seção 4.1 | Julia Pêgo |
-| 04/-7/2026 | 2.4    | Novos testes adicionado ao roteiro com suas evidências | Ítalo Carlos |

@@ -1,20 +1,24 @@
-import '../auth.css'
+import './style.css'
+import logo from '/src/assets/Assinatura Versão Preferencial Horizontal Reduzida.png'
 import { useNavigate } from 'react-router-dom'
-import { useState, type CSSProperties } from 'react'
-import BrandLogo from '../../components/BrandLogo'
-import ThemeToggle from '../../components/ThemeToggle'
-import heroSalas from '../../assets/hero-salas.jpg'
+import { useState } from 'react'
+import triangulo_azul from '/src/assets/triangulo_azul.png'
+import triangulo_verde from '/src/assets/triangulo_verde.png'
+import meia_lua_azul from '/src/assets/meia_lua_azul.png'
+import meia_lua_verde from '/src/assets/meia_lua_verde.png'
+import meio_arco_azul from '/src/assets/meio_arco_azul.png'
+import meio_arco_verde from '/src/assets/meio_arco_verde.png'
+import arco_verde from '/src/assets/arco_verde.png'
+
 
 function Login() {
   const navigate = useNavigate()
   const [usuario, setUsuario] = useState('')
   const [senha, setSenha] = useState('')
   const [erro, setErro] = useState('')
-  const [carregando, setCarregando] = useState(false)
 
   async function handleLogin() {
     setErro('')
-    setCarregando(true)
     try {
       const resposta = await fetch('https://two026-turing.onrender.com/auth/login', {
         method: 'POST',
@@ -25,109 +29,51 @@ function Login() {
         const dados = await resposta.json()
         localStorage.setItem('token', dados.token)
         alert('Login feito com sucesso!')
-        navigate('/')
       } else {
         setErro('Usuário ou senha inválidos.')
       }
-    } catch {
+    } catch (e) {
       setErro('Não foi possível conectar ao servidor!')
-    } finally {
-      setCarregando(false)
     }
   }
 
   return (
-    <div className="auth-shell" style={{ '--auth-hero-image': `url(${heroSalas})` } as CSSProperties}>
-      <aside className="auth-hero" aria-label="Apresentação do Seu espaço UnB">
-        <div className="auth-hero__content">
-          <div className="auth-hero__top">
-            <BrandLogo light />
-            <button type="button" className="auth-back-button" aria-label="Voltar ao início">
-              ←
-            </button>
-          </div>
-
-          <div className="auth-hero__headline">
-            <span className="auth-eyebrow">FCTE · Universidade de Brasília</span>
-            <h1>Reserve seu espaço na UnB em minutos.</h1>
-            <p>
-              Veja a disponibilidade no calendário, acompanhe ocupações acadêmicas e acesse sua conta
-              com uma experiência mais simples, moderna e responsiva.
-            </p>
-          </div>
-
-          <span className="auth-hero__footer">Seu espaço UnB · Salas, laboratórios e auditórios</span>
+    <div className='container'>
+      <img src={arco_verde} style={{position:'absolute', left:0, bottom:'10%', width:'100px', transform:'rotate(180deg)', zIndex: -1}} />
+      <img src={meia_lua_azul} style={{position:'absolute', left:'50%', top:'75px', width:'100px', transform:'rotate(45deg)', zIndex: -1}} />
+      <img src={triangulo_azul} style={{position:'absolute', left:'25%', bottom:'25%', width:'200px', transform:'rotate(-45deg)', zIndex: -1}} />
+      <img src={meio_arco_verde} style={{position:'absolute', top:'100px', left:'0', width:'150px', transform:'rotate(180deg)', zIndex: -1}} />
+      <img src={meia_lua_verde} style={{position:'absolute', right:0, top:'225px', width:'75px', zIndex: -1}} />
+      <img src={meio_arco_azul} style={{position:'absolute', right:0, top:'150px', width:'150px', zIndex: -1}} />
+      <img src={triangulo_verde} style={{position:'absolute', right:'0', bottom:'10%', width:'200px', transform:'rotate(-90deg)', zIndex: -1}} />
+      <img src={logo} alt="Logo" className='logo' />
+      <button className='btn-cadastro' onClick={() => navigate('/cadastro')}>Cadastre-se</button>
+      <form>
+        <h1>Login</h1>
+        <div className='inputs'>
+          <label>Usuário:</label>
+          <input
+            name='user'
+            type='text'
+            placeholder='Digite seu email...'
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+          />
         </div>
-      </aside>
-
-      <main className="auth-main">
-        <div className="auth-panel">
-          <div className="auth-mobile-header">
-            <BrandLogo />
-            <ThemeToggle />
-          </div>
-
-          <section className="auth-card" aria-labelledby="login-title">
-            <div className="auth-card__header">
-              <h1 id="login-title">Entrar</h1>
-              <p className="auth-card__description">
-                Acesse sua conta para consultar reservas e visualizar a ocupação dos espaços da FCTE.
-              </p>
-            </div>
-
-            <form
-              className="auth-form"
-              onSubmit={(event) => {
-                event.preventDefault()
-                handleLogin()
-              }}
-            >
-              <div className="auth-field">
-                <label htmlFor="login-email">E-mail</label>
-                <input
-                  id="login-email"
-                  name="user"
-                  type="email"
-                  placeholder="voce@aluno.unb.br"
-                  value={usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
-                  autoComplete="email"
-                  required
-                />
-              </div>
-
-              <div className="auth-field">
-                <label htmlFor="login-password">Senha</label>
-                <input
-                  id="login-password"
-                  name="senha"
-                  type="password"
-                  placeholder="Digite sua senha"
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
-                  autoComplete="current-password"
-                  required
-                />
-              </div>
-
-              {erro && <p className="auth-alert">{erro}</p>}
-
-              <div className="auth-actions">
-                <button className="auth-button auth-button--primary" type="submit" disabled={carregando}>
-                  {carregando ? 'Entrando...' : 'Entrar'}
-                </button>
-                <button className="auth-button auth-button--secondary" type="button">
-                  Recuperar senha
-                </button>
-              </div>
-            </form>
-
-            <p className="auth-switch">
-              Ainda não tem conta? <button type="button" onClick={() => navigate('/cadastro')}>Cadastre-se</button>
-            </p>
-          </section>
+        <div className='inputs'>
+          <label>Senha:</label>
+          <input
+            name='senha'
+            type='password'
+            placeholder='Digite sua senha...'
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
         </div>
-      </main>
+        {erro && <p style={{ color: 'red' }}>{erro}</p>}
+        <button className="btn-recuperar" type='button'>Recuperar Senha</button>
+        <button className="btn-Entrar" type='button' onClick={handleLogin}>Entrar</button>
+      </form>
     </div>
   )
 }

@@ -84,8 +84,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/turing/solicitacoes/*/cancelar").hasAnyRole("CLIENTE", "ADM")
                         .requestMatchers(HttpMethod.PATCH, "/turing/solicitacoes/*/status").hasRole("ADM")
 
-                        .requestMatchers(HttpMethod.GET, "/agenda/evento/*").hasAnyRole("CLIENTE", "ADM")
-
                         .anyRequest().authenticated())
 
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

@@ -120,27 +120,27 @@ Figura 4 - Diagrama de Pacote
 Fonte: Elaborado pelos autores (2026).
  
 ### 2.5.3 Visão estrutural
-
+ 
 A visão estrutural do sistema Seu Espaço UnB (SeU) apresenta os principais elementos que compõem a aplicação, como eles se conectam e suas responsabilidades dentro do processo de gerenciamento de reservas de espaços acadêmicos da FCTE.
-
+ 
 O sistema é composto pelos elementos principais:
-
-* Usuário;
-* Sala;
-* Horário da Sala;
-* Solicitação de Reserva.
-
-Os usuários do sistema são representados por uma única entidade, Usuario, diferenciada por um atributo de perfil (TipoUsuario, com os valores CLIENTE e ADM) em vez de subclasses distintas. Essa decisão simplifica a persistência dos dados e a lógica de autenticação, já que o Spring Security atribui os papéis de acesso (ROLE_CLIENTE, ROLE_ADM) diretamente a partir desse atributo, sem necessidade de herança entre classes. O perfil Cliente é responsável por consultar salas, verificar disponibilidade e realizar solicitações de reserva. O perfil Administrador possui permissões para analisar, aprovar ou rejeitar solicitações e gerenciar a ocupação dos espaços.
-
-A entidade Sala representa os espaços físicos disponíveis para uso acadêmico, enquanto HorarioSala define a grade de horários de cada ambiente: cada registro corresponde a um dia da semana fixo, com hora de início e fim. A ocupação por aulas regulares é indicada pelo campo descricaoOcupacao, enquanto a disponibilidade para reservas pontuais é controlada pela relação com a entidade Solicitacao. A entidade Solicitacao registra as reservas realizadas pelos usuários, armazenando motivo, quantidade de participantes, data de uso, status e, quando aplicável, a observação do administrador responsável pela análise.
-
+ 
+- Usuário
+- Cliente
+- Administrador
+- Sala
+- Horário da Sala
+- Solicitação de Reserva
+Os usuários do sistema são divididos em dois perfis: Cliente e Administrador. O Cliente é responsável por consultar salas, verificar disponibilidade e realizar solicitações de reserva. O Administrador possui permissões para analisar, aprovar ou rejeitar solicitações e gerenciar a ocupação dos espaços.
+ 
+A entidade Sala representa os espaços físicos disponíveis para uso acadêmico, enquanto HorarioSala controla os períodos disponíveis e ocupados de cada ambiente. A entidade Solicitação registra as reservas realizadas pelos usuários, armazenando informações como motivo, data e status da solicitação.
+ 
 Os elementos do sistema se conectam por meio de relacionamentos que representam o fluxo de funcionamento da aplicação:
-
-* um usuário pode realizar várias solicitações;
-* cada solicitação pertence a um horário específico (HorarioSala);
-* uma sala pode possuir vários horários cadastrados;
-* ao aprovar uma solicitação, o sistema rejeita automaticamente as demais solicitações pendentes que concorriam pelo mesmo horário e data.
-
+ 
+- Um cliente pode realizar várias solicitações;
+- Cada solicitação pertence a um horário específico;
+- Uma sala pode possuir vários horários cadastrados;
+- Os administradores podem analisar múltiplas solicitações.
 Figura 5 - Diagrama de Classes
  
 ![diagrama-classes](../static/diagrama-classes.png)
@@ -195,10 +195,13 @@ No que diz respeito às características de qualidade de software, destacam-se:
 - **Usabilidade:** a interface deve ser intuitiva e de fácil navegação, permitindo que usuários sem conhecimento técnico realizem reservas e consultas sem dificuldades;
 - **Eficiência:** o sistema deve apresentar tempo de resposta inferior a 2 segundos para as principais operações, como listagem e filtragem de espaços;
 - **Confiabilidade:** a aplicação deve garantir estabilidade nas funcionalidades entregues, assegurada pela Definition of Done da equipe, que exige testes aprovados e revisão de código antes de qualquer integração à branch principal;
-- **Portabilidade:** por ser uma aplicação web, o sistema deve funcionar nos principais navegadores modernos sem necessidade de instalação; 
-- **Segurança:** o sistema garante a criptografia de dados sensíveis e a proteção contra acessos não autorizados. A autenticação é gerenciada pelo Spring Security de forma *stateless* via tokens JWT, com os perfis de acesso centralizados em uma entidade única `Usuario` através de um enumerador (`TipoUsuario`), assegurando um controle de permissões leve e eficiente.
+- **Portabilidade:** por ser uma aplicação web, o sistema deve funcionar nos principais navegadores modernos sem necessidade de instalação;
+- **Segurança:** o sistema lida com dados pessoais dos usuários, como CPF, e-mail e senha, devendo garantir criptografia de senhas e proteção contra acessos não autorizados;
+Em relação à segurança e aos perfis de acesso, o sistema adota uma hierarquia de classes na qual tanto o perfil Cliente quanto o perfil Administrador herdam da classe base Usuario, responsável por centralizar os atributos comuns de identificação, como `id`, `nome`, `emailInstitucional`, `cpf` e `senha`.
  
-A diferenciação de permissões ocorre com base no papel atribuído ao usuário:
+Essa decisão arquitetural evita duplicação de dados e centraliza a lógica de autenticação em um único ponto.
+ 
+A diferenciação de permissões ocorre por meio da especialização da classe base:
  
 - O perfil **Cliente** possui acesso às operações de consulta e solicitação, podendo consultar salas, visualizar horários disponíveis, solicitar reservas e cancelar solicitações;
 - O perfil **Administrador** possui permissões de gestão, sendo responsável por consultar solicitações pendentes, aprovar reservas e rejeitar solicitações com observações, além de ser o único perfil capaz de alterar o estado de uma solicitação.

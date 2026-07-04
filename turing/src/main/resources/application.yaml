@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: "optional:file:.env[.properties]"
   application:
     name: turing
   datasource:
@@ -17,22 +15,6 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: ${MAIL_USERNAME}
-#    password: ${MAIL_PASSWORD}
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
-
-    resend:
-      api-key: ${RESEND_API_KEY}
-      sender-email: ${RESEND_SENDER_EMAIL}
-      sender-name: "Seu Espaço UnB"
 
 api:
   security:
@@ -44,4 +26,3 @@ admin:
     email: ${ADMIN_EMAIL:adm@gmail.com}
     senha: ${ADMIN_SENHA:123}
     cpf: ${ADMIN_CPF:00000000000}
-
