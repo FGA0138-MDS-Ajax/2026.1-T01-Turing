@@ -57,6 +57,10 @@ public class AuthController {
             throw new ConflictException("CPF ja cadastrado no sistema");
         }
 
+        if (usuarioService.AdmTestEmail(request.email())){
+            throw new ConflictException("Email ja cadastrado no sistema");
+        }
+
         novoUsuario.setName(request.name());
         novoUsuario.setEmail(request.email());
         novoUsuario.setCpf(request.cpf());

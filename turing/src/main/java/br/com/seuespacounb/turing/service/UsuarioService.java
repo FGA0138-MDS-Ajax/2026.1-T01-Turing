@@ -173,4 +173,13 @@ public class UsuarioService {
         }
         return false;
     }
+
+    public boolean AdmTestEmail(String email) throws NotFoundException {
+        Usuario emailUsuario = usuarioRepository.findByEmail(email);
+
+        if (emailUsuario != null) {
+            return true;
+        }
+        return false;
+    }
 }
