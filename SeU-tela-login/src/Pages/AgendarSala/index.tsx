@@ -226,20 +226,13 @@ const horariosDoDia = horarios.filter(
     h => h.diaSemana === diaSelecionado
 );
 
-function horarioEstaOcupado(horario: any) {
-
-    return solicitacoes.some((solicitacao) =>
-
-        solicitacao.horarioSalaId === horario.id &&
-
-        solicitacao.dataUso ===
-        dataSelecionada.toISOString().split("T")[0] &&
-
-        solicitacao.status !== "CANCELADA"
-
-    );
-
-}
+    function horarioEstaOcupado(horario: any) {
+        return solicitacoes.some((solicitacao) =>
+            solicitacao.horarioSala?.id === horario.id &&
+            solicitacao.dataUso === dataSelecionada.toISOString().split("T")[0] &&
+            (solicitacao.status === "PENDENTE" || solicitacao.status === "APROVADA")
+        );
+    }
 
     return (
 
