@@ -1,0 +1,209 @@
+.agendar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.hero {
+  background: #e7ecf1;
+  padding: 40px 50px; 
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+
+.hero h1 { 
+  margin: 0; 
+  color: #0a192f; 
+  font-size: 2.5rem;
+  font-weight: 800;  
+  line-height: 1.2;
+}
+
+.search-wrapper { 
+  position: relative; 
+  display: flex; 
+  align-items: center; 
+  margin-top: 20px; 
+  background: white;
+  border-radius: 50px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(91, 157, 231, 0.678);
+  transition: all 0.3s ease;
+}
+
+.search-icon { position: absolute; left: 15px; color: #888; }
+.search-wrapper input { 
+  width: 100%; 
+  padding: 15px 15px 15px 45px; 
+  border-radius: 30px; 
+  border: none; 
+  outline: none;
+  background: transparent;
+}
+
+.grid-salas { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+  gap: 20px; 
+}
+
+.sala-card {
+  padding: 20px;
+  border: 1px solid #10894e;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  background: white;
+}
+
+.sala-card:hover {
+  border-color: #10894e;
+  background: #f8fbff;
+  box-shadow: 0 4px 12px rgba(16, 137, 78, 0.1);
+}
+.card-info { display: flex; gap: 15px; color: #666; font-size: 0.85rem; margin: 15px 0; }
+.card-info span { display: flex; align-items: center; gap: 5px; }
+
+.btn-ver-horarios {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #10894e; 
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; 
+}
+ 
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-confirmar {
+  background: #0a192f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.filters-row {
+  display: flex;
+  gap: 15px;
+  width: 100%; 
+  margin-top: 20px;
+  flex-wrap: wrap; 
+}
+
+.filter-group {
+  flex: 1; 
+  min-width: 250px; 
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-group svg {
+  position: absolute;
+  left: 15px;
+  color: #555;
+  pointer-events: none;
+}
+
+
+.filter-group select, 
+.filter-group input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border-radius: 50px; 
+  border: 1px solid #ddd;
+  background: white;
+  outline: none;
+  font-size: 14px;
+}
+.calendar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+/* Garante que o DatePicker não ultrapasse o modal */
+.react-datepicker-wrapper {
+  display: block;
+}
+
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.horarios-grid button {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.horarios-grid button.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+/* --- Estilização da Paginação --- */
+.paginacao button {
+  background: #173a6e;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.paginacao button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.paginacao button:hover:not(:disabled) {
+  background: #173a6e;
+}
+
+.paginacao span {
+  font-weight: 600;
+  color: #333;
+}

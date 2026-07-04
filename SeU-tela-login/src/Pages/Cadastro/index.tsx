@@ -1,89 +1,166 @@
-import './style.css'
-import logo from '/src/assets/Assinatura Versão Preferencial Horizontal Reduzida.png'
+import '../auth.css'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import triangulo_azul from '/src/assets/triangulo_azul.png'
-import triangulo_verde from '/src/assets/triangulo_verde.png'
-import meia_lua_azul from '/src/assets/meia_lua_azul.png'
-import meia_lua_verde from '/src/assets/meia_lua_verde.png'
-import meio_arco_azul from '/src/assets/meio_arco_azul.png'
-import meio_arco_verde from '/src/assets/meio_arco_verde.png'
-import arco_verde from '/src/assets/arco_verde.png'
-
+import { useState, type CSSProperties } from 'react'
+import BrandLogo from '../../components/BrandLogo'
+import ThemeToggle from '../../components/ThemeToggle'
+import heroSalas from '../../assets/hero-salas.jpg'
 
 function Cadastro() {
-  
-      const navigate = useNavigate()
+  const navigate = useNavigate()
 
-      const [name, setName] = useState('')
-      const [cpf, setCpf] = useState('')
-      const [email, setEmail] = useState('')
-      const [password, setPassword] = useState('')
-      const [erro, setErro] = useState('')
+  const [name, setName] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [erro, setErro] = useState('')
+  const [carregando, setCarregando] = useState(false)
 
-      async function handleCadastro() {
-        setErro('')
-        try {
-          const resposta = await fetch('https://two026-turing.onrender.com/auth/register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, cpf, password, tipousuario: 'CLIENTE' })
-          })
+  async function handleCadastro() {
+    setErro('')
+    setCarregando(true)
+    try {
+      const resposta = await fetch('https://two026-turing.onrender.com/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, cpf, password, tipousuario: 'CLIENTE' })
+      })
 
-          if (resposta.ok) {
-            const dados = await resposta.json()
-            console.log(dados)
-            alert('Cadastro feito com sucesso!')
-            navigate('/')
-          } else {
-            setErro('Erro ao cadastrar usuário. Tente novamente.')
-          }
-        } catch (e) {
-          setErro('Não foi possível conectar ao servidor!')
-        }
+      if (resposta.ok) {
+        const dados = await resposta.json()
+        console.log(dados)
+        alert('Cadastro feito com sucesso!')
+        navigate('/login')
+      } else {
+        setErro('Erro ao cadastrar usuário. Tente novamente.')
       }
+    } catch {
+      setErro('Não foi possível conectar ao servidor!')
+    } finally {
+      setCarregando(false)
+    }
+  }
 
   return (
-    
-        <div className='container'>
-        <img src={arco_verde} style={{position:'absolute', left:0, bottom:'10%', width:'100px', transform:'rotate(180deg)', zIndex: -1}} />
-        <img src={meia_lua_azul} style={{position:'absolute', left:'50%', top:'75px', width:'100px', transform:'rotate(45deg)', zIndex: -1}} />
-        <img src={triangulo_azul} style={{position:'absolute', left:'25%', bottom:'25%', width:'200px', transform:'rotate(-45deg)', zIndex: -1}} />
-        <img src={meio_arco_verde} style={{position:'absolute', top:'100px', left:'0', width:'150px', transform:'rotate(180deg)', zIndex: -1}} />
-        <img src={meia_lua_verde} style={{position:'absolute', right:0, top:'225px', width:'75px', zIndex: -1}} />
-        <img src={meio_arco_azul} style={{position:'absolute', right:0, top:'150px', width:'150px', zIndex: -1}} />
-        <img src={triangulo_verde} style={{position:'absolute', right:'0', bottom:'10%', width:'200px', transform:'rotate(-90deg)', zIndex: -1}} />
-        <img src={logo} alt="Logo" className='logo' />
+    <div className="auth-shell" style={{ '--auth-hero-image': `url(${heroSalas})` } as CSSProperties}>
+      <aside className="auth-hero" aria-label="Apresentação do Seu espaço UnB">
+        <div className="auth-hero__content">
+          <div className="auth-hero__top">
+            <BrandLogo light />
+            <button type="button" className="auth-ghost-link" onClick={() => navigate('/')}>
+              Entrar
+            </button>
+          </div>
 
-        <img src={logo} alt="Logo" className='logo' />
+          <div className="auth-hero__headline">
+            <span className="auth-eyebrow">Cadastro acadêmico</span>
+            <h1>Crie sua conta para reservar espaços.</h1>
+            <p>
+              Cadastre seus dados para acompanhar horários disponíveis e participar da gestão digital
+              de salas, laboratórios e auditórios.
+            </p>
+          </div>
 
-        <button className='btn-login' onClick={() => navigate('/')}>Entrar</button>
-          <form>
-            <h1>Cadastro</h1> 
-            <div className='inputs'>
-                <label>Usuário:</label>
-                <input name='user' type='text' value={name} onChange={e => setName(e.target.value)} placeholder='Digite seu nome...'/>
-            </div>
-          <div className='inputs'>  
-            <label>CPF:</label>
-            <input name='cpf' type='text' value={cpf} onChange={e => setCpf(e.target.value)} placeholder='Digite seu CPF...'/>
-          </div>
-          <div className='inputs'>
-            <label>Email:</label>
-            <input name='email' type='email' value={email} onChange={e => setEmail(e.target.value)} placeholder='Digite seu email...'/>
-          </div>
-          <div className='inputs'>  
-            <label>Senha:</label>
-            <input name='password' type='password' value={password} onChange={e => setPassword(e.target.value)} placeholder='Digite sua senha...'/>
-          </div>
-          {erro && <p style={{ color: 'red' }}>{erro}</p>}
-            <button className="btn-confirmar" type='button' onClick={handleCadastro}>Confirmar Cadastro</button>
-  
-          </form>
+          <span className="auth-hero__footer">FCTE · Universidade de Brasília</span>
         </div>
-    
+      </aside>
+
+      <main className="auth-main">
+        <div className="auth-panel">
+          <div className="auth-mobile-header">
+            <BrandLogo />
+            <ThemeToggle />
+          </div>
+
+          <section className="auth-card" aria-labelledby="signup-title">
+            <div className="auth-card__header">
+              <h1 id="signup-title">Cadastro</h1>
+              <p className="auth-card__description">
+                Informe seus dados para criar uma conta no Seu espaço UnB.
+              </p>
+            </div>
+
+            <form
+              className="auth-form"
+              onSubmit={(event) => {
+                event.preventDefault()
+                handleCadastro()
+              }}
+            >
+              <div className="auth-field">
+                <label htmlFor="signup-name">Nome completo</label>
+                <input
+                  id="signup-name"
+                  name="user"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Seu nome"
+                  autoComplete="name"
+                  required
+                />
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="signup-cpf">CPF</label>
+                <input
+                  id="signup-cpf"
+                  name="cpf"
+                  type="text"
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
+                  placeholder="000.000.000-00"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  required
+                />
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="signup-email">E-mail</label>
+                <input
+                  id="signup-email"
+                  name="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="voce@aluno.unb.br"
+                  autoComplete="email"
+                  required
+                />
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="signup-password">Senha</label>
+                <input
+                  id="signup-password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Crie uma senha"
+                  autoComplete="new-password"
+                  required
+                />
+              </div>
+
+              {erro && <p className="auth-alert">{erro}</p>}
+
+              <div className="auth-actions">
+                <button className="auth-button auth-button--primary" type="submit" disabled={carregando}>
+                  {carregando ? 'Criando conta...' : 'Confirmar cadastro'}
+                </button>
+              </div>
+            </form>
+
+            <p className="auth-switch">
+              Já tem conta? <button type="button" onClick={() => navigate('/')}>Entrar</button>
+            </p>
+          </section>
+        </div>
+      </main>
+    </div>
   )
 }
 

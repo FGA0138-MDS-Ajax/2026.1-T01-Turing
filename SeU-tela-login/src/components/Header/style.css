@@ -1,0 +1,191 @@
+.navbar {
+  display: flex;
+  flex-direction: row ;
+  flex-wrap: nowrap; 
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  background: white;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+ 
+.header-logo { 
+  display: flex !important; 
+  align-items: center !important; 
+  flex-shrink: 0 !important; 
+  width: auto !important;
+  margin-top: 0px;
+}
+
+.header-logo-img {
+  height: 40px;   
+  width: auto;     
+  max-height: 100% !important; 
+  object-fit: contain !important;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  gap: 200px;        
+  margin-left: 10px;           
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.2s; 
+}
+
+.nav-links a:hover {
+  opacity: 0.7; 
+}
+
+.nav-links a.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+.user-profile {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 15px !important;
+  white-space: nowrap;
+  flex: 0 0 auto !important;
+}
+
+.user-profile a {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.user-profile a:hover {
+  opacity: 0.7;
+}
+
+.login-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #333;
+  transition: opacity 0.2s;
+  font-size: 1rem;
+}
+
+.login-btn:hover {
+  opacity: 0.7; 
+}
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 20px; 
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+
+.calendar-wrapper .react-datepicker {
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 20px !important; 
+  overflow: hidden; 
+  width: 55%;
+}
+.react-datepicker__header {
+  background-color: #10894e !important;
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+  border-bottom: none !important;
+  padding-top: 10px;
+}
+
+.react-datepicker__current-month {
+  color: white !important;
+  font-size: 1.2rem !important;
+  margin-bottom: 10px !important;
+}
+
+
+.react-datepicker__day--selected {
+  background-color: #10894e !important;
+  border-radius: 50% !important;
+}
+
+.horarios-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.horarios-grid button {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.horarios-grid button.active {
+  background: #10894e;
+  color: white;
+  border-color: #10894e;
+}
+
+.btn-confirmar {
+  width: 100%;
+  padding: 12px;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-confirmar:disabled {
+  background: #ccc;
+}
