@@ -53,20 +53,13 @@ export const Header = ({ isLogged = false }: HeaderProps) => {
         <img src={logo} alt="Logo Seu Espaço UnB" className="header-logo-img" />
       </div>
 
-<<<<<<< HEAD:SeU-tela-login/src/components/Header.tsx
       {!isAdminRoute && (
-        <nav className="nav-links">
-          <Link to="/agendar">Agendar</Link>
-          <Link to="/agendamentos">Meus Agendamentos</Link>
-        </nav>
-      )}
-=======
-      <nav className="nav-links">
-        <Link to="/">Tela Inicial</Link>
-        <Link to="/agendar">Agendar</Link>
-        <Link to="/agendamentos">Meus Agendamentos</Link>
-      </nav>
->>>>>>> 1b474fe9df8ecac6aacb0112591957b2c50abcaa:SeU-tela-login/src/components/Header/index.tsx
+          <nav className="nav-links">
+            <Link to="/">Tela Inicial</Link>
+            <Link to="/agendar">Agendar</Link>
+            <Link to="/agendamentos">Meus Agendamentos</Link>
+          </nav>
+        )}
 
       <div className="user-profile">
         {isLogged ? (
