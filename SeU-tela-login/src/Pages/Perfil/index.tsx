@@ -54,211 +54,50 @@ export default function Perfil() {
 
   },[]);
 
-  async function carregarUsuario(){
+ async function carregarUsuario() {
+    setLoading(true);
 
-      const token = localStorage.getItem("token");
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-      if(!token){
+    const mock = {
+        name: "Usuário Teste",
+        email: "usuario@aluno.unb.br",
+        cpf: "123.456.789-00",
+        tipoUsuario: "CLIENTE"
+    };
 
-          alert("Faça login.");
+    setUsuario(mock);
+    setOriginal(mock);
 
-          return;
+    setLoading(false);
+}
 
-      }
+    function cancelar() {
+    setUsuario(original);
+    setSenha("");
+    setConfirmarSenha("");
+}
 
-      try{
+  async function salvar() {
 
-          /*
-          Quando o backend criar:
+    if (senha !== confirmarSenha) {
+        alert("As senhas não coincidem.");
+        return;
+    }
 
-          GET /turing/usuarios/me
+    setSaving(true);
 
-          basta remover o mock abaixo.
-          */
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-          const resposta = await fetch(
-              "https://two026-turing.onrender.com/turing/usuarios/me",
-              {
-                  headers:{
-                      Authorization:`Bearer ${token}`
-                  }
-              }
-          );
+    setOriginal(usuario);
 
-          if(resposta.ok){
+    setSenha("");
+    setConfirmarSenha("");
 
-              const dados = await resposta.json();
+    setSaving(false);
 
-              setUsuario(dados);
-
-              setOriginal(dados);
-
-          }
-
-          else{
-
-              /*
-              MOCK TEMPORÁRIO
-
-              Quando existir o endpoint
-              este trecho nunca será executado.
-              */
-
-              const mock = {
-
-                  name:"Usuário",
-
-                  email:"usuario@aluno.unb.br",
-
-                  cpf:"00000000000",
-
-                  tipoUsuario:"CLIENTE"
-
-              };
-
-              setUsuario(mock);
-
-              setOriginal(mock);
-
-          }
-
-      }
-
-      catch{
-
-          const mock = {
-
-              name:"Usuário",
-
-              email:"usuario@aluno.unb.br",
-
-              cpf:"00000000000",
-
-              tipoUsuario:"CLIENTE"
-
-          };
-
-          setUsuario(mock);
-
-          setOriginal(mock);
-
-      }
-
-      finally{
-
-          setLoading(false);
-
-      }
-
-  }
-
-  function cancelar(){
-
-      setUsuario(original);
-
-      setSenha("");
-
-      setConfirmarSenha("");
-
-  }
-
-  async function salvar(){
-
-      if(senha!==confirmarSenha){
-
-          alert("As senhas não coincidem.");
-
-          return;
-
-      }
-
-      setSaving(true);
-
-      const token = localStorage.getItem("token");
-
-      try{
-
-          const resposta = await fetch(
-
-              "https://two026-turing.onrender.com/turing/usuarios",
-
-              {
-
-                  method:"PUT",
-
-                  headers:{
-
-                      "Content-Type":"application/json",
-
-                      Authorization:`Bearer ${token}`
-
-                  },
-
-                  body:JSON.stringify({
-
-                      name:usuario.name,
-
-                      email:usuario.email,
-
-                      cpf:usuario.cpf,
-
-                      senha:senha,
-
-                      tipoUsuario:usuario.tipoUsuario
-
-                  })
-
-              }
-
-          );
-
-          if(resposta.ok){
-
-              const dados = await resposta.json();
-
-              if(dados.usuario){
-
-                  setUsuario(dados.usuario);
-
-                  setOriginal(dados.usuario);
-
-              }
-
-              if(dados.token){
-
-                  localStorage.setItem("token",dados.token);
-
-              }
-
-              setSenha("");
-
-              setConfirmarSenha("");
-
-              alert("Dados atualizados com sucesso!");
-
-          }
-
-          else{
-
-              alert("Não foi possível atualizar.");
-
-          }
-
-      }
-
-      catch{
-
-          alert("Erro ao conectar ao servidor.");
-
-      }
-
-      finally{
-
-          setSaving(false);
-
-      }
-
-  }
+    alert("Dados atualizados com sucesso! (Mock)");
+}
 
   if(loading){
 
