@@ -61,7 +61,7 @@ export default function Perfil() {
       if(!token){
 
           alert("Faça login.");
-
+          setLoading(false);
           return;
 
       }
@@ -307,7 +307,7 @@ export default function Perfil() {
 
                   <div className="perfil-avatar">
 
-                      {usuario.name.charAt(0).toUpperCase()}
+                      {usuario?.name ? usuario.name.charAt(0).toUpperCase() : "U"}
 
                   </div>
 
