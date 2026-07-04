@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CalendarCheck2, Clock, ShieldCheck, MousePointerClick, BellRing,
@@ -76,7 +75,7 @@ export default function Landing() {
         </motion.div>
       </section>
 
-      {/* Seção 1: Features (Você tinha o array, mas faltava mostrar na tela) */}
+      {/* Seção 1: Features*/}
       <section className="features-section">
         <div className="grid-container">
           {features.map((f, i) => (

@@ -7,7 +7,6 @@ import './style.css';
  
 export const Agendar = () => {
   const navigate = useNavigate();
-  const [isLogged, setIsLogged] = useState(!!localStorage.getItem('token'));
   const [busca, setBusca] = useState('');
   const [campus, setCampus] = useState('Todos');
   const [predio, setPredio] = useState('Todos');
@@ -60,7 +59,7 @@ export const Agendar = () => {
 
   return (
     <>
-      <Header isLogged={isLogged} />
+      <Header isLogged={!!localStorage.getItem('token')} />
 
       <div className="agendar-container">
         <header className="hero">

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { UserCircle, LogIn, LogOut, Shield, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { toast } from 'sonner';
 import logo from '/src/assets/assinatura_versao_preferencial_horizontal.svg';
 import './style.css';
 

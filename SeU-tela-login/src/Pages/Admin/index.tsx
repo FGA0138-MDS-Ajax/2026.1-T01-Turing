@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect } from "react";
 import { Ban, Edit, MapPin, Plus, ShieldCheck, Trash2 } from "lucide-react";
-import { toast } from "sonner"; 
 import { motion } from "framer-motion"; 
 import { Header } from "../../components/Header"; 
 import './style.css';
+
 
 type Profile = { id: string | number; nome: string; email: string; cpf: string | null; papel: string };
 type Sala = { id: string | number; nome: string; capacidade: number; localizacao: string };
@@ -92,11 +92,11 @@ export default function GestaoInfraestrutura() {
 
     if (!response.ok) throw new Error("Erro na requisição. Verifique o Swagger.");
     
-    toast.success(`Sala ${isEdit ? 'atualizada' : 'criada'} com sucesso!`);
+    alert(`Sala ${isEdit ? 'atualizada' : 'criada'} com sucesso!`);
     setModalSala(null);
     carregarDados();
   } catch (error) {
-    toast.error(error instanceof Error ? error.message : "Erro ao salvar.");
+    alert(error instanceof Error ? error.message : "Erro ao salvar.");
   }
 }
 
@@ -112,9 +112,9 @@ export default function GestaoInfraestrutura() {
     if (!response.ok) throw new Error("Erro ao excluir. A sala pode estar em uso.");
     
     setSalas(prev => prev.filter(sala => sala.id !== id));
-    toast.success("Sala removida!");
+    alert("Sala removida!");
   } catch (error) {
-    toast.error("Erro ao remover sala.");
+    alert("Erro ao remover sala.");
   }
 }
 
@@ -135,23 +135,23 @@ export default function GestaoInfraestrutura() {
 
       if (!response.ok) throw new Error("Erro ao atualizar o aluno.");
       
-      toast.success("Dados do aluno atualizados com sucesso!");
+      alert("Dados do aluno atualizados com sucesso!");
       setModalAluno(null);
       carregarDados();
 
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Erro desconhecido.");
+      alert(error instanceof Error ? error.message : "Erro desconhecido.");
     }
   }
 
   const handleToggleBlock = (studentId: string | number, block: boolean) => {
     if (block) {
       setBlocks(prev => [...prev, { user_id: studentId, motivo: "" }]);
-      toast.success("Aluno bloqueado!");
+      alert("Aluno bloqueado!");
       setModalBloqueioAluno(null);
     } else {
       setBlocks(prev => prev.filter(b => b.user_id !== studentId));
-      toast.success("Aluno desbloqueado!");
+      alert("Aluno desbloqueado!");
     }
   };
 

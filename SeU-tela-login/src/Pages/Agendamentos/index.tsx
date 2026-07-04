@@ -5,7 +5,6 @@ import { Calendar, Clock, MapPin, Trash2 } from 'lucide-react';
 import './style.css'; 
 
 export const Agendamentos = () => {
-  const [isLogged, setIsLogged] = useState(true);
   const [minhasReservas, setMinhasReservas] = useState<any[]>([]);
 
   const carregarReservas = async () => {

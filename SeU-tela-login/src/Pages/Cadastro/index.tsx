@@ -42,7 +42,6 @@ function Cadastro() {
         alert('Cadastro feito com sucesso!')
         navigate('/login')
       } else {
-        // Se der erro 400 novamente, tentamos ler a mensagem exata que o Java mandou
         const erroDoServidor = await resposta.text()
         console.error("Motivo da recusa pelo backend:", erroDoServidor)
         setErro('Erro ao cadastrar. Verifique se o CPF é válido ou se o email já existe.')
