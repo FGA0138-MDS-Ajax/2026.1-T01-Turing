@@ -45,8 +45,14 @@ public class UsuarioController {
         usuarioService.deletarDadosProprioUsuario(usuarioLogado.getId());
     }
 
+    @GetMapping("/usuarios/me")
+    @ResponseStatus(HttpStatus.OK)
+    public AdmGetUsuarioDTO getMeuPerfil(
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) throws NotFoundException {
 
-
+        return usuarioService.getMeuPerfil(usuarioLogado.getId());
+    }
 
 
     @GetMapping("/usuarios/adm")
