@@ -120,27 +120,27 @@ Figura 4 - Diagrama de Pacote
 Fonte: Elaborado pelos autores (2026).
  
 ### 2.5.3 Visão estrutural
- 
+
 A visão estrutural do sistema Seu Espaço UnB (SeU) apresenta os principais elementos que compõem a aplicação, como eles se conectam e suas responsabilidades dentro do processo de gerenciamento de reservas de espaços acadêmicos da FCTE.
- 
+
 O sistema é composto pelos elementos principais:
- 
-- Usuário
-- Cliente
-- Administrador
-- Sala
-- Horário da Sala
-- Solicitação de Reserva
-Os usuários do sistema são divididos em dois perfis: Cliente e Administrador. O Cliente é responsável por consultar salas, verificar disponibilidade e realizar solicitações de reserva. O Administrador possui permissões para analisar, aprovar ou rejeitar solicitações e gerenciar a ocupação dos espaços.
- 
-A entidade Sala representa os espaços físicos disponíveis para uso acadêmico, enquanto HorarioSala controla os períodos disponíveis e ocupados de cada ambiente. A entidade Solicitação registra as reservas realizadas pelos usuários, armazenando informações como motivo, data e status da solicitação.
- 
+
+* Usuário;
+* Sala;
+* Horário da Sala;
+* Solicitação de Reserva.
+
+Os usuários do sistema são representados por uma única entidade, Usuario, diferenciada por um atributo de perfil (TipoUsuario, com os valores CLIENTE e ADM) em vez de subclasses distintas. Essa decisão simplifica a persistência dos dados e a lógica de autenticação, já que o Spring Security atribui os papéis de acesso (ROLE_CLIENTE, ROLE_ADM) diretamente a partir desse atributo, sem necessidade de herança entre classes. O perfil Cliente é responsável por consultar salas, verificar disponibilidade e realizar solicitações de reserva. O perfil Administrador possui permissões para analisar, aprovar ou rejeitar solicitações e gerenciar a ocupação dos espaços.
+
+A entidade Sala representa os espaços físicos disponíveis para uso acadêmico, enquanto HorarioSala define a grade de horários de cada ambiente: cada registro corresponde a um dia da semana fixo, com hora de início e fim. A ocupação por aulas regulares é indicada pelo campo descricaoOcupacao, enquanto a disponibilidade para reservas pontuais é controlada pela relação com a entidade Solicitacao. A entidade Solicitacao registra as reservas realizadas pelos usuários, armazenando motivo, quantidade de participantes, data de uso, status e, quando aplicável, a observação do administrador responsável pela análise.
+
 Os elementos do sistema se conectam por meio de relacionamentos que representam o fluxo de funcionamento da aplicação:
- 
-- Um cliente pode realizar várias solicitações;
-- Cada solicitação pertence a um horário específico;
-- Uma sala pode possuir vários horários cadastrados;
-- Os administradores podem analisar múltiplas solicitações.
+
+* um usuário pode realizar várias solicitações;
+* cada solicitação pertence a um horário específico (HorarioSala);
+* uma sala pode possuir vários horários cadastrados;
+* ao aprovar uma solicitação, o sistema rejeita automaticamente as demais solicitações pendentes que concorriam pelo mesmo horário e data.
+
 Figura 5 - Diagrama de Classes
  
 ![diagrama-classes](../static/diagrama-classes.png)
