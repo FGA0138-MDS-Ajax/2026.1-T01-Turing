@@ -54,7 +54,6 @@ export const Header = ({ isLogged = false }: HeaderProps) => {
 
       {!isAdminRoute && (
           <nav className="nav-links">
-            <Link to="/">Tela Inicial</Link>
             <Link to="/agendar">Agendar</Link>
             <Link to="/agendamentos">Meus Agendamentos</Link>
           </nav>

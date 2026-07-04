@@ -8,6 +8,7 @@ import './style.css';
 type Profile = { id: string | number; nome: string; email: string; cpf: string | null; papel: string };
 type Sala = { id: string | number; nome: string; capacidade: number; localizacao: string };
 type Block = { user_id: string | number; motivo: string };
+type Horario = { id: string | number; inicio: string; fim: string; salaId: string | number };
 
 function formatCpf(cpf: string | null | undefined) {
   const digits = (cpf ?? "").replace(/\D/g, "");
@@ -16,7 +17,7 @@ function formatCpf(cpf: string | null | undefined) {
 }
 
 export default function GestaoInfraestrutura() {
-  const [abaAtiva, setAbaAtiva] = useState<'salas' | 'alunos'>('salas');
+  const [abaAtiva, setAbaAtiva] = useState<'salas' | 'alunos' | 'horarios'>('salas');
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [salas, setSalas] = useState<Sala[]>([]);
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -25,10 +26,12 @@ export default function GestaoInfraestrutura() {
 
   const [buscaAluno, setBuscaAluno] = useState("");
   const [buscaSala, setBuscaSala] = useState("");
-  
   const [modalBloqueioAluno, setModalBloqueioAluno] = useState<Profile | null>(null);
   const [modalSala, setModalSala] = useState<Partial<Sala> | null>(null);
   const [modalAluno, setModalAluno] = useState<Profile | null>(null);
+
+  const [horarios, setHorarios] = useState<Horario[]>([]);
+  const [modalHorario, setModalHorario] = useState<Partial<Horario> | null>(null);
 
   useEffect(() => {
     carregarDados();
@@ -44,10 +47,14 @@ export default function GestaoInfraestrutura() {
         "Authorization": `Bearer ${token}`
       };
 
-      const [resUsuarios, resSalas] = await Promise.all([
-  fetch("https://two026-turing.onrender.com/usuarios", { headers: headersSeguranca }),
-  fetch("https://two026-turing.onrender.com/salas", { headers: headersSeguranca })
-]);
+      const [resUsuarios, resSalas, resHorarios] = await Promise.all([
+        fetch("https://two026-turing.onrender.com/turing/usuarios/adm", { headers: headersSeguranca }),
+        fetch("https://two026-turing.onrender.com/turing/salas", { headers: headersSeguranca }),
+        fetch("https://two026-turing.onrender.com/turing/horarios", { headers: headersSeguranca })
+      ]);
+
+      const dadosHorarios = await resHorarios.json();
+      setHorarios(dadosHorarios.content ? dadosHorarios.content : dadosHorarios);
 
       if (!resUsuarios.ok || !resSalas.ok) {
         throw new Error("Sua sessão expirou ou você não tem permissão de Admin. Faça login novamente.");
@@ -72,8 +79,8 @@ export default function GestaoInfraestrutura() {
 
   const isEdit = !!modalSala.id;
   const url = isEdit 
-    ? `https://two026-turing.onrender.com/salas/${modalSala.id}` 
-    : `https://two026-turing.onrender.com/salas`;
+    ? `https://two026-turing.onrender.com/turing/salas/${modalSala.id}` 
+    : `https://two026-turing.onrender.com/turing/salas`;
   
   try {
     const token = localStorage.getItem("token");
@@ -104,7 +111,7 @@ export default function GestaoInfraestrutura() {
   if (!window.confirm("Confirma a exclusão desta sala?")) return;
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`https://two026-turing.onrender.com/salas/${id}`, {
+    const response = await fetch(`https://two026-turing.onrender.com/turing/salas/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${token}` }
     });
@@ -124,7 +131,7 @@ export default function GestaoInfraestrutura() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`https://two026-turing.onrender.com/usuarios/${modalAluno.id}`, {
+      const response = await fetch(`https://two026-turing.onrender.com/turing/usuarios/adm/${modalAluno.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -143,6 +150,39 @@ export default function GestaoInfraestrutura() {
       alert(error instanceof Error ? error.message : "Erro desconhecido.");
     }
   }
+
+  async function handleSalvarHorario(e: React.FormEvent) {
+  e.preventDefault();
+  if (!modalHorario) return;
+  const isEdit = !!modalHorario.id;
+  const url = isEdit ? `https://two026-turing.onrender.com/turing/horarios/${modalHorario.id}` : `https://two026-turing.onrender.com/turing/horarios`;
+  
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(url, {
+      method: isEdit ? "PUT" : "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify(modalHorario)
+    });
+    if (!response.ok) throw new Error("Erro ao salvar.");
+    alert("Horário salvo!");
+    setModalHorario(null);
+    carregarDados();
+  } catch (error) { alert("Erro ao salvar."); }
+}
+
+async function handleExcluirHorario(id: string | number) {
+  if (!window.confirm("Confirmar exclusão?")) return;
+  try {
+    const token = localStorage.getItem("token");
+    await fetch(`https://two026-turing.onrender.com/turing/horarios/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    alert("Horário removido!");
+    carregarDados();
+  } catch (error) { alert("Erro ao remover."); }
+}
 
   const handleToggleBlock = (studentId: string | number, block: boolean) => {
     if (block) {
@@ -185,6 +225,9 @@ export default function GestaoInfraestrutura() {
             </div>
           </div>
           <div className="tabs-container">
+            <button className={`tab-button ${abaAtiva === 'horarios' ? 'active' : ''}`} onClick={() => setAbaAtiva('horarios')}>
+            Horários
+            </button>
             <button className={`tab-button ${abaAtiva === 'salas' ? 'active' : ''}`} onClick={() => setAbaAtiva('salas')}>
               Salas e Horários
             </button>
@@ -281,6 +324,28 @@ export default function GestaoInfraestrutura() {
           </>
         )}
 
+            {abaAtiva === 'horarios' && (
+              <motion.div className="aba-conteudo" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}>
+                <div className="controles-secao">
+                  <button className="btn-primario" onClick={() => setModalHorario({ inicio: "", fim: "", salaId: "" })}>
+                    <Plus size={20} /> Novo Horário
+                  </button>
+                </div>
+                <div className="lista-grid">
+                  {horarios.map((h) => (
+                    <div key={h.id} className="card-item">
+                      <h3>{h.inicio} às {h.fim}</h3>
+                      <p>ID da Sala: {h.salaId}</p>
+                      <div className="item-acoes">
+                        <button className="btn-acao" onClick={() => setModalHorario(h)}><Edit size={16} /> Editar</button>
+                        <button className="btn-acao btn-perigo" onClick={() => handleExcluirHorario(h.id)}><Trash2 size={16} /> Excluir</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
         {modalSala && (
           <div className="modal-overlay">
             <div className="modal-content" style={{ maxWidth: '400px' }}>
@@ -333,6 +398,23 @@ export default function GestaoInfraestrutura() {
                 <button className="btn-cancelar" onClick={() => setModalBloqueioAluno(null)}>Cancelar</button>
                 <button className="btn-confirmar" onClick={() => handleToggleBlock(modalBloqueioAluno.id, true)}>Confirmar Bloqueio</button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {modalHorario && (
+          <div className="modal-overlay">
+            <div className="modal-content" style={{ maxWidth: '400px' }}>
+              <h2>{modalHorario.id ? 'Editar Horário' : 'Novo Horário'}</h2>
+              <form onSubmit={handleSalvarHorario} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <input required type="time" className="pesquisa-input" value={modalHorario.inicio || ''} onChange={(e) => setModalHorario({...modalHorario, inicio: e.target.value})} />
+                <input required type="time" className="pesquisa-input" value={modalHorario.fim || ''} onChange={(e) => setModalHorario({...modalHorario, fim: e.target.value})} />
+                <input required type="number" placeholder="ID da Sala" className="pesquisa-input" value={modalHorario.salaId || ''} onChange={(e) => setModalHorario({...modalHorario, salaId: e.target.value})} />
+                <div className="modal-acoes">
+                  <button type="button" className="btn-cancelar" onClick={() => setModalHorario(null)}>Cancelar</button>
+                  <button type="submit" className="btn-confirmar">Salvar</button>
+                </div>
+              </form>
             </div>
           </div>
         )}
