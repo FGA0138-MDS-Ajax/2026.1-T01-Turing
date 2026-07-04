@@ -63,3 +63,57 @@ Quadro x - Roteiro de Testes do Sistema Seu Espaço UnB
 | CT-27 | Filtro por prédio | Validar filtro de prédio | Sistema | Funcional | Lista de salas carregada | Apenas salas do prédio selecionado são exibidas | Aprovado |![ct27](../static/ct27.png)| Nenhum | 1 |
 | CT-28 | Filtro por capacidade | Validar filtro de capacidade mínima | Sistema | Funcional | Lista de salas carregada | Apenas salas com capacidade suficiente são exibidas | Aprovado |..| Nenhum | 1 |
 | CT-29 | Paginação das salas | Validar navegação entre páginas | Sistema | Funcional | Mais de seis salas cadastradas | Navegação entre páginas funcionando corretamente | Aprovado | . | Nenhum | 1 |
+
+
+
+## Como Rodar os Testes Unitários
+
+**Pré-requisitos:**
+- Java 17 instalado (Temurin/Eclipse Adoptium)
+- Maven instalado
+
+**Passos:**
+```bash
+# 1. Acessar a pasta do backend
+cd turing
+
+# 2. Configurar o Java 17
+set JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot
+
+# 3. Rodar os testes na branch correta
+git checkout testes
+mvn clean test
+```
+
+**Resultado esperado:**
+Tests run: 32, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS
+
+## Como Rodar os Testes de Integração e Sistema
+
+**Pré-requisitos:**
+- Postman instalado
+- Backend rodando (local ou via Render: https://two026-turing.onrender.com)
+
+**Passos:**
+1. Importe a collection `Seu Espaço UnB — Roteiro de Testes.postman_collection.json` no Postman (Import → seleciona o arquivo)
+2. Crie um Environment chamado `Turing - Render` com as variáveis:
+
+| Variável | Valor |
+|---|---|
+| baseUrl | https://two026-turing.onrender.com |
+| token | (preenchido automaticamente após CT-02) |
+| tokenAdmin | (preenchido automaticamente após CT-02-ADM) |
+| solicitacaoA | (preenchido automaticamente após CT-23) |
+
+3. Selecione o environment `Turing - Render` no canto superior direito do Postman
+4. Execute os requests na ordem da collection
+
+**Credenciais de teste:**
+
+| Usuário | Email | Senha |
+|---|---|---|
+| Cliente | teste_auto@aluno.unb.br | Senha@123 |
+| Administrador | adm@gmail.com | 123 |
+
+**Resultado esperado:** todos os testes com status PASSED na aba Test Results de cada request.
