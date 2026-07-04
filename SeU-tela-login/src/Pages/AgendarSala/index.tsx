@@ -25,9 +25,7 @@ export default function AgendarSala() {
 
     const navigate = useNavigate();
 
-    const [isLogged, setIsLogged] = useState(
-        !!localStorage.getItem("token")
-    );
+    <Header isLogged={!!localStorage.getItem('token')} />
 
     const [sala, setSala] = useState<any>(null);
     const [quantidadeParticipantes, setQuantidadeParticipantes] = useState(1);
@@ -247,7 +245,7 @@ function horarioEstaOcupado(horario: any) {
 
         <>
 
-            <Header isLogged={isLogged} />
+            <Header isLogged={!!localStorage.getItem('token')} />
 
             <div className="agendar-sala-container">
 

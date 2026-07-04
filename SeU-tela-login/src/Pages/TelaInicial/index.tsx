@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CalendarCheck2, Clock, ShieldCheck, MousePointerClick, BellRing,
@@ -40,15 +39,17 @@ const fadeUp = {
 
 export default function Landing() {
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
+  const estaLogado = !!token;
   return (
     <div className="landing-container">
       <header className="landing-header">
         <img src={assinatura_versao_preferencial_horizontal} alt="Logo Seu Espaço UnB" className="landing-logo-img" style={{ height: '50px', width: 'auto' }}/>
-        <button 
-          onClick={() => navigate('/login')} 
-          className="btn-header">
-          Entrar
+        <button
+              onClick={() => navigate(estaLogado ? '/agendar' : '/login')}
+              className="btn-header"
+            >
+              {estaLogado ? 'Agendar' : 'Entrar'}
         </button>
       </header>
 
@@ -63,7 +64,7 @@ export default function Landing() {
           </p>
           
           <div className="hero-button">
-            <button onClick={() => navigate('/Cadastro')} className="btn-hero">
+            <button onClick={() => navigate(estaLogado ? '/agendar' : '/cadastro')} className="btn-hero">
               Começar agora
             </button>
           </div>
@@ -76,7 +77,7 @@ export default function Landing() {
         </motion.div>
       </section>
 
-      {/* Seção 1: Features (Você tinha o array, mas faltava mostrar na tela) */}
+      {/* Seção 1: Features*/}
       <section className="features-section">
         <div className="grid-container">
           {features.map((f, i) => (
@@ -148,7 +149,7 @@ export default function Landing() {
             <h3>Integração com o Google Agenda</h3>
             <p>Ao confirmar uma reserva, adicione o horário diretamente ao seu Google Agenda com um clique.</p>
           </div>
-          <button onClick={() => navigate('/Cadastro')} className="btn-hero">
+          <button onClick={() => navigate(estaLogado ? '/agendar' : '/cadastro')} className="btn-hero">
             Reservar agora
           </button>
         </motion.div>
@@ -160,7 +161,7 @@ export default function Landing() {
           <MapPin className="icon-large success-text" />
           <h2>Pronto para reservar seu espaço?</h2>
           <p>Crie sua conta com o e-mail acadêmico e organize seus horários na FCTE.</p>
-          <button onClick={() => navigate('/Cadastro')} className="btn-hero" style={{ marginTop: '20px' }}>
+          <button onClick={() => navigate(estaLogado ? '/agendar' : '/cadastro')} className="btn-hero" style={{ marginTop: '20px' }}>
             Começar agora
           </button>
         </motion.div>

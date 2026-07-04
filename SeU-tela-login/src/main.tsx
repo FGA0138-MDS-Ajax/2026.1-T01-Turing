@@ -9,7 +9,9 @@ import TelaInicial from './Pages/TelaInicial';
 import CalendarioAdmin from './Pages/Calendario'
 import Agendar from './Pages/Agendar' 
 import AgendarSala from './Pages/AgendarSala';
-import Agendamentos from './Pages/Agendar/Agendamentos';
+import Agendamentos from './Pages/Agendamentos';
+import Usuario from './Pages/Perfil';
+
 import Admin from './Pages/Admin'
 import './index.css'
 
@@ -22,7 +24,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/" element={<TelaInicial />} />
         <Route path="/home" element={<TelaInicial />} />
-
+        <Route path="/perfil" element={<Usuario />} />
         {/* Rotas Protegidas (Para qualquer usuário logado) */}
         <Route path="/agendar" element={
           <ProtectedRoute><Agendar /></ProtectedRoute>
