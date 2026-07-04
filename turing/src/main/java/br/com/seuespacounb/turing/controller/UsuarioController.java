@@ -27,7 +27,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PutMapping("/usuarios")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public AtualizarUsuarioResponseDTO alterarDadosUsuario(
             @AuthenticationPrincipal Usuario usuarioLogado,
             @RequestBody AtualizarUsuarioRequestDTO dados

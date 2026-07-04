@@ -9,7 +9,7 @@ public class HorarioValidoValidator implements ConstraintValidator<HorarioValido
     @Override
     public boolean isValid(HorarioSalaRequestDTO dto, ConstraintValidatorContext context) {
         if (dto.inicioHora() == null || dto.fimHora() == null) {
-            return true; // deixa o @NotNull de cada campo cuidar disso
+            return true;
         }
         return dto.inicioHora().isBefore(dto.fimHora());
     }
