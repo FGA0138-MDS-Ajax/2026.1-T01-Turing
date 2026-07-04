@@ -5,13 +5,11 @@ import { Calendar, Clock, MapPin, Trash2 } from 'lucide-react';
 import './style.css'; 
 
 export const Agendamentos = () => {
-  const [isLogged, setIsLogged] = useState(true);
   const [minhasReservas, setMinhasReservas] = useState<any[]>([]);
 
   const carregarReservas = async () => {
     const token = localStorage.getItem('token');
     
-    // Se não houver token, não fazemos a requisição (evita o erro 401 desnecessário)
     if (!token) {
       console.warn("Usuário não está logado ou token ausente.");
       return;
@@ -33,7 +31,6 @@ export const Agendamentos = () => {
         setMinhasReservas(dados);
       } else if (resposta.status === 401) {
         console.error("Token inválido ou expirado. Faça login novamente.");
-        // Opcional: localStorage.removeItem('token'); navigate('/login');
       } else {
         console.error("Erro ao buscar reservas:", resposta.status);
       }
@@ -83,7 +80,7 @@ export const Agendamentos = () => {
 
   return (
     <>
-      <Header isLogged={isLogged} onToggleLogin={() => setIsLogged(!isLogged)} />
+      <Header isLogged={true} />
       
       <div className="agendar-container">
         <main className="content">
@@ -110,13 +107,24 @@ export const Agendamentos = () => {
                     whileHover={{ y: -5 }}
                   >
                     <div className="card-header">
-                      <h3>Reserva #{reserva.id}</h3>
+                      <h3>{reserva.horarioSala.sala.nome} • Reserva #{reserva.id}</h3>
                       <button className="delete-btn" onClick={() => cancelarReserva(reserva.id)}>
                         <Trash2 size={18} />
                       </button>
                     </div>
                     <div className="card-details">
-                      <span><Calendar size={14} /> {reserva.dataUso}</span>
+                      <span>
+                    <Calendar size={14}/>{reserva.dataUso}
+                  </span>
+
+                  <span>
+                    <Clock size={14}/>
+                    {reserva.horarioSala.inicioHora.slice(0,5)} - {reserva.horarioSala.fimHora.slice(0,5)}
+                  </span>
+                  <span>
+                    <MapPin size={14}/>
+                   {reserva.horarioSala.sala.localizacao}
+                  </span>
                       <span> <Clock size={14} />  Status: {statusTraduzido[reserva.status] ?? reserva.status}</span>
                       <span><MapPin size={14} /> Motivo: {reserva.motivo}</span>
                     </div>

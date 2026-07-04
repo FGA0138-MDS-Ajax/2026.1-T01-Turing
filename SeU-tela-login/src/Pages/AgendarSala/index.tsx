@@ -25,9 +25,7 @@ export default function AgendarSala() {
 
     const navigate = useNavigate();
 
-    const [isLogged, setIsLogged] = useState(
-        !!localStorage.getItem("token")
-    );
+    <Header isLogged={!!localStorage.getItem('token')} />
 
     const [sala, setSala] = useState<any>(null);
     const [quantidadeParticipantes, setQuantidadeParticipantes] = useState(1);
@@ -57,7 +55,7 @@ export default function AgendarSala() {
             );
 
             const dados = await resposta.json();
-
+            console.log(dados);
             setSala(dados);
 
         } catch (erro) {
@@ -86,7 +84,8 @@ async function buscarHorarios() {
         }
 
         const dados = await resposta.json();
-
+        console.log(JSON.stringify(dados, null, 2));
+        
         setHorarios(dados);
 
     } catch (erro) {
@@ -109,7 +108,7 @@ async function buscarSolicitacoes() {
         }
 
         const dados = await resposta.json();
-
+        console.log(dados);
         setSolicitacoes(dados);
 
     } catch (erro) {
@@ -246,10 +245,7 @@ function horarioEstaOcupado(horario: any) {
 
         <>
 
-            <Header
-                isLogged={isLogged}
-                onToggleLogin={() => setIsLogged(!isLogged)}
-            />
+            <Header isLogged={!!localStorage.getItem('token')} />
 
             <div className="agendar-sala-container">
 
@@ -320,7 +316,7 @@ function horarioEstaOcupado(horario: any) {
 
                                     minDate={new Date()}
 
-                                    onChange={(date) => {
+                                    onChange={(date: any) => {
 
                                         if (date) {
 
