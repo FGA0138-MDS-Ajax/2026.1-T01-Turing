@@ -46,7 +46,7 @@ export default function Landing() {
       <header className="landing-header">
         <img src={assinatura_versao_preferencial_horizontal} alt="Logo Seu Espaço UnB" className="landing-logo-img" style={{ height: '50px', width: 'auto' }}/>
         <button 
-          onClick={() => navigate('/')} 
+          onClick={() => navigate('/login')} 
           className="btn-header">
           Entrar
         </button>

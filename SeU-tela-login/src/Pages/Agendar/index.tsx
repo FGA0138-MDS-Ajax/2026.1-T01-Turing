@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search, MapPin, Building2, Users, CalendarPlus, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Header } from '../../components/Header';
+import { Header } from '../../components/Header/index.tsx';
 import './style.css';
  
 export const Agendar = () => {

@@ -40,7 +40,7 @@ function Cadastro() {
         const dados = await resposta.json()
         console.log("Sucesso:", dados)
         alert('Cadastro feito com sucesso!')
-        navigate('/') // Joga o usuário para a tela de Login
+        navigate('/login')
       } else {
         // Se der erro 400 novamente, tentamos ler a mensagem exata que o Java mandou
         const erroDoServidor = await resposta.text()

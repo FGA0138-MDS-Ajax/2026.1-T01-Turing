@@ -132,7 +132,7 @@ async function reservarSala() {
         }
 
         if (quantidadeParticipantes > sala.capacidade) {
-            alert("Essa sala suporta apenas ${sala.capacidade} participantes.");
+            alert(`Essa sala suporta apenas ${sala.capacidade} participantes.`);
             return;
         }
 

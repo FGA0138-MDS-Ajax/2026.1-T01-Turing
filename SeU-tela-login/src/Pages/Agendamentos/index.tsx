@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Header } from '../../components/Header';
 import { Calendar, Clock, MapPin, Trash2 } from 'lucide-react';
-import './style-agendamentos.css'; 
+import './style.css'; 
 
 export const Agendamentos = () => {
   const [isLogged, setIsLogged] = useState(true);
