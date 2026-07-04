@@ -195,10 +195,8 @@ No que diz respeito às características de qualidade de software, destacam-se:
 - **Usabilidade:** a interface deve ser intuitiva e de fácil navegação, permitindo que usuários sem conhecimento técnico realizem reservas e consultas sem dificuldades;
 - **Eficiência:** o sistema deve apresentar tempo de resposta inferior a 2 segundos para as principais operações, como listagem e filtragem de espaços;
 - **Confiabilidade:** a aplicação deve garantir estabilidade nas funcionalidades entregues, assegurada pela Definition of Done da equipe, que exige testes aprovados e revisão de código antes de qualquer integração à branch principal;
-- **Portabilidade:** por ser uma aplicação web, o sistema deve funcionar nos principais navegadores modernos sem necessidade de instalação;
-- **Segurança:** o sistema lida com dados pessoais dos usuários, como CPF, e-mail e senha, devendo garantir criptografia de senhas e proteção contra acessos não autorizados;
-Em relação à segurança e aos perfis de acesso, o sistema adota uma hierarquia de classes na qual tanto o perfil Cliente quanto o perfil Administrador herdam da classe base Usuario, responsável por centralizar os atributos comuns de identificação, como `id`, `nome`, `emailInstitucional`, `cpf` e `senha`.
- 
+- **Portabilidade:** por ser uma aplicação web, o sistema deve funcionar nos principais navegadores modernos sem necessidade de instalação; 
+- **Segurança:** o sistema lida com dados pessoais dos usuários, como CPF, e-mail e senha, devendo garantir criptografia de senhas e proteção contra acessos não autorizados. Em relação à segurança e aos perfis de acesso, o sistema abandonou a hierarquia de classes em favor de uma única entidade `Usuario`, que centraliza os atributos de identificação. A diferenciação entre os papéis de Cliente e Administrador é feita exclusivamente por meio de uma enumeração (`TipoUsuario`). Essa decisão simplifica a lógica de autenticação: a segurança é gerenciada pelo Spring Security operando de forma *stateless* com tokens JWT (JSON Web Token). Durante o login, o sistema atribui os papéis de acesso (`ROLE_CLIENTE`, `ROLE_ADM`) diretamente a partir do `TipoUsuario` e os embute no token, garantindo o controle de permissões de forma leve e segura nas requisições subsequentes.
 Essa decisão arquitetural evita duplicação de dados e centraliza a lógica de autenticação em um único ponto.
  
 A diferenciação de permissões ocorre por meio da especialização da classe base:
