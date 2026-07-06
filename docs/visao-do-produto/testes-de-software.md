@@ -61,8 +61,8 @@ Quadro x - Roteiro de Testes do Sistema Seu Espaço UnB
 | CT-25 | Listagem de salas | Validar carregamento das salas disponíveis | Integração | Funcional | API de salas disponível | Lista de salas exibida corretamente | Aprovado |![ct25](../static/ct25.png)| Nenhum | 1 |
 | CT-26 | Busca por nome da sala | Validar pesquisa por nome | Sistema | Funcional | Lista de salas carregada | Apenas salas compatíveis são exibidas | Aprovado |![ct26](../static/ct26.png)| Nenhum | 1 |
 | CT-27 | Filtro por prédio | Validar filtro de prédio | Sistema | Funcional | Lista de salas carregada | Apenas salas do prédio selecionado são exibidas | Aprovado |![ct27](../static/ct27.png)| Nenhum | 1 |
-| CT-28 | Filtro por capacidade | Validar filtro de capacidade mínima | Sistema | Funcional | Lista de salas carregada | Apenas salas com capacidade suficiente são exibidas | Aprovado |..| Nenhum | 1 |
-| CT-29 | Paginação das salas | Validar navegação entre páginas | Sistema | Funcional | Mais de seis salas cadastradas | Navegação entre páginas funcionando corretamente | Aprovado | . | Nenhum | 1 |
+| CT-28 | Filtro por capacidade | Validar filtro de capacidade mínima | Sistema | Funcional | Lista de salas carregada | Apenas salas com capacidade suficiente são exibidas | Aprovado |![ct27](../static/ct27.png)| Nenhum | 1 |
+| CT-29 | Paginação das salas | Validar navegação entre páginas | Sistema | Funcional | Mais de seis salas cadastradas | Navegação entre páginas funcionando corretamente | Aprovado |![ct25](../static/ct25.png) | Nenhum | 1 |
 
 
 
