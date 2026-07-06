@@ -44,7 +44,7 @@ export const Agendamentos = () => {
   }, []);
 
 
-  
+
   const cancelarReserva = async (id: number) => {
     const token = localStorage.getItem('token');
     if (!token) return;
@@ -69,7 +69,7 @@ export const Agendamentos = () => {
     }
   };
 
-  const statusTraduzido = {
+  const statusTraduzido: Record<string, string> = {
     PENDENTE: "🟡 Pendente",
     APROVADA: "🟢 Aprovada",
     REJEITADA: "🔴 Rejeitada",
@@ -80,7 +80,7 @@ export const Agendamentos = () => {
 
   return (
     <>
-      
+      <Header isLogged={true} />
       
       <div className="agendar-container">
         <main className="content">
