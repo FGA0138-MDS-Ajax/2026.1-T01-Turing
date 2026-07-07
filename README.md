@@ -12,6 +12,10 @@
   <img src="https://img.shields.io/badge/banco-MySQL-orange" alt="banco"/>
 </p>
 
+<p align="center">
+  <strong>🌐 <a href="https://seuespacounb.netlify.app/" target="_blank">Acesse a aplicação em produção</a></strong>
+</p>
+
 ---
 ## 📖 Sobre o projeto
 
