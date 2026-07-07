@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>4.0.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<groupId>br.com.seuespacounb</groupId>
@@ -84,6 +84,10 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
@@ -142,11 +146,6 @@
 				<configuration>
 					<source>17</source>
 					<target>17</target>
-<!--					<annotationProcessing>-->
-<!--						<profile name="Maven default annotation processors profile" enabled="true">-->
-<!--							<sourceOutputDir name="target/generated-sources/annotations" />-->
-<!--						</profile>-->
-<!--					</annotationProcessing>-->
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>

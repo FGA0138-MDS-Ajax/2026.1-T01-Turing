@@ -8,11 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> {
 
-    // lista solicitações ativas (dataUso >= hoje) de uma sala
     @Query("SELECT s FROM Solicitacao s WHERE s.horarioSala.sala.id = :salaId AND s.dataUso >= :hoje")
     List<Solicitacao> findAtivasPorSala(
             @Param("salaId") Long salaId,
@@ -20,7 +20,6 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
 
     List<Solicitacao> findBySolicitanteId(Long solicitanteId);
 
-    // verifica conflito: mesmo horário, mesma data, status PENDENTE ou APROVADA
     @Query("SELECT CASE WHEN COUNT(s) > 0 THEN TRUE ELSE FALSE END FROM Solicitacao s " +
             "WHERE s.horarioSala.id = :horarioSalaId " +
             "AND s.dataUso = :dataUso " +
@@ -45,4 +44,6 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
             @Param("excludeId") Long excludeId);
 
     boolean existsByHorarioSalaId(Long horarioSalaId);
+
+    Optional<Solicitacao> findByIdAndStatus(Long id, StatusSolicitacao status);
 }

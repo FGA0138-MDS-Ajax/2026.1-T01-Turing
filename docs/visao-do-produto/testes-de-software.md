@@ -54,5 +54,66 @@ Quadro x - Roteiro de Testes do Sistema Seu Espaço UnB
 | CT-18 | Acesso sem token | Validar bloqueio de acesso sem autenticação | Integração | Funcional | Usuário não autenticado | Status 401 ou 403 | Aprovado | ![teste-ct18](../static/ct18.png) | Nenhum | 1 |
 | CT-19 | Buscar sala inexistente | Garantir tratamento de erro para recurso não encontrado | Integração | Funcional | Usuário autenticado | Status 404 | Aprovado | ![teste-ct19](../static/ct19.png) | Nenhum | 1 |
 | CT-20 | Solicitação sem token | Validar bloqueio de criação de reserva sem autenticação | Integração | Funcional | Usuário não autenticado | Status 401 ou 403 | Aprovado | ![teste-ct20](../static/ct20.png) | Nenhum | 1 |
-| CT-21 | Aprovação por perfil Aluno (RBAC) | Validar restrição de perfil para aprovação de solicitações | Integração | Funcional | Usuário autenticado com perfil Aluno | Status 403 | Aprovado | ![teste-ct21](../static/ct21.png) | Renovação do token no fluxo do teste | 1 |
+| CT-21 | Aprovação por perfil Aluno (RBAC) | Validar restrição de perfil para aprovação de solicitações | Integração | Funcional | Usuário autenticado com perfil Aluno | Status 403 | Aprovado | ![teste-ct21](../static/ct21.png) | Renovação do token no fluxo do teste | 1 |
+| CT-22 | Fluxo Usuário — Cadastro a Cancelamento | Validar fluxo completo do usuário desde o cadastro até o cancelamento de reserva | Sistema | Funcional | API ativa e banco disponível | Todos os passos retornam sucesso (201, 200, 204) | Aprovado | ![ct22-p1](../static/ct22-p1.png) ![ct22-p2](../static/ct22-p2.png) ![ct22-p3](../static/ct22-p3.png) ![ct22-p4](../static/ct22-p4.png) ![ct22-p5](../static/ct22-p5.png) ![ct22-p6](../static/ct22-p6.png) ![ct22-p7](../static/ct22-p7.png) | Nenhum | 1 |
+| CT-23 | Fluxo ADM — Aprovação e Rejeição Automática | Validar fluxo completo do ADM com aprovação e rejeição automática de concorrentes | Sistema | Funcional | Usuário ADM autenticado e duas solicitações pendentes para o mesmo horário | Solicitação aprovada com 200 e concorrente rejeitada automaticamente | Aprovado | ![ct23-p1](../static/ct23-p1.png) ![ct23-p2](../static/ct23-p2.png) ![ct23-p3](../static/ct23-p3.png) ![ct23-p4a](../static/ct23-p4a.png) ![ct23-p4b](../static/ct23-p4b.png) ![ct23-p4](../static/ct23-p4.png) ![ct23-p5](../static/ct23-p5.png) ![ct23-p6](../static/ct23-p6.png) ![ct23-p7](../static/ct23-p7.png) | Nenhum | 1 |
+| CT-24 | Fluxo Google Agenda — Geração de URL | Validar geração de URL do Google Calendar após aprovação de solicitação | Sistema | Funcional | Solicitação aprovada existente | Status 200 e URL válida do Google Calendar retornada | Aprovado | ![ct24-p1](../static/ct24-p1.png) ![ct24-p2](../static/ct24-p2.png) | Nenhum | 1 |
+| CT-25 | Listagem de salas | Validar carregamento das salas disponíveis | Integração | Funcional | API de salas disponível | Lista de salas exibida corretamente | Aprovado |![ct25](../static/ct25.png)| Nenhum | 1 |
+| CT-26 | Busca por nome da sala | Validar pesquisa por nome | Sistema | Funcional | Lista de salas carregada | Apenas salas compatíveis são exibidas | Aprovado |![ct26](../static/ct26.png)| Nenhum | 1 |
+| CT-27 | Filtro por prédio | Validar filtro de prédio | Sistema | Funcional | Lista de salas carregada | Apenas salas do prédio selecionado são exibidas | Aprovado |![ct27](../static/ct27.png)| Nenhum | 1 |
+| CT-28 | Filtro por capacidade | Validar filtro de capacidade mínima | Sistema | Funcional | Lista de salas carregada | Apenas salas com capacidade suficiente são exibidas | Aprovado |![ct27](../static/ct27.png)| Nenhum | 1 |
+| CT-29 | Paginação das salas | Validar navegação entre páginas | Sistema | Funcional | Mais de seis salas cadastradas | Navegação entre páginas funcionando corretamente | Aprovado |![ct25](../static/ct25.png) | Nenhum | 1 |
 
+
+
+## Como Rodar os Testes Unitários
+
+**Pré-requisitos:**
+- Java 17 instalado (Temurin/Eclipse Adoptium)
+- Maven instalado
+
+**Passos:**
+```bash
+# 1. Acessar a pasta do backend
+cd turing
+
+# 2. Configurar o Java 17
+set JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot
+
+# 3. Rodar os testes na branch correta
+git checkout testes
+mvn clean test
+```
+
+**Resultado esperado:**
+Tests run: 32, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS
+
+## Como Rodar os Testes de Integração e Sistema
+
+**Pré-requisitos:**
+- Postman instalado
+- Backend rodando (local ou via Render: https://two026-turing.onrender.com)
+
+**Passos:**
+1. Importe a collection `Seu Espaço UnB — Roteiro de Testes.postman_collection.json` no Postman (Import → seleciona o arquivo)
+2. Crie um Environment chamado `Turing - Render` com as variáveis:
+
+| Variável | Valor |
+|---|---|
+| baseUrl | https://two026-turing.onrender.com |
+| token | (preenchido automaticamente após CT-02) |
+| tokenAdmin | (preenchido automaticamente após CT-02-ADM) |
+| solicitacaoA | (preenchido automaticamente após CT-23) |
+
+3. Selecione o environment `Turing - Render` no canto superior direito do Postman
+4. Execute os requests na ordem da collection
+
+**Credenciais de teste:**
+
+| Usuário | Email | Senha |
+|---|---|---|
+| Cliente | teste_auto@aluno.unb.br | Senha@123 |
+| Administrador | adm@gmail.com | 123 |
+
+**Resultado esperado:** todos os testes com status PASSED na aba Test Results de cada request.

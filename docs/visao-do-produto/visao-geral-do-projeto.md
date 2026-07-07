@@ -73,9 +73,9 @@ Quadro 3 - Planejamento das fases e/ou iterações do projeto
 | Sprint 4 | Cadastro/Login de Usuários (Autenticação) | 16/05/2026 | 23/05/2026 | Tela e Lógica de negócio do Cadastro/Login de usuários | Todos | 100% |
 | Sprint 5 | Consulta de espaços e disponibilidade | 23/05/2026 | 30/05/2026 | Listagem e filtros de salas (backend), HorarioSala | Todos | 100% |
 | Sprint 6 | Solicitação e aprovação de reservas | 30/05/2026 | 06/06/2026 | Lógica de reserva, aprovação/rejeição pelo ADM, cancelamento | Todos | 100% |
-| Sprint 7 | Painel Usuário / Painel Administrador | 06/06/2026 | 13/06/2026 | Histórico de reservas, calendário de ocupação, integração front-back | Todos | 70% |
-| Sprint 8 | Usabilidade e integração front-back | 13/06/2026 | 20/06/2026 | Refatoração, tratamento de exceções, Swagger, hospedagem, testes | Todos | 30% |
-| Sprint 9 | Integrações finais e entrega | 20/06/2026 | 27/06/2026 | Google Agenda, testes finais, documentação atualizada, apresentação | Todos | 30% |
+| Sprint 7 | Painel Usuário / Painel Administrador | 06/06/2026 | 13/06/2026 | Histórico de reservas, calendário de ocupação, integração front-back | Todos | 100% |
+| Sprint 8 | Usabilidade e integração front-back | 13/06/2026 | 20/06/2026 | Refatoração, tratamento de exceções, Swagger, hospedagem, testes | Todos | 100% |
+| Sprint 9 | Integrações finais e entrega | 20/06/2026 | 27/06/2026 | Google Agenda, testes finais, documentação atualizada, apresentação | Todos | 100% |
  
 Fonte: Elaborado pelos autores, 2026.
  

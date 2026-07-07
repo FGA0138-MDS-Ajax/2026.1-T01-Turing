@@ -27,7 +27,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PutMapping("/usuarios")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public AtualizarUsuarioResponseDTO alterarDadosUsuario(
             @AuthenticationPrincipal Usuario usuarioLogado,
             @RequestBody AtualizarUsuarioRequestDTO dados
@@ -45,8 +45,14 @@ public class UsuarioController {
         usuarioService.deletarDadosProprioUsuario(usuarioLogado.getId());
     }
 
+    @GetMapping("/usuarios/me")
+    @ResponseStatus(HttpStatus.OK)
+    public AdmGetUsuarioDTO getMeuPerfil(
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) throws NotFoundException {
 
-
+        return usuarioService.getMeuPerfil(usuarioLogado.getId());
+    }
 
 
     @GetMapping("/usuarios/adm")

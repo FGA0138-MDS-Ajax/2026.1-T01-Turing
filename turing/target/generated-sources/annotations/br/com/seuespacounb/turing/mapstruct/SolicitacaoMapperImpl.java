@@ -1,24 +1,30 @@
 package br.com.seuespacounb.turing.mapstruct;
 
+import br.com.seuespacounb.turing.dto.response.HorarioSalaResponseDTO;
 import br.com.seuespacounb.turing.dto.response.SolicitacaoResponseDTO;
-import br.com.seuespacounb.turing.entity.HorarioSala;
+import br.com.seuespacounb.turing.dto.response.UsuarioResumoDTO;
 import br.com.seuespacounb.turing.entity.Solicitacao;
 import br.com.seuespacounb.turing.entity.StatusSolicitacao;
-import br.com.seuespacounb.turing.entity.Usuario;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-07-01T22:26:05-0300",
+    date = "2026-07-04T08:26:36-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.16 (Oracle Corporation)"
 )
 @Component
 public class SolicitacaoMapperImpl implements SolicitacaoMapper {
+
+    @Autowired
+    private HorarioSalaMapper horarioSalaMapper;
+    @Autowired
+    private UsuarioMapper usuarioMapper;
 
     @Override
     public SolicitacaoResponseDTO paraSolicitacaoResponseDTO(Solicitacao entity) {
@@ -26,8 +32,6 @@ public class SolicitacaoMapperImpl implements SolicitacaoMapper {
             return null;
         }
 
-        Long horarioSalaId = null;
-        Long solicitanteId = null;
         Long id = null;
         String motivo = null;
         Integer quantidadeParticipantes = null;
@@ -35,9 +39,9 @@ public class SolicitacaoMapperImpl implements SolicitacaoMapper {
         LocalDate dataUso = null;
         StatusSolicitacao status = null;
         String observacaoAdm = null;
+        HorarioSalaResponseDTO horarioSala = null;
+        UsuarioResumoDTO solicitante = null;
 
-        horarioSalaId = entityHorarioSalaId( entity );
-        solicitanteId = entitySolicitanteId( entity );
         id = entity.getId();
         motivo = entity.getMotivo();
         quantidadeParticipantes = entity.getQuantidadeParticipantes();
@@ -45,8 +49,10 @@ public class SolicitacaoMapperImpl implements SolicitacaoMapper {
         dataUso = entity.getDataUso();
         status = entity.getStatus();
         observacaoAdm = entity.getObservacaoAdm();
+        horarioSala = horarioSalaMapper.paraHorarioResponseDTO( entity.getHorarioSala() );
+        solicitante = usuarioMapper.paraUsuarioResumoDTO( entity.getSolicitante() );
 
-        SolicitacaoResponseDTO solicitacaoResponseDTO = new SolicitacaoResponseDTO( id, motivo, quantidadeParticipantes, dataSolicitacao, dataUso, status, observacaoAdm, horarioSalaId, solicitanteId );
+        SolicitacaoResponseDTO solicitacaoResponseDTO = new SolicitacaoResponseDTO( id, motivo, quantidadeParticipantes, dataSolicitacao, dataUso, status, observacaoAdm, horarioSala, solicitante );
 
         return solicitacaoResponseDTO;
     }
@@ -63,35 +69,5 @@ public class SolicitacaoMapperImpl implements SolicitacaoMapper {
         }
 
         return list;
-    }
-
-    private Long entityHorarioSalaId(Solicitacao solicitacao) {
-        if ( solicitacao == null ) {
-            return null;
-        }
-        HorarioSala horarioSala = solicitacao.getHorarioSala();
-        if ( horarioSala == null ) {
-            return null;
-        }
-        Long id = horarioSala.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
-    }
-
-    private Long entitySolicitanteId(Solicitacao solicitacao) {
-        if ( solicitacao == null ) {
-            return null;
-        }
-        Usuario solicitante = solicitacao.getSolicitante();
-        if ( solicitante == null ) {
-            return null;
-        }
-        Long id = solicitante.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
     }
 }

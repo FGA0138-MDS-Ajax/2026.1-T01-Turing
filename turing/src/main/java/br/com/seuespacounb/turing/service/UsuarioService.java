@@ -70,9 +70,18 @@ public class UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
+    public AdmGetUsuarioDTO getMeuPerfil(Long idUsuarioLogado) throws NotFoundException {
+        Usuario usuario = usuarioRepository.findById(idUsuarioLogado)
+                .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
 
-
-
+        return new AdmGetUsuarioDTO(
+                usuario.getId(),
+                usuario.getName(),
+                usuario.getEmail(),
+                usuario.getCpf(),
+                usuario.getTipoUsuario()
+        );
+    }
 
 
     public List<AdmGetUsuarioDTO> getUsuarios(Long idAdm) throws NotFoundException, AccessDeniedException {

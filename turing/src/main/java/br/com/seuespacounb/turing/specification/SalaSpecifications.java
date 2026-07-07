@@ -58,8 +58,6 @@ public class SalaSpecifications {
         };
     }
 
-    // Substitui possuiStatus. Só filtra se dataUso for informada —
-    // sem data não dá pra responder "disponível quando?".
     public static Specification<Sala> disponivelEm(LocalDate dataUso) {
         return (root, query, cb) -> {
             if (dataUso == null) return cb.conjunction();

@@ -9,5 +9,5 @@ public record HorarioSalaResponseDTO(
         LocalTime inicioHora,
         LocalTime fimHora,
         String descricaoOcupacao,
-        Long salaId
+        SalaResponseDTO sala
 ) {}
