@@ -1,7 +1,45 @@
-# Seu Espaço UnB (SeU)
-Sistema de reserva de espaços acadêmicos da Universidade de Brasília — desenvolvido na disciplina de Métodos de Desenvolvimento de Software (MDS). O Repositório Conta com os documentos de Visão de arquitetura e documentos de Visão de produto e projeto dentro da pasta DOCS, Além disso: Estamos passando tudo do documento para arquivos .md. A pasta Turing contém a pasta src que é o local dos nossos códigos.
+<div align="center">
+  <img src="docs/static/logomarca-horizontal-produto.png" alt="Seu Espaço UnB" width="360"/>
+</div>
+
+<h3 align="center">Seu Espaço UnB (SeU)</h3>
+<p align="center">Sistema de reserva de espaços acadêmicos da Universidade de Brasília, desenvolvido para a disciplina de Métodos de Desenvolvimento de Software (MDS) — FGA/UnB.</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen" alt="status"/>
+  <img src="https://img.shields.io/badge/backend-Java%20%7C%20Spring%20Boot-blue" alt="backend"/>
+  <img src="https://img.shields.io/badge/frontend-React%20%7C%20TypeScript-blue" alt="frontend"/>
+  <img src="https://img.shields.io/badge/banco-MySQL-orange" alt="banco"/>
+</p>
 
 ---
+## 📖 Sobre o projeto
+
+Estudantes e professores da UnB frequentemente precisam reservar salas e espaços compartilhados para reuniões, monitorias e eventos acadêmicos — hoje um processo manual e descentralizado. O **SeU** centraliza esse fluxo em uma aplicação web: o usuário consulta a disponibilidade de uma sala em um calendário, envia uma solicitação de reserva e um administrador aprova ou rejeita o pedido, com controle de capacidade e conflitos de horário.
+
+O projeto foi construído em 8 sprints por uma equipe de 12 pessoas, cobrindo desde a modelagem UML e o documento de arquitetura até o deploy em produção.
+
+## ✨ Funcionalidades
+
+- Cadastro e login de usuários com autenticação JWT e papéis distintos (aluno/administrador)
+- Consulta de disponibilidade de salas por data e horário
+- Solicitação de reserva com validação de capacidade (`quantidadeParticipantes`) e detecção de conflitos
+- Fluxo de aprovação administrativa (`PENDENTE` → `APROVADA` / `REJEITADA` / `CANCELADA`)
+- Painel administrativo com dashboard de indicadores de uso das salas
+- Notificação por e-mail das atualizações de status da solicitação
+
+## 🏗️ Arquitetura
+
+O documento completo de arquitetura está em [`docs/MDS Documento de Arquitetura Turing.pdf`](docs/MDS%20Documento%20de%20Arquitetura%20Turing.pdf). Principais diagramas:
+
+| Diagrama | Arquivo |
+|---|---|
+| Casos de uso | [`docs/static/diagrama-casos-uso.png`](docs/static/diagrama-casos-uso.png) |
+| Classes | [`docs/static/diagrama-classes.png`](docs/static/diagrama-classes.png) |
+| Componentes | [`docs/static/diagrama-componentes.png`](docs/static/diagrama-componentes.png) |
+| Implantação (deploy) | [`docs/static/diagrama-implantacao.png`](docs/static/diagrama-implantacao.png) |
+
+**Stack de deploy:** backend no Render, frontend no Netlify, banco MySQL no Railway.
  
 ## 👥 Equipe
  
