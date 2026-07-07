@@ -109,6 +109,15 @@ Sistema de reserva de espaços acadêmicos da Universidade de Brasília — dese
 <br>
 <sub>Banco de Dados</sub>
 </td>
+<td align="center" width="150px">
+<a href="https://github.com/gsVieiraaa">
+<img src="https://avatars.githubusercontent.com/u/101344435?v=4" width="90px"; style="border-radius:50%" alt="Gabriel""
+<br><br>
+<b>Gabriel Vieira</b>
+</a>
+<br>
+<sub>Frontend</sub>
+</td>
 </tr>
 </table>
 </div>
