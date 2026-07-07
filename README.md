@@ -39,6 +39,38 @@ O documento completo de arquitetura está em [`docs/MDS Documento de Arquitetura
 | Componentes | [`docs/static/diagrama-componentes.png`](docs/static/diagrama-componentes.png) |
 | Implantação (deploy) | [`docs/static/diagrama-implantacao.png`](docs/static/diagrama-implantacao.png) |
 
+## 🚀 Como rodar localmente
+
+### Backend
+```bash
+cd turing
+cp .env.example .env        # preencha as variáveis (DB, JWT_SECRET, e-mail)
+docker-compose up -d        # sobe o banco MySQL local
+./mvnw spring-boot:run
+```
+A API sobe por padrão em `http://localhost:8080`.
+
+### Frontend
+```bash
+cd SeU-tela-login
+npm install
+npm run dev
+```
+A aplicação sobe por padrão em `http://localhost:5173`.
+
+## 📁 Estrutura do repositório
+
+```
+├── turing/            # Backend (Spring Boot)
+├── SeU-tela-login/    # Frontend (React + TypeScript)
+├── docs/              # Documentação MDS (visão de produto, arquitetura, atas)
+└── mkdocs.yml         # Configuração da documentação navegável
+```
+
+A documentação navegável completa (MkDocs) pode ser consultada a partir de [`docs/index.md`](docs/index.md).
+
+---
+
 **Stack de deploy:** backend no Render, frontend no Netlify, banco MySQL no Railway.
  
 ## 👥 Equipe
