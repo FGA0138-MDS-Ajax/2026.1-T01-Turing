@@ -1,14 +1,25 @@
 import { useState, useMemo, useEffect } from "react";
 import { Ban, Edit, MapPin, Plus, ShieldCheck, Trash2 } from "lucide-react";
-import { motion } from "framer-motion"; 
-import { Header } from "../../components/Header"; 
-import './style.css';
-
+import { motion } from "framer-motion";
+import { Header } from "../../components/Header";
+import './style.css'; 
 
 type Profile = { id: string | number; nome: string; email: string; cpf: string | null; papel: string };
 type Sala = { id: string | number; nome: string; capacidade: number; localizacao: string };
 type Block = { user_id: string | number; motivo: string };
-type Horario = { id: string | number; inicio: string; fim: string; salaId: string | number };
+type Horario = { 
+  id?: string | number; 
+  inicioHora: string; 
+  fimHora: string; 
+  salaId?: string | number; 
+  diaSemana?: string;
+  sala?: {                  
+    id: string | number; 
+    nome: string; 
+    capacidade: number; 
+    localizacao: string 
+  };
+};
 
 function formatCpf(cpf: string | null | undefined) {
   const digits = (cpf ?? "").replace(/\D/g, "");
@@ -22,6 +33,7 @@ export default function GestaoInfraestrutura() {
   const [salas, setSalas] = useState<Sala[]>([]);
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingHorarios, setIsLoadingHorarios] = useState(false);
   const [erroNaTela, setErroNaTela] = useState("");
 
   const [buscaAluno, setBuscaAluno] = useState("");
@@ -34,30 +46,32 @@ export default function GestaoInfraestrutura() {
   const [modalHorario, setModalHorario] = useState<Partial<Horario> | null>(null);
 
   useEffect(() => {
-    carregarDados();
+    carregarDadosIniciais();
   }, []);
 
-  async function carregarDados() {
+  useEffect(() => {
+    if (abaAtiva === 'horarios' && salas.length > 0) {
+      carregarHorariosPorSala();
+    }
+  }, [abaAtiva, salas]);
+
+  async function carregarDadosIniciais() {
     setErroNaTela("");
     setIsLoading(true);
     try {
-      const token = localStorage.getItem("token"); 
+      const token = localStorage.getItem("token");
       const headersSeguranca = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       };
 
-      const [resUsuarios, resSalas, resHorarios] = await Promise.all([
+      const [resUsuarios, resSalas] = await Promise.all([
         fetch("https://two026-turing.onrender.com/turing/usuarios/adm", { headers: headersSeguranca }),
-        fetch("https://two026-turing.onrender.com/turing/salas", { headers: headersSeguranca }),
-        fetch("https://two026-turing.onrender.com/turing/horarios", { headers: headersSeguranca })
+        fetch("https://two026-turing.onrender.com/turing/salas", { headers: headersSeguranca })
       ]);
 
-      const dadosHorarios = await resHorarios.json();
-      setHorarios(dadosHorarios.content ? dadosHorarios.content : dadosHorarios);
-
       if (!resUsuarios.ok || !resSalas.ok) {
-        throw new Error("Sua sessão expirou ou você não tem permissão de Admin. Faça login novamente.");
+        throw new Error("Sua sessão expirou ou você não tem permissão de Admin.");
       }
 
       const dadosUsuarios = await resUsuarios.json();
@@ -73,57 +87,86 @@ export default function GestaoInfraestrutura() {
     }
   }
 
-  async function handleSalvarSala(e: React.FormEvent) {
-  e.preventDefault();
-  if (!modalSala) return;
-
-  const isEdit = !!modalSala.id;
-  const url = isEdit 
-    ? `https://two026-turing.onrender.com/turing/salas/${modalSala.id}` 
-    : `https://two026-turing.onrender.com/turing/salas`;
-  
-  try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(url, {
-      method: isEdit ? "PUT" : "POST",
-      headers: {
+  async function carregarHorariosPorSala() {
+    setIsLoadingHorarios(true);
+    try {
+      const token = localStorage.getItem("token");
+      const headersSeguranca = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        nome: modalSala.nome,
-        capacidade: modalSala.capacidade,
-        localizacao: modalSala.localizacao
-      })
-    });
+      };
 
-    if (!response.ok) throw new Error("Erro na requisição. Verifique o Swagger.");
-    
-    alert(`Sala ${isEdit ? 'atualizada' : 'criada'} com sucesso!`);
-    setModalSala(null);
-    carregarDados();
-  } catch (error) {
-    alert(error instanceof Error ? error.message : "Erro ao salvar.");
+      const promessasHorarios = salas.map(async (sala) => {
+        try {
+          const res = await fetch(`https://two026-turing.onrender.com/turing/horarios/sala/${sala.id}`, { headers: headersSeguranca });
+          if (!res.ok) return [];
+          const dados = await res.json();
+          return Array.isArray(dados) ? dados : (dados.content ? dados.content : []);
+        } catch {
+          return [];
+        }
+      });
+
+      const resultadosHorarios = await Promise.all(promessasHorarios);
+      setHorarios(resultadosHorarios.flat());
+    } catch {
+      setHorarios([]);
+    } finally {
+      setIsLoadingHorarios(false);
+    }
   }
-}
+
+  async function handleSalvarSala(e: React.FormEvent) {
+    e.preventDefault();
+    if (!modalSala) return;
+
+    const isEdit = !!modalSala.id;
+    const url = isEdit
+      ? `https://two026-turing.onrender.com/turing/salas/${modalSala.id}`
+      : `https://two026-turing.onrender.com/turing/salas`;
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(url, {
+        method: isEdit ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          nome: modalSala.nome,
+          capacidade: modalSala.capacidade,
+          localizacao: modalSala.localizacao
+        })
+      });
+
+      if (!response.ok) throw new Error("Erro na requisição.");
+
+      alert(`Sala ${isEdit ? 'atualizada' : 'criada'} com sucesso!`);
+      setModalSala(null);
+      carregarDadosIniciais();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Erro ao salvar.");
+    }
+  }
 
   async function handleExcluirSala(id: string | number) {
-  if (!window.confirm("Confirma a exclusão desta sala?")) return;
-  try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`https://two026-turing.onrender.com/turing/salas/${id}`, {
-      method: "DELETE",
-      headers: { "Authorization": `Bearer ${token}` }
-    });
-    
-    if (!response.ok) throw new Error("Erro ao excluir. A sala pode estar em uso.");
-    
-    setSalas(prev => prev.filter(sala => sala.id !== id));
-    alert("Sala removida!");
-  } catch (error) {
-    alert("Erro ao remover sala.");
+    if (!window.confirm("Confirma a exclusão desta sala?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`https://two026-turing.onrender.com/turing/salas/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+
+      if (!response.ok) throw new Error("Erro ao excluir.");
+
+      setSalas(prev => prev.filter(sala => sala.id !== id));
+      alert("Sala removida!");
+    } catch (error) {
+      alert("Erro ao remover sala.");
+    }
   }
-}
 
   async function handleSalvarAluno(e: React.FormEvent) {
     e.preventDefault();
@@ -141,10 +184,10 @@ export default function GestaoInfraestrutura() {
       });
 
       if (!response.ok) throw new Error("Erro ao atualizar o aluno.");
-      
+
       alert("Dados do aluno atualizados com sucesso!");
       setModalAluno(null);
-      carregarDados();
+      carregarDadosIniciais();
 
     } catch (error) {
       alert(error instanceof Error ? error.message : "Erro desconhecido.");
@@ -152,37 +195,41 @@ export default function GestaoInfraestrutura() {
   }
 
   async function handleSalvarHorario(e: React.FormEvent) {
-  e.preventDefault();
-  if (!modalHorario) return;
-  const isEdit = !!modalHorario.id;
-  const url = isEdit ? `https://two026-turing.onrender.com/turing/horarios/${modalHorario.id}` : `https://two026-turing.onrender.com/turing/horarios`;
-  
-  try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(url, {
-      method: isEdit ? "PUT" : "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
-      body: JSON.stringify(modalHorario)
-    });
-    if (!response.ok) throw new Error("Erro ao salvar.");
-    alert("Horário salvo!");
-    setModalHorario(null);
-    carregarDados();
-  } catch (error) { alert("Erro ao salvar."); }
-}
+    e.preventDefault();
+    if (!modalHorario) return;
+    const isEdit = !!modalHorario.id;
+    const url = isEdit ? `https://two026-turing.onrender.com/turing/horarios/${modalHorario.id}` : `https://two026-turing.onrender.com/turing/horarios`;
 
-async function handleExcluirHorario(id: string | number) {
-  if (!window.confirm("Confirmar exclusão?")) return;
-  try {
-    const token = localStorage.getItem("token");
-    await fetch(`https://two026-turing.onrender.com/turing/horarios/${id}`, {
-      method: "DELETE",
-      headers: { "Authorization": `Bearer ${token}` }
-    });
-    alert("Horário removido!");
-    carregarDados();
-  } catch (error) { alert("Erro ao remover."); }
-}
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(url, {
+        method: isEdit ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify({
+          inicioHora: modalHorario.inicioHora,
+          fimHora: modalHorario.fimHora,
+          salaId: modalHorario.salaId
+        })
+      });
+      if (!response.ok) throw new Error("Erro ao salvar.");
+      alert("Horário salvo!");
+      setModalHorario(null);
+      if (salas.length > 0) carregarHorariosPorSala();
+    } catch (error) { alert("Erro ao salvar."); }
+  }
+
+  async function handleExcluirHorario(id: string | number) {
+    if (!window.confirm("Confirmar exclusão?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      await fetch(`https://two026-turing.onrender.com/turing/horarios/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      alert("Horário removido!");
+      if (salas.length > 0) carregarHorariosPorSala();
+    } catch (error) { alert("Erro ao remover."); }
+  }
 
   const handleToggleBlock = (studentId: string | number, block: boolean) => {
     if (block) {
@@ -196,13 +243,13 @@ async function handleExcluirHorario(id: string | number) {
   };
 
   const blockedSet = useMemo(() => new Set(blocks.map((b) => b.user_id)), [blocks]);
-  
+
   const alunosFiltrados = useMemo(() => {
     const term = buscaAluno.trim().toLowerCase();
     if (!term) return profiles;
     return profiles.filter((p) => p.nome?.toLowerCase().includes(term) || (p.cpf && p.cpf.includes(term)));
   }, [profiles, buscaAluno]);
-  
+
   const salasFiltradas = useMemo(() => {
     const term = buscaSala.trim().toLowerCase();
     if (!term) return salas;
@@ -213,7 +260,7 @@ async function handleExcluirHorario(id: string | number) {
     <>
       <Header isLogged={true} />
 
-      <motion.main 
+      <motion.main
         className="admin-container"
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
       >
@@ -226,7 +273,7 @@ async function handleExcluirHorario(id: string | number) {
           </div>
           <div className="tabs-container">
             <button className={`tab-button ${abaAtiva === 'horarios' ? 'active' : ''}`} onClick={() => setAbaAtiva('horarios')}>
-            Horários
+              Horários
             </button>
             <button className={`tab-button ${abaAtiva === 'salas' ? 'active' : ''}`} onClick={() => setAbaAtiva('salas')}>
               Salas e Horários
@@ -264,6 +311,7 @@ async function handleExcluirHorario(id: string | number) {
                           <div className="item-icone" style={{ background: '#ecfdf5', color: '#059669' }}><MapPin size={24} /></div>
                           <div className="item-dados">
                             <h3>{sala.nome || "Sala sem nome"} <span className="badge-status ativo">Ativa</span></h3>
+                            <p>ID da Sala: <span className="destaque">{sala.id}</span></p>
                             <p>{sala.localizacao || "Localização não informada"}</p>
                             <p>Capacidade: <span className="destaque">{sala.capacidade || 0} pessoas</span></p>
                           </div>
@@ -307,7 +355,6 @@ async function handleExcluirHorario(id: string | number) {
                             <button className="btn-acao" onClick={() => setModalAluno(p)}>
                               <Edit size={16} /> Editar
                             </button>
-                            
                             {isBlocked ? (
                               <button className="btn-acao" onClick={() => handleToggleBlock(p.id, false)}><ShieldCheck size={16} /> Desbloquear</button>
                             ) : (
@@ -321,30 +368,44 @@ async function handleExcluirHorario(id: string | number) {
                 </div>
               </motion.div>
             )}
-          </>
-        )}
 
             {abaAtiva === 'horarios' && (
               <motion.div className="aba-conteudo" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}>
                 <div className="controles-secao">
-                  <button className="btn-primario" onClick={() => setModalHorario({ inicio: "", fim: "", salaId: "" })}>
+                  <button className="btn-primario" onClick={() => setModalHorario({ inicioHora: "", fimHora: "", salaId: "" })}>
                     <Plus size={20} /> Novo Horário
                   </button>
                 </div>
-                <div className="lista-grid">
-                  {horarios.map((h) => (
-                    <div key={h.id} className="card-item">
-                      <h3>{h.inicio} às {h.fim}</h3>
-                      <p>ID da Sala: {h.salaId}</p>
-                      <div className="item-acoes">
-                        <button className="btn-acao" onClick={() => setModalHorario(h)}><Edit size={16} /> Editar</button>
-                        <button className="btn-acao btn-perigo" onClick={() => handleExcluirHorario(h.id)}><Trash2 size={16} /> Excluir</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                
+                {isLoadingHorarios ? (
+                  <div style={{ textAlign: 'center', marginTop: '30px', color: '#6b7280' }}>Buscando horários das salas no banco de dados...</div>
+                ) : (
+                  <div className="lista-grid">
+                    {Array.isArray(horarios) && horarios.length > 0 ? (
+                      horarios.map((h) => (
+                        <div key={h.id} className="card-item">
+                          <h3>{h.inicioHora?.slice(0,5)} às {h.fimHora?.slice(0,5)}</h3>
+                          <p>ID da Sala: {h.sala ? h.sala.id : h.salaId}</p>
+                          <div className="item-acoes">
+                            <button className="btn-acao" onClick={() => setModalHorario({
+                              id: h.id,
+                              inicioHora: h.inicioHora,
+                              fimHora: h.fimHora,
+                              salaId: h.sala ? h.sala.id : h.salaId
+                            })}><Edit size={16} /> Editar</button>
+                            <button className="btn-acao btn-perigo" onClick={() => handleExcluirHorario(h.id!)}><Trash2 size={16} /> Excluir</button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p style={{ textAlign: 'center', color: '#6b7280', gridColumn: '1 / -1' }}>Nenhum horário cadastrado para as salas atuais.</p>
+                    )}
+                  </div>
+                )}
               </motion.div>
             )}
+          </>
+        )}
 
         {modalSala && (
           <div className="modal-overlay">
@@ -352,14 +413,11 @@ async function handleExcluirHorario(id: string | number) {
               <h2>{modalSala.id ? 'Editar Sala' : 'Nova Sala'}</h2>
               <form onSubmit={handleSalvarSala} style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '15px' }}>
                 <input required type="text" placeholder="Nome da Sala" className="pesquisa-input"
-                  value={modalSala.nome || ''} onChange={(e) => setModalSala({...modalSala, nome: e.target.value})} />
-                
+                  value={modalSala.nome || ''} onChange={(e) => setModalSala({ ...modalSala, nome: e.target.value })} />
                 <input required type="number" placeholder="Capacidade" className="pesquisa-input"
-                  value={modalSala.capacidade || ''} onChange={(e) => setModalSala({...modalSala, capacidade: Number(e.target.value)})} />
-                
+                  value={modalSala.capacidade || ''} onChange={(e) => setModalSala({ ...modalSala, capacidade: Number(e.target.value) })} />
                 <input required type="text" placeholder="Localização (Ex: Bloco A)" className="pesquisa-input"
-                  value={modalSala.localizacao || ''} onChange={(e) => setModalSala({...modalSala, localizacao: e.target.value})} />
-
+                  value={modalSala.localizacao || ''} onChange={(e) => setModalSala({ ...modalSala, localizacao: e.target.value })} />
                 <div className="modal-acoes">
                   <button type="button" className="btn-cancelar" onClick={() => setModalSala(null)}>Cancelar</button>
                   <button type="submit" className="btn-confirmar">Salvar</button>
@@ -375,11 +433,9 @@ async function handleExcluirHorario(id: string | number) {
               <h2>Editar Aluno</h2>
               <form onSubmit={handleSalvarAluno} style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '15px' }}>
                 <input required type="text" placeholder="Nome" className="pesquisa-input"
-                  value={modalAluno.nome || ''} onChange={(e) => setModalAluno({...modalAluno, nome: e.target.value})} />
-                
+                  value={modalAluno.nome || ''} onChange={(e) => setModalAluno({ ...modalAluno, nome: e.target.value })} />
                 <input required type="email" placeholder="E-mail" className="pesquisa-input"
-                  value={modalAluno.email || ''} onChange={(e) => setModalAluno({...modalAluno, email: e.target.value})} />
-                
+                  value={modalAluno.email || ''} onChange={(e) => setModalAluno({ ...modalAluno, email: e.target.value })} />
                 <div className="modal-acoes">
                   <button type="button" className="btn-cancelar" onClick={() => setModalAluno(null)}>Cancelar</button>
                   <button type="submit" className="btn-confirmar">Atualizar</button>
@@ -407,9 +463,9 @@ async function handleExcluirHorario(id: string | number) {
             <div className="modal-content" style={{ maxWidth: '400px' }}>
               <h2>{modalHorario.id ? 'Editar Horário' : 'Novo Horário'}</h2>
               <form onSubmit={handleSalvarHorario} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <input required type="time" className="pesquisa-input" value={modalHorario.inicio || ''} onChange={(e) => setModalHorario({...modalHorario, inicio: e.target.value})} />
-                <input required type="time" className="pesquisa-input" value={modalHorario.fim || ''} onChange={(e) => setModalHorario({...modalHorario, fim: e.target.value})} />
-                <input required type="number" placeholder="ID da Sala" className="pesquisa-input" value={modalHorario.salaId || ''} onChange={(e) => setModalHorario({...modalHorario, salaId: e.target.value})} />
+                <input required type="time" className="pesquisa-input" value={modalHorario.inicioHora || ''} onChange={(e) => setModalHorario({ ...modalHorario, inicioHora: e.target.value })} />
+                <input required type="time" className="pesquisa-input" value={modalHorario.fimHora || ''} onChange={(e) => setModalHorario({ ...modalHorario, fimHora: e.target.value })} />
+                <input required type="number" placeholder="ID da Sala" className="pesquisa-input" value={modalHorario.salaId || ''} onChange={(e) => setModalHorario({ ...modalHorario, salaId: e.target.value })} />
                 <div className="modal-acoes">
                   <button type="button" className="btn-cancelar" onClick={() => setModalHorario(null)}>Cancelar</button>
                   <button type="submit" className="btn-confirmar">Salvar</button>
@@ -418,7 +474,6 @@ async function handleExcluirHorario(id: string | number) {
             </div>
           </div>
         )}
-
       </motion.main>
     </>
   );

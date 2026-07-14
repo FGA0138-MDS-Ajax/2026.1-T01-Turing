@@ -24,7 +24,6 @@ function Login() {
       if (resposta.ok) {
         const dados = await resposta.json()
         localStorage.setItem('token', dados.token)
-        alert('Login feito com sucesso!')
         navigate('/')
       } else {
         setErro('Usuário ou senha inválidos.')
@@ -42,7 +41,7 @@ function Login() {
         <div className="auth-hero__content">
           <div className="auth-hero__top">
             <BrandLogo light />
-            <button type="button" className="auth-back-button" aria-label="Voltar ao início">
+            <button type="button" className="auth-back-button" onClick={()=>navigate("/")} aria-label="Voltar ao início">
               ←
             </button>
           </div>
