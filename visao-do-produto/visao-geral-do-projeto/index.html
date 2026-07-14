@@ -1,0 +1,1491 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>2. Visão Geral do Projeto - Documentação</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-visao-geral-do-projeto" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Documentação" class="md-header__button md-logo" aria-label="Documentação" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentação
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Visão Geral do Projeto
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentação" class="md-nav__button md-logo" aria-label="Documentação" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentação
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seu Espaço UnB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Atas de Reunião
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Atas de Reunião
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-17-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-27-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-29-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-04-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-11-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-18-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-25-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-08-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-15-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-18-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-23-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 11
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas-reuniao/ata-reuniao-25-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ata 12
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentos de Visão do Produto e do projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentos de Visão do Produto e do projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabela-integrantes-do-grupo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela - Integrantes do Grupo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabela-historico-de-revisoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela - Histórico de Revisões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visao-geral-do-produto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão geral do produto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processo-de-desenvolvimento-de-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processo de desenvolvimento de software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../declaracao-de-escopo-do-projeto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Declaração do escopo do projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metrica-e-medicoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas e Medições
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testes-de-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testes de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentos de Arquitetura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentos de Arquitetura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arquitetura/tabela-integrantes-do-grupo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela - Integrantes do Grupo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arquitetura/tabela-historico-revisoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela - historico de Revisões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arquitetura/introducao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introdução
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arquitetura/representacao-arquitetural/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação Arquitetural
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arquitetura/bibliografia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bibliografia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21-ciclo-de-vida-do-projeto-de-desenvolvimento-de-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Ciclo de vida do projeto de desenvolvimento de software
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-organizacao-do-projeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Organização do Projeto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-planejamento-das-fases-eou-iteracoes-do-projeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Planejamento das Fases e/ou Iterações do Projeto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-matriz-de-comunicacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Matriz de Comunicação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-gerenciamento-de-riscos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Gerenciamento de Riscos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-criterios-de-replanejamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Critérios de Replanejamento
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2-visao-geral-do-projeto">2. Visão Geral do Projeto</h1>
+<h2 id="21-ciclo-de-vida-do-projeto-de-desenvolvimento-de-software">2.1 Ciclo de vida do projeto de desenvolvimento de software</h2>
+<p>O ciclo de vida adotado neste projeto é classificado como ágil, pois combina características iterativas e incrementais. O ciclo de vida do software compreende as fases pelas quais o software passa, desde a definição de requisitos, codificação e manutenção, até sua descontinuidade. Além disso, existem modelos que representam esse ciclo em forma de processo.</p>
+<p>Nesse sentido, o projeto Seu Espaço UnB (SeU) adota uma abordagem ágil, na qual requisitos são tratados como variáveis, o desenvolvimento ocorre por incrementos e há feedback frequente dos stakeholders. Essa escolha está alinhada ao contexto do projeto, pois o sistema envolve necessidades da comunidade acadêmica da FCTE que podem ser refinadas ao longo do desenvolvimento.</p>
+<p>A abordagem ágil foi escolhida considerando:</p>
+<ul>
+<li>A necessidade de validação constante com o cliente e com os usuários envolvidos;</li>
+<li>A possibilidade de mudanças frequentes nos requisitos, comuns em sistemas acadêmicos;</li>
+<li>O uso de tecnologias modernas, como React, Spring Boot e MySQL, que favorecem o desenvolvimento incremental;</li>
+<li>O curto prazo acadêmico, exigindo entregas parciais e evolutivas;</li>
+<li>A natureza de documento vivo do projeto, permitindo revisão e atualização do escopo ao longo das sprints.</li>
+</ul>
+<p><strong>Instanciação do Ciclo de Vida no Projeto</strong></p>
+<p>O projeto adota uma abordagem ágil e um ciclo de vida ágil, pois utiliza características iterativas e incrementais para refinar os requisitos e entregar incrementos funcionais ao longo do desenvolvimento. Esse ciclo de vida será operacionalizado por meio do Scrum, utilizado como framework de organização do trabalho, e por práticas do XP, utilizadas para apoiar a qualidade técnica do produto. Dessa forma, Scrum e XP não são tratados como o ciclo de vida em si, mas como processos e práticas que implementam a abordagem ágil escolhida.</p>
+<p>No projeto Seu Espaço UnB (SeU), o ciclo será executado em sprints semanais. Em cada sprint, a equipe selecionará itens do Product Backlog, realizará o planejamento, desenvolverá as funcionalidades priorizadas, executará testes, revisará o incremento produzido e coletará feedback do cliente ou Product Owner. A cada iteração, o sistema poderá receber ajustes nos requisitos, melhorias técnicas e novas funcionalidades, mantendo coerência com a natureza de um documento vivo e com a necessidade de adaptação durante o andamento do projeto.</p>
+<p><strong>Justificativa da Escolha do Modelo</strong></p>
+<p>A escolha por um ciclo de vida ágil se justifica pelos seguintes fatores:</p>
+<ul>
+<li><strong>Flexibilidade:</strong> Permite adaptação rápida a mudanças de requisitos;</li>
+<li><strong>Entrega contínua:</strong> O sistema evolui gradualmente, reduzindo riscos;</li>
+<li><strong>Feedback constante:</strong> O cliente participa ativamente do desenvolvimento;</li>
+<li><strong>Qualidade:</strong> A integração com práticas de XP (testes e revisão de código) garante maior confiabilidade.</li>
+</ul>
+<p><strong>Relação com o Processo de Desenvolvimento</strong></p>
+<p>O ciclo de vida definido está diretamente alinhado com o processo descrito na Seção 3, onde:</p>
+<ul>
+<li>O Scrum define a organização das iterações;</li>
+<li>O XP garante qualidade técnica através de testes, revisão de código e integração contínua;</li>
+<li>O fluxo de trabalho (diagrama apresentado) representa a execução prática deste ciclo.
+O fluxo detalhado de execução deste ciclo pode ser visualizado no diagrama de fluxo de trabalho apresentado na Seção 3.</li>
+</ul>
+<h2 id="22-organizacao-do-projeto">2.2 Organização do Projeto</h2>
+<p>A organização do projeto foi estruturada com base nos papéis definidos pelas metodologias ágeis adotadas (Scrum), garantindo uma divisão clara de responsabilidades entre os membros da equipe.</p>
+<p>Todos os integrantes possuem igual importância no desenvolvimento do projeto, sendo responsáveis de forma colaborativa pelo sucesso das entregas ao longo das sprints.</p>
+<p>Quadro 2 - Organização do projeto</p>
+<table>
+<thead>
+<tr>
+<th>Papel</th>
+<th>Atribuições</th>
+<th>Responsável</th>
+<th>Participantes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scrum master</td>
+<td>Garante a aplicação da metodologia, facilita as sprints e remove impedimentos que bloqueiam a equipe</td>
+<td>Kauan Tarchetti</td>
+<td>Kauan Tarchetti</td>
+</tr>
+<tr>
+<td>Product Owner</td>
+<td>Define funcionalidades do produto (backlog), prioriza as histórias de usuário e valida as entregas junto ao cliente</td>
+<td>Alan Farias Braga</td>
+<td>Alan Farias Braga, Pedro Galdino</td>
+</tr>
+<tr>
+<td>Desenvolvedor Frontend</td>
+<td>Responsáveis pela interface do usuário (UI), experiência do usuário (UX) e integração com a API utilizando React.</td>
+<td>—</td>
+<td>Arthur Brayan, Rafaela</td>
+</tr>
+<tr>
+<td>Desenvolvedor Backend</td>
+<td>Responsáveis pela lógica de negócio, segurança e criação das APIs REST utilizando Java, junto com o framework Spring Boot.</td>
+<td>Pedro Galdino</td>
+<td>Pedro Galdino, Marcely, Kauan Tarchetti, Júlia Pêgo</td>
+</tr>
+<tr>
+<td>Desenvolvedor Banco de Dados</td>
+<td>Responsáveis pela modelagem do esquema relacional, integridade dos dados e performance das consultas no MySQL</td>
+<td>Evellyn Rocha</td>
+<td>Pedro Galdino, Marcely, Kauan Tarchetti, Rafaela, Evellyn Rocha</td>
+</tr>
+<tr>
+<td>Cliente</td>
+<td>Fornecer visão do negócio, validar requisitos, participar da homologação de sprints e dar feedbacks sobre os protótipos.</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Fonte: Elaborado pelos autores, 2026.</p>
+<h2 id="23-planejamento-das-fases-eou-iteracoes-do-projeto">2.3 Planejamento das Fases e/ou Iterações do Projeto</h2>
+<p>O planejamento do projeto foi organizado em sprints semanais, permitindo a entrega incremental de funcionalidades e a validação contínua com o cliente.</p>
+<p>Cada sprint possui objetivos específicos e entregáveis definidos, sendo revisados ao final de cada ciclo, conforme a abordagem ágil adotada.</p>
+<p>Quadro 3 - Planejamento das fases e/ou iterações do projeto</p>
+<table>
+<thead>
+<tr>
+<th>Sprint</th>
+<th>Produto (Entrega)</th>
+<th>Data Início</th>
+<th>Data Fim</th>
+<th>Entregável(eis)</th>
+<th>Responsáveis</th>
+<th>% Conclusão</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sprint 1</td>
+<td>Definição produto e projeto</td>
+<td>25/04/2026</td>
+<td>02/05/2026</td>
+<td>Documento de visão do produto e projeto</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 2</td>
+<td>Protótipo e Arquitetura</td>
+<td>02/05/2026</td>
+<td>09/05/2026</td>
+<td>Documento de Arquitetura e Protótipo Figma</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 3</td>
+<td>Discussão do produto de software</td>
+<td>09/05/2026</td>
+<td>16/05/2026</td>
+<td>Atualização do Documento de visão e Arquitetura</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 4</td>
+<td>Cadastro/Login de Usuários (Autenticação)</td>
+<td>16/05/2026</td>
+<td>23/05/2026</td>
+<td>Tela e Lógica de negócio do Cadastro/Login de usuários</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 5</td>
+<td>Consulta de espaços e disponibilidade</td>
+<td>23/05/2026</td>
+<td>30/05/2026</td>
+<td>Listagem e filtros de salas (backend), HorarioSala</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 6</td>
+<td>Solicitação e aprovação de reservas</td>
+<td>30/05/2026</td>
+<td>06/06/2026</td>
+<td>Lógica de reserva, aprovação/rejeição pelo ADM, cancelamento</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 7</td>
+<td>Painel Usuário / Painel Administrador</td>
+<td>06/06/2026</td>
+<td>13/06/2026</td>
+<td>Histórico de reservas, calendário de ocupação, integração front-back</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 8</td>
+<td>Usabilidade e integração front-back</td>
+<td>13/06/2026</td>
+<td>20/06/2026</td>
+<td>Refatoração, tratamento de exceções, Swagger, hospedagem, testes</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Sprint 9</td>
+<td>Integrações finais e entrega</td>
+<td>20/06/2026</td>
+<td>27/06/2026</td>
+<td>Google Agenda, testes finais, documentação atualizada, apresentação</td>
+<td>Todos</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<p>Fonte: Elaborado pelos autores, 2026.</p>
+<h2 id="24-matriz-de-comunicacao">2.4 Matriz de Comunicação</h2>
+<p>A comunicação entre os membros da equipe e demais stakeholders é fundamental para o sucesso do projeto, especialmente em um ambiente ágil.</p>
+<p>Dessa forma, foi definida uma matriz de comunicação que estabelece a periodicidade das interações, os envolvidos e os artefatos gerados em cada tipo de reunião.</p>
+<p>Quadro 4 - Matriz de comunicação</p>
+<table>
+<thead>
+<tr>
+<th>Área / Envolvidos</th>
+<th>Descrição</th>
+<th>Periodicidade</th>
+<th>Produtos Gerados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Todos</td>
+<td>Reunião de planejamento e revisão da Sprint (Sprint Planning e Sprint Review)</td>
+<td>Semanal</td>
+<td>Ata de reunião, backlog atualizado e Kanban atualizado</td>
+</tr>
+<tr>
+<td>Todos + Cliente</td>
+<td>Reunião com cliente</td>
+<td>Semanal</td>
+<td>Ata de reunião, ajuste de prioridade e backlog atualizado</td>
+</tr>
+<tr>
+<td>Todos</td>
+<td>Daily assíncrona</td>
+<td>Diária</td>
+<td>Status do andamento do projeto de forma individualizada</td>
+</tr>
+<tr>
+<td>Todos + Professor/Monitor</td>
+<td>Comunicação sobre o andamento do projeto</td>
+<td>Semanal</td>
+<td>Relatório de feedbacks e Ata de reunião</td>
+</tr>
+</tbody>
+</table>
+<p>Fonte: Elaborado pelos autores, 2026.</p>
+<h2 id="25-gerenciamento-de-riscos">2.5 Gerenciamento de Riscos</h2>
+<p>O gerenciamento de riscos se refere à identificação e monitoramento de eventos incertos, porém possíveis, de ocorrerem e que podem impactar o projeto, sendo fundamental para aumentar as chances de sucesso do projeto que está sendo realizado.</p>
+<p>Esse gerenciamento tem como ponto de partida a determinação dos riscos em cada fase, e com isso a elaboração de ações para minimizar as chances de ocorrerem ou seu impacto caso venham a ocorrer. Paralelamente, os riscos devem ser registrados ao longo do desenvolvimento, para que possam ser acompanhados.</p>
+<p>Por fim, de acordo com Rabechini Junior e Carvalho (2013), a adoção de práticas de gerenciamento de riscos traz benefícios significativos na realização e no desempenho dos projetos. A identificação e acompanhamento contínuo dos riscos permitem maior previsibilidade e controle sobre o andamento do projeto.</p>
+<p>Quadro 5 - Gerenciamento de riscos</p>
+<table>
+<thead>
+<tr>
+<th>Riscos</th>
+<th>Grau de Exposição</th>
+<th>Mitigação</th>
+<th>Plano de contingência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atraso no desenvolvimento</td>
+<td>Alto</td>
+<td>Divisão e acompanhamento das tarefas</td>
+<td>Reorganização dos prazos</td>
+</tr>
+<tr>
+<td>Falhas no sistema</td>
+<td>Médio</td>
+<td>Testes contínuos durante o desenvolvimento</td>
+<td>Correção e ajustes no código</td>
+</tr>
+<tr>
+<td>Indisponibilidade de membro da equipe</td>
+<td>Médio</td>
+<td>Monitoramento da participação</td>
+<td>Redistribuição das tarefas</td>
+</tr>
+<tr>
+<td>Problemas nos programas utilizados</td>
+<td>Médio</td>
+<td>Validação e testes no sistema</td>
+<td>Recuperação e ajuste dos dados</td>
+</tr>
+</tbody>
+</table>
+<p>Fonte: Elaborado pelos autores, 2026.</p>
+<h2 id="26-criterios-de-replanejamento">2.6 Critérios de Replanejamento</h2>
+<p>Com base na natureza iterativa do projeto e nos riscos identificados, foram definidos critérios objetivos para o replanejamento, garantindo a adaptação do projeto a possíveis desvios de escopo, prazo ou recursos.</p>
+<p>O projeto será sujeito a um replanejamento ao atingir algum dos critérios abaixo, implicando em uma reunião de replanejamento, alteração do backlog e o versionamento do documento:</p>
+<ul>
+<li>Taxa de conclusão da sprint abaixo de 70% por duas sprints consecutivas (indicando um escopo desalinhado com a capacidade da equipe);</li>
+<li>Indisponibilidade de algum membro por 2 sprints ou mais, sendo necessário a redistribuição de papéis e revisão do backlog;</li>
+<li>Mudança significativa de requisitos por parte do cliente que impactam funcionalidades já existentes ou em andamento;</li>
+<li>Atraso de 2 sprints ou mais em relação ao cronograma, exigindo alteração no escopo juntamente ao cliente para garantir uma entrega razoável.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
